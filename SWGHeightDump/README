@@ -1,0 +1,19 @@
+Pre-requisites:
+
+1. MinGW
+2. pthreadGC2
+3. Psapi
+
+
+Running:
+
+1. Start SWG client with provided user.cfg
+2. Connect to server
+3. Start Dumper with a position X argument where to start dumping, select swg client pid
+4. Send from server a DataTransform ObjectController (0x71 objc)
+5. Wait ( if it crashes start over with the last position X)
+6. It will dump all the files in the SWG folder
+7. Run SWGHeightCompiler there, to unify all the files
+
+
+

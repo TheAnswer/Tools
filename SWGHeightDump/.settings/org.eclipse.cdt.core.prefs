@@ -1,0 +1,7 @@
+#Fri Apr 25 03:37:57 CEST 2008
+eclipse.preferences.version=1
+indexer/filesToParseUpFront=stdarg.h, stddef.h, sys/types.h
+indexer/indexAllFiles=true
+indexer/indexerId=org.eclipse.cdt.core.domsourceindexer
+indexer/skipReferences=false
+indexer/skipTypeReferences=false
