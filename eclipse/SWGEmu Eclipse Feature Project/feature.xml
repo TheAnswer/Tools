@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="Core3_MangedObject_Wizard"
+      label="Core3 MangedObject Wizard"
+      version="1.0.0.qualifier"
+      provider-name="SWGEmu">
+
+   <description url="www.swgemu.com">
+      ManagedObject Class Wizard helps you create ManagedObjects for
+your Core3 project.
+   </description>
+
+   <copyright>
+      DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
+                    Version 2, December 2004 
+
+ Copyright (C) 2004 Sam Hocevar &lt;sam@hocevar.net&gt; 
+
+ Everyone is permitted to copy and distribute verbatim or modified 
+ copies of this license document, and changing it is allowed as long 
+ as the name is changed. 
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION 
+
+  0. You just DO WHAT THE FUCK YOU WANT TO.
+   </copyright>
+
+   <license>
+      DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
+                    Version 2, December 2004 
+
+ Copyright (C) 2004 Sam Hocevar &lt;sam@hocevar.net&gt; 
+
+ Everyone is permitted to copy and distribute verbatim or modified 
+ copies of this license document, and changing it is allowed as long 
+ as the name is changed. 
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION 
+
+  0. You just DO WHAT THE FUCK YOU WANT TO.
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui.ide"/>
+   </requires>
+
+   <plugin
+         id="SWGEmu_Core3_ManagedObject_Plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.2.qualifier"
+         unpack="false"/>
+
+</feature>
