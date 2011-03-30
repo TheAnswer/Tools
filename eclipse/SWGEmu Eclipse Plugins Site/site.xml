@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/Core3_MangedObject_Wizard_1.0.0.201103301533.jar" id="Core3_MangedObject_Wizard" version="1.0.0.201103301533">
+      <category name="swgemu"/>
+   </feature>
+   <category-def name="swgemu" label="SWGEmu"/>
+</site>
