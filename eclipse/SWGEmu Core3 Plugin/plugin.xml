@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="SWGEmu_Core3_Plugin"
+            name="%category.name">
+      </category>
+      <wizard
+            category="SWGEmu_Core3_Plugin"
+            class="swgemu_core3_plugin.wizards.ManagedObjectWizard"
+            icon="icons/sample.gif"
+            id="swgemu_core3_plugin.wizards.ManagedObjectWizard"
+            name="%wizard.name">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="swgemu_core3_plugin.preferences.SWGEmuPreferencesPage"
+            id="swgemu_core3_plugin.preferences.SWGEmuPreferencesPage"
+            name="%page.name">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="swgemu_core3_plugin.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>
