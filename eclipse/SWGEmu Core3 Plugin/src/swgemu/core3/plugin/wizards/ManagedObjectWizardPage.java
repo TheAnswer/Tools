@@ -1,4 +1,4 @@
-package swgemu_core3_plugin.wizards;
+package swgemu.core3.plugin.wizards;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
@@ -233,11 +233,18 @@ public class ManagedObjectWizardPage extends WizardPage {
 			updateStatus("File container must be specified");
 			return;
 		}
+		
 		if (container == null
 				|| (container.getType() & (IResource.PROJECT | IResource.FOLDER)) == 0) {
 			updateStatus("File container must exist");
 			return;
 		}
+		
+		if (!getContainerName().contains("src") || !getContainerName().contains("server")) {
+			updateStatus("Invalid directory");
+			return;
+		}
+		
 		if (!container.isAccessible()) {
 			updateStatus("Project must be writable");
 			return;

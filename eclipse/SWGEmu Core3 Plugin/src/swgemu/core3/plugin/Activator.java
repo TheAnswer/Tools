@@ -1,4 +1,4 @@
-package swgemu_core3_plugin;
+package swgemu.core3.plugin;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

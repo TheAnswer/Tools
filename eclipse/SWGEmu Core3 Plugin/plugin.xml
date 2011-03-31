@@ -9,16 +9,23 @@
       </category>
       <wizard
             category="SWGEmu_Core3_Plugin"
-            class="swgemu_core3_plugin.wizards.ManagedObjectWizard"
+            class="swgemu.core3.plugin.wizards.ManagedObjectWizard"
             icon="icons/sample.gif"
-            id="swgemu_core3_plugin.wizards.ManagedObjectWizard"
-            name="%wizard.name">
+            id="swgemu.core3.plugin.wizards.ManagedObjectWizard"
+            name="%wizard.name.0">
+      </wizard>
+      <wizard
+            category="SWGEmu_Core3_Plugin"
+            class="swgemu.core3.managedobject.plugin.wizards.ManagerNewWizard"
+            icon="icons/sample.gif"
+            id="swgemu.core3.managedobject.plugin.wizards.ManagerNewWizard"
+            name="%wizard.name.1">
       </wizard>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="swgemu_core3_plugin.preferences.SWGEmuPreferencesPage"
+            class="swgemu.core3.plugin.preferences.SWGEmuPreferencesPage"
             id="swgemu_core3_plugin.preferences.SWGEmuPreferencesPage"
             name="%page.name">
       </page>
@@ -26,7 +33,7 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="swgemu_core3_plugin.preferences.PreferenceInitializer">
+            class="swgemu.core3.plugin.preferences.PreferenceInitializer">
       </initializer>
    </extension>
 

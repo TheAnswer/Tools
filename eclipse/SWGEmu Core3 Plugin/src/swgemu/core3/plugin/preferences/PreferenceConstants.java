@@ -1,4 +1,4 @@
-package swgemu_core3_plugin.preferences;
+package swgemu.core3.plugin.preferences;
 
 /**
  * Constant definitions for plug-in preferences
