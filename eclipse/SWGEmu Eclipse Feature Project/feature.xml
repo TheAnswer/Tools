@@ -2,7 +2,7 @@
 <feature
       id="Core3_MangedObject_Wizard"
       label="Core3 MangedObject Wizard"
-      version="1.0.0.qualifier"
+      version="1.0.2.qualifier"
       provider-name="SWGEmu">
 
    <description url="www.swgemu.com">
@@ -53,7 +53,7 @@ your Core3 project.
          id="SWGEmu_Core3_ManagedObject_Plugin"
          download-size="0"
          install-size="0"
-         version="0.0.2.qualifier"
+         version="0.0.4.qualifier"
          unpack="false"/>
 
 </feature>
