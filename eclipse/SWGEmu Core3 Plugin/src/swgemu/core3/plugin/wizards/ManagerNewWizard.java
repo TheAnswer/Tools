@@ -1,4 +1,4 @@
-package swgemu.core3.managedobject.plugin.wizards;
+package swgemu.core3.plugin.wizards;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -315,7 +315,7 @@ public class ManagerNewWizard extends Wizard implements INewWizard {
 		IContainer container = (IContainer) resource;
 
 		String packageName = containerName.substring(containerName.indexOf("server"));
-		packageName = packageName.replaceAll("/", ".");
+		packageName = packageName.replaceAll(String.valueOf(File.separatorChar), ".");
 
 		final IFile file;
 

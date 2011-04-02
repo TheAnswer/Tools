@@ -16,9 +16,9 @@
       </wizard>
       <wizard
             category="SWGEmu_Core3_Plugin"
-            class="swgemu.core3.managedobject.plugin.wizards.ManagerNewWizard"
+            class="swgemu.core3.plugin.wizards.ManagerNewWizard"
             icon="icons/sample.gif"
-            id="swgemu.core3.managedobject.plugin.wizards.ManagerNewWizard"
+            id="swgemu.core3.plugin.wizards.ManagerNewWizard"
             name="%wizard.name.1">
       </wizard>
    </extension>
@@ -35,6 +35,44 @@
       <initializer
             class="swgemu.core3.plugin.preferences.PreferenceInitializer">
       </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="SWGEmu_Core3_ManagedObject_Plugin.contribution1"
+            objectClass="org.eclipse.core.resources.IFile"
+            nameFilter="*.idl">
+         <menu
+               id="SWGEmu_Core3_ManagedObject_Plugin.menu1"
+               label="%menu.label"
+               path="additions">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               class="swgemu.core3.popup.actions.BuildIDLFile"
+               enablesFor="1"
+               id="SWGEmu_Core3_ManagedObject_Plugin.newAction"
+               label="%action.label.1"
+               menubarPath="SWGEmu_Core3_ManagedObject_Plugin.menu1/group1">
+         </action>
+         <action
+               class="swgemu.core3.popup.actions.BuildAllIDLFiles"
+               enablesFor="1"
+               id="SWGEmu_Core3_ManagedObject_Plugin.newAction2"
+               label="%action.label.0"
+               menubarPath="SWGEmu_Core3_ManagedObject_Plugin.menu1/group1">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.consoleLineTrackers">
+         <consoleLineTracker 
+     		id="swgemu_core3_plugin_trackers_IDLCConsoleLineTracker"
+     		class="swgemu.core3.plugin.trackers.IDLCConsoleLineTracker"
+     		processType="idlc">
+  		</consoleLineTracker>
    </extension>
 
 </plugin>

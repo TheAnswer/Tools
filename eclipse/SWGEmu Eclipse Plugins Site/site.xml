@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/Core3_MangedObject_Wizard_1.0.2.201103310323.jar" id="Core3_MangedObject_Wizard" version="1.0.2.201103310323">
+   <feature url="features/Core3_MangedObject_Wizard_1.0.4.201104020410.jar" id="Core3_MangedObject_Wizard" version="1.0.4.201104020410">
       <category name="swgemu"/>
    </feature>
    <category-def name="swgemu" label="SWGEmu"/>
