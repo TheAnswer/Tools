@@ -1,4 +1,4 @@
-package swgemu.core3.popup.actions;
+package org.swgemu.core3.popup.actions;
 
 
 import java.io.File;
@@ -15,7 +15,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.Job;
 
-import swgemu.core3.plugin.shared.Core3Shared;
+import org.swgemu.core3.plugin.shared.Core3Shared;
 
 public class BuildIDLFile implements IObjectActionDelegate {
 

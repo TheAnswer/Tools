@@ -1,4 +1,4 @@
-package swgemu.core3.plugin.wizards;
+package org.swgemu.core3.plugin.wizards;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -15,8 +15,10 @@ import org.eclipse.core.runtime.CoreException;
 import java.io.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.ide.IDE;
+import org.swgemu.core3.plugin.shared.*;
 
-import swgemu.core3.plugin.shared.*;
+import org.swgemu.core3.plugin.shared.Core3Shared;
+import org.swgemu.core3.plugin.wizards.ManagedObjectWizardPage;
 
 
 /**

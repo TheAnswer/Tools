@@ -1,10 +1,11 @@
-package swgemu.core3.plugin.preferences;
+package org.swgemu.core3.plugin.preferences;
 
 import org.eclipse.jface.preference.*;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
 
-import swgemu.core3.plugin.Activator;
+import org.swgemu.core3.plugin.Activator;
+import org.swgemu.core3.plugin.preferences.PreferenceConstants;
 
 /**
  * This class represents a preference page that

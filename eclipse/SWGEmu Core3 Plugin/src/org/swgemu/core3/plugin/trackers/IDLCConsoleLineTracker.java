@@ -1,4 +1,4 @@
-package swgemu.core3.plugin.trackers;
+package org.swgemu.core3.plugin.trackers;
 
 import java.io.File;
 import java.util.regex.Matcher;
@@ -17,7 +17,7 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.ui.externaltools.internal.model.IExternalToolConstants;
 import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.texteditor.IDocumentProvider;
-import swgemu.core3.plugin.shared.Core3Shared;
+import org.swgemu.core3.plugin.shared.Core3Shared;
 
 @SuppressWarnings("restriction")
 public class IDLCConsoleLineTracker implements IConsoleLineTrackerExtension {
@@ -81,11 +81,10 @@ public class IDLCConsoleLineTracker implements IConsoleLineTrackerExtension {
 
 			boolean b = m.find();
 			
+			String workingDirectory = Core3Shared.currentProjectResource.getLocation().toOSString();
+			workingDirectory = workingDirectory.substring(workingDirectory.lastIndexOf(File.separatorChar) + 1);
+			
 			if (b) {
-				@SuppressWarnings("deprecation")
-				String workingDirectory = console.getProcess().getLaunch().getLaunchConfiguration().getAttribute(IExternalToolConstants.ATTR_WORKING_DIRECTORY, "notFound");
-				workingDirectory = workingDirectory.substring(workingDirectory.lastIndexOf(File.separatorChar) + 1);
-				
 				int serverIdx = lineText.indexOf("server");
 				
 				if (serverIdx >= 0) {
@@ -134,10 +133,6 @@ public class IDLCConsoleLineTracker implements IConsoleLineTrackerExtension {
 				int idx = lineText.indexOf(".idl");
 				
 				if (idx >= 0) {
-					@SuppressWarnings("deprecation")
-					String workingDirectory = console.getProcess().getLaunch().getLaunchConfiguration().getAttribute(IExternalToolConstants.ATTR_WORKING_DIRECTORY, "notFound");
-					workingDirectory = workingDirectory.substring(workingDirectory.lastIndexOf(File.separatorChar) + 1);
-
 					int serverIdx = lineText.indexOf("server");
 
 					if (serverIdx > 0) {

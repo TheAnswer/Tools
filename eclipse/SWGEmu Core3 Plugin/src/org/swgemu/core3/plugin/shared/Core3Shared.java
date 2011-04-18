@@ -1,17 +1,22 @@
-package swgemu.core3.plugin.shared;
+package org.swgemu.core3.plugin.shared;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.List;
 import java.util.StringTokenizer;
+import java.util.Vector;
+import org.eclipse.jface.text.IRegion;
 
+import org.eclipse.debug.ui.console.IConsole;
 import org.eclipse.core.externaltools.internal.IExternalToolConstants;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -32,24 +37,100 @@ import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsoleManager;
+import org.eclipse.ui.console.IPatternMatchListener;
+import org.eclipse.ui.console.MessageConsole;
+import org.eclipse.ui.console.PatternMatchEvent;
+import org.eclipse.ui.console.TextConsole;
 
-import swgemu.core3.plugin.Activator;
-import swgemu.core3.plugin.preferences.PreferenceConstants;
+
+import org.swgemu.core3.plugin.Activator;
+import org.swgemu.core3.plugin.editors.IDLConfiguration;
+import org.swgemu.core3.plugin.preferences.PreferenceConstants;
+import org.swgemu.core3.plugin.trackers.IDLCConsole;
+import org.swgemu.core3.plugin.trackers.IDLCConsoleLineTracker;
+
+import org.sr.idlc.compiler.Compiler;
+
+import org.swgemu.idlc.*;
 
 @SuppressWarnings("restriction")
 public class Core3Shared {
-	
+
 	//Find a better way
 	static public IProject currentProjectResource = null;
-	
+
 	static public void runIDLC(final String idlcPath, final String classPath, final String fileFullPath, final String workingDirectory, final boolean fullRebuild) 
 	throws CoreException {
-		ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
+		IDLCConsole console = new IDLCConsole();
+		
+		org.eclipse.ui.console.IConsole[] arg = { console };
+		
+		org.eclipse.ui.console.IConsole[] currentConsoles = ConsolePlugin.getDefault().getConsoleManager().getConsoles();
+		Vector<org.eclipse.ui.console.IConsole> consolesToRemove = new Vector<org.eclipse.ui.console.IConsole>();
+		
+		for (int i = 0; i < currentConsoles.length; i++) {
+			if (currentConsoles[i] instanceof IDLCConsole) {
+				consolesToRemove.add(currentConsoles[i]);
+			}
+		}
+		
+		IConsoleManager consoleManager = ConsolePlugin.getDefault().getConsoleManager();
+		consoleManager.removeConsoles(consolesToRemove.toArray(new org.eclipse.ui.console.IConsole[consolesToRemove.size()]));
+		consoleManager.addConsoles(arg);
+		consoleManager.showConsoleView(console);
+
+		console.addPatternMatchListener(new IDLCConsolePatterListener());
+		
+		IDLCInstance idlc = new IDLCInstance();
+		idlc.setPrintStream(new PrintStream(console.newOutputStream()));
+
+		try {
+			Vector<String> args = new Vector<String>();
+			
+			args.add("-cp");
+			args.add(currentProjectResource.getLocation().toOSString() + File.separatorChar + classPath);
+
+			if (fullRebuild) {
+				args.add("-rb");
+				args.add("-sd");
+				args.add(currentProjectResource.getLocation().toOSString() + File.separatorChar + "src");
+				args.add("anyadEclipse");
+			} else {
+				args.add("-sd");
+				args.add(currentProjectResource.getLocation().toOSString() + File.separatorChar + "src");
+				args.add(fileFullPath.substring(fileFullPath.indexOf("src" + String.valueOf(File.separatorChar)) + 4));
+			}
+
+			String[] array = new String[args.size()];
+			array = args.toArray(array);
+			
+			try {
+			
+				idlc.run(array);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				
+			}
+
+		} catch (Exception e) {
+
+		}
+		
+		idlc.clearPrintStream();
+		
+		/*
+		 * ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
 
 		ILaunchConfigurationType type = manager.getLaunchConfigurationType(IExternalToolConstants.ID_PROGRAM_LAUNCH_CONFIGURATION_TYPE);
 
 		ILaunchConfigurationWorkingCopy wc = null;
-		
+
 		try {
 			wc = type.newInstance(null, "idlc");
 		} catch (CoreException e) {
@@ -58,13 +139,6 @@ public class Core3Shared {
 			ErrorDialog.openError(null, "Error", "Can't create new launch configuration for idlc.", tStatus);
 			return;
 		}
-		
-		String arguments;
-		
-		if (!fullRebuild)
-			arguments = "-cp " + classPath + " -sd src " + fileFullPath.substring(fileFullPath.indexOf("src" + String.valueOf(File.separatorChar)) + 4);
-		else
-			arguments = "-rb -cp " + classPath + " -sd src anyadEclipse";
 
 		wc.setAttribute(IExternalToolConstants.ATTR_LOCATION, idlcPath);
 		wc.setAttribute(IExternalToolConstants.ATTR_TOOL_ARGUMENTS, arguments); 
@@ -75,13 +149,13 @@ public class Core3Shared {
 
 		ILaunchConfiguration config;
 		config = wc.copy("idlc " + arguments);
-							
-		config.launch(ILaunchManager.RUN_MODE, null);
+
+		config.launch(ILaunchManager.RUN_MODE, null);*/
 	}
 
 	static public String getMakefileVariable(final String variableName, final String makefileScript) {
 		String returnString;
-		
+
 		try {
 			int idxOfClasspath = makefileScript.indexOf(variableName);
 
@@ -224,7 +298,7 @@ public class Core3Shared {
 		} catch (IOException ex) {
 			return;
 		}
-		
+
 		container.refreshLocal(IContainer.DEPTH_ONE, null);
 
 		monitor.worked(1);

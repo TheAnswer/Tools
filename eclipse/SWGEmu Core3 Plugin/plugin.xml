@@ -9,14 +9,14 @@
       </category>
       <wizard
             category="SWGEmu_Core3_Plugin"
-            class="swgemu.core3.plugin.wizards.ManagedObjectWizard"
+            class="org.swgemu.core3.plugin.wizards.ManagedObjectWizard"
             icon="icons/sample.gif"
             id="swgemu.core3.plugin.wizards.ManagedObjectWizard"
             name="%wizard.name.0">
       </wizard>
       <wizard
             category="SWGEmu_Core3_Plugin"
-            class="swgemu.core3.plugin.wizards.ManagerNewWizard"
+            class="org.swgemu.core3.plugin.wizards.ManagerNewWizard"
             icon="icons/sample.gif"
             id="swgemu.core3.plugin.wizards.ManagerNewWizard"
             name="%wizard.name.1">
@@ -25,7 +25,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="swgemu.core3.plugin.preferences.SWGEmuPreferencesPage"
+            class="org.swgemu.core3.plugin.preferences.SWGEmuPreferencesPage"
             id="swgemu_core3_plugin.preferences.SWGEmuPreferencesPage"
             name="%page.name">
       </page>
@@ -33,7 +33,7 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="swgemu.core3.plugin.preferences.PreferenceInitializer">
+            class="org.swgemu.core3.plugin.preferences.PreferenceInitializer">
       </initializer>
    </extension>
    <extension
@@ -51,14 +51,14 @@
             </separator>
          </menu>
          <action
-               class="swgemu.core3.popup.actions.BuildIDLFile"
+               class="org.swgemu.core3.popup.actions.BuildIDLFile"
                enablesFor="1"
                id="SWGEmu_Core3_ManagedObject_Plugin.newAction"
                label="%action.label.1"
                menubarPath="SWGEmu_Core3_ManagedObject_Plugin.menu1/group1">
          </action>
          <action
-               class="swgemu.core3.popup.actions.BuildAllIDLFiles"
+               class="org.swgemu.core3.popup.actions.BuildAllIDLFiles"
                enablesFor="1"
                id="SWGEmu_Core3_ManagedObject_Plugin.newAction2"
                label="%action.label.0"
@@ -73,6 +73,25 @@
      		class="swgemu.core3.plugin.trackers.IDLCConsoleLineTracker"
      		processType="idlc">
   		</consoleLineTracker>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.swgemu.core3.plugin.editors.IDLEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            extensions="idl"
+            icon="icons/sample.gif"
+            id="swgemu.core3.plugin.editors.IDLEditor"
+            name="SWGEmu IDL editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            default="true"
+            id="SWGEmu Core3 Plugin.editor1"
+            name="name">
+      </editor>
    </extension>
 
 </plugin>

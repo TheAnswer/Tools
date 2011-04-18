@@ -1,7 +1,9 @@
-package swgemu.core3.plugin;
+package org.swgemu.core3.plugin;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import org.swgemu.core3.plugin.Activator;
 
 /**
  * The activator class controls the plug-in life cycle

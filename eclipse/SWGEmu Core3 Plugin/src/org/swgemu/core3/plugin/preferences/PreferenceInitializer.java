@@ -1,9 +1,10 @@
-package swgemu.core3.plugin.preferences;
+package org.swgemu.core3.plugin.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import swgemu.core3.plugin.Activator;
+import org.swgemu.core3.plugin.Activator;
+import org.swgemu.core3.plugin.preferences.PreferenceConstants;
 
 /**
  * Class used to initialize default preference values.

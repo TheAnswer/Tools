@@ -1,4 +1,4 @@
-package swgemu.core3.plugin.wizards;
+package org.swgemu.core3.plugin.wizards;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -20,7 +20,8 @@ import java.io.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.ide.IDE;
 
-import swgemu.core3.plugin.shared.Core3Shared;
+import org.swgemu.core3.plugin.shared.Core3Shared;
+import org.swgemu.core3.plugin.wizards.ManagerNewWizardPage;
 
 
 /**

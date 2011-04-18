@@ -1,4 +1,4 @@
-package swgemu.core3.plugin.wizards;
+package org.swgemu.core3.plugin.wizards;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;

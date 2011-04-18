@@ -1,7 +1,7 @@
 /**
  * 
  */
-package swgemu.core3.popup.actions;
+package org.swgemu.core3.popup.actions;
 
 import java.io.File;
 
@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import swgemu.core3.plugin.shared.Core3Shared;
+import org.swgemu.core3.plugin.shared.Core3Shared;
 
 /**
  * @author victor
