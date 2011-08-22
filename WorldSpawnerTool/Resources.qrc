@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="naboo.jpg">ui_map_naboo.jpg</file>
+        <file>ui_map_corellia.jpg</file>
+        <file>ui_map_dantooine.jpg</file>
+        <file>ui_map_dathomir.jpg</file>
+        <file>ui_map_endor.jpg</file>
+        <file>ui_map_lok.jpg</file>
+        <file>ui_map_rori.jpg</file>
+        <file>ui_map_talus.jpg</file>
+        <file>ui_map_yavin4.jpg</file>
+        <file>ui_map_tatooine.jpg</file>
+    </qresource>
+</RCC>
