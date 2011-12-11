@@ -22,6 +22,10 @@ public:
     explicit CreatureManager(MainWindow* mainWindow, QWidget *parent = 0);
     ~CreatureManager();
 
+    QList<QString> getMobiles() {
+        return creatureMap.keys();
+    }
+
 public slots:
     void loadCreatureObjects();
 
@@ -61,6 +65,8 @@ private:
     bool creatureChanged;
 
     QString parseName(QByteArray& buffer, int& currentPosition);
+
+
 };
 
 #endif // CREATUREMANAGER_H

@@ -80,27 +80,6 @@ public:
     void setVariable(const QString& name, const QString& data);
 
     QString serializeToLua();
-    void addStringVariableToText(QTextStream& stream, const QString& varName, const QString& var);
-    void addIntVariableToText(QTextStream& stream, const QString& varName, int var);
-    void addFloatVariableToText(QTextStream& stream, const QString& varName, float var);
-
-    void addStringVectorToText(QTextStream& stream, const QString& varName, QVector<QString>& var);
-
-    template<typename V>
-    void addVectorToText(QTextStream& stream, const QString& varName, QVector<V>& var) {
-        stream << "\t" << varName << " = {";
-
-        for (int i = 0; i < var.size(); ++i) {
-            V value = var.at(i);
-
-            stream << value;
-
-            if (i + 1 < var.size())
-                stream << ",";
-        }
-
-        stream << "}";
-    }
 
     void addPvpBitmaskVariableToText(QTextStream& stream, const QString& varName);
     void addCreatureBitmaskVariableToText(QTextStream& stream, const QString& varName);

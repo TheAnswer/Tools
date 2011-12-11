@@ -26,6 +26,8 @@ class StaticSpawnTableItem;
 class QUndoStack;
 class QUndoView;
 class QUndoCommand;
+class LairTypes;
+class LairLuaManager;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -43,6 +45,8 @@ private:
     PreORCreatureManager* preORManager;
     SpawnLuaManager* spawnLuaManager;
     PlanetSelection* planetSelection;
+    LairTypes* lairTypes;
+    LairLuaManager* lairLuaManager;
 
     QMap<QString, QAction*> actions;
 
@@ -126,6 +130,10 @@ public:
 
     inline CreatureLuaManager* getLuaManager() {
         return luaManager;
+    }
+
+    inline LairLuaManager* getLairLuaManager() {
+        return lairLuaManager;
     }
 
     inline CreatureManager* getCreatureManager() {

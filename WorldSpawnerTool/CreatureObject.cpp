@@ -1,5 +1,6 @@
 #include "CreatureObject.h"
 #include "creatureluamanager.h"
+#include "LuaSerializerHelper.h"
 
 void CreatureObject::readObject(lua_State* l) {
     meatType = CreatureLuaManager::getStringField(l, "meatType");
@@ -158,70 +159,70 @@ QString CreatureObject::serializeToLua() {
 
     stream << luaObjectName << " = Creature:new {" << endl;
 
-    addStringVariableToText(stream, "objectName", objectName);
+    LuaSerializerHelper::addStringVariableToText(stream, "objectName", objectName);
     stream << "," << endl;
 
-    addStringVariableToText(stream, "socialGroup", socialGroup);
+    LuaSerializerHelper::addStringVariableToText(stream, "socialGroup", socialGroup);
     stream << "," << endl;
 
-    addStringVariableToText(stream, "pvpFaction", pvpFaction);
+    LuaSerializerHelper::addStringVariableToText(stream, "pvpFaction", pvpFaction);
     stream << "," << endl;
 
-    addStringVariableToText(stream, "faction", faction);
+    LuaSerializerHelper::addStringVariableToText(stream, "faction", faction);
     stream << "," << endl;
 
-    addIntVariableToText(stream, "level", level);
+    LuaSerializerHelper::addIntVariableToText(stream, "level", level);
     stream << "," << endl;
 
-    addFloatVariableToText(stream, "chanceHit", chanceHit);;
+    LuaSerializerHelper::addFloatVariableToText(stream, "chanceHit", chanceHit);;
     stream << "," << endl;
 
-    addIntVariableToText(stream, "damageMin", damageMin);
+    LuaSerializerHelper::addIntVariableToText(stream, "damageMin", damageMin);
     stream << "," << endl;
 
-    addIntVariableToText(stream, "damageMax", damageMax);
+    LuaSerializerHelper::addIntVariableToText(stream, "damageMax", damageMax);
     stream << "," << endl;
 
-    addIntVariableToText(stream, "baseXp", baseXp);
+    LuaSerializerHelper::addIntVariableToText(stream, "baseXp", baseXp);
     stream << "," << endl;
 
-    addIntVariableToText(stream, "baseHAM", baseHAM);
+    LuaSerializerHelper::addIntVariableToText(stream, "baseHAM", baseHAM);
     stream << "," << endl;
 
-    addIntVariableToText(stream, "baseHAMmax", baseHAMmax);
+    LuaSerializerHelper::addIntVariableToText(stream, "baseHAMmax", baseHAMmax);
     stream << "," << endl;
 
-    addIntVariableToText(stream, "armor", armor);
+    LuaSerializerHelper::addIntVariableToText(stream, "armor", armor);
     stream << "," << endl;
 
-    addVectorToText(stream, "resists", resists);
+    LuaSerializerHelper::addVectorToText(stream, "resists", resists);
     stream << "," << endl;
 
-    addStringVariableToText(stream, "meatType", meatType);
+    LuaSerializerHelper::addStringVariableToText(stream, "meatType", meatType);
     stream << "," << endl;
 
-    addIntVariableToText(stream, "meatAmount", meatAmount);
+    LuaSerializerHelper::addIntVariableToText(stream, "meatAmount", meatAmount);
     stream << "," << endl;
 
-    addStringVariableToText(stream, "hideType", hideType);
+    LuaSerializerHelper::addStringVariableToText(stream, "hideType", hideType);
     stream << "," << endl;
 
-    addIntVariableToText(stream, "hideAmount", hideAmount);
+    LuaSerializerHelper::addIntVariableToText(stream, "hideAmount", hideAmount);
     stream << "," << endl;
 
-    addStringVariableToText(stream, "boneType", boneType);
+    LuaSerializerHelper::addStringVariableToText(stream, "boneType", boneType);
     stream << "," << endl;
 
-    addIntVariableToText(stream, "boneAmount", boneAmount);
+    LuaSerializerHelper::addIntVariableToText(stream, "boneAmount", boneAmount);
     stream << "," << endl;
 
-    addIntVariableToText(stream, "milk", milk);
+    LuaSerializerHelper::addIntVariableToText(stream, "milk", milk);
     stream << "," << endl;
 
-    addFloatVariableToText(stream, "tamingChance", tamingChance);
+    LuaSerializerHelper::addFloatVariableToText(stream, "tamingChance", tamingChance);
     stream << "," << endl;
 
-    addIntVariableToText(stream, "ferocity", ferocity);
+    LuaSerializerHelper::addIntVariableToText(stream, "ferocity", ferocity);
     stream << "," << endl;
 
     addPvpBitmaskVariableToText(stream, "pvpBitmask");
@@ -230,22 +231,22 @@ QString CreatureObject::serializeToLua() {
     addCreatureBitmaskVariableToText(stream, "creatureBitmask");
     stream << "," << endl;
 
-    addIntVariableToText(stream, "optionsBitmask", optionsBitmask);
+    LuaSerializerHelper::addIntVariableToText(stream, "optionsBitmask", optionsBitmask);
     stream << "," << endl;
 
     addDietBitmaskVariableToText(stream, "diet");
     stream << "," << endl << endl;
 
-    addStringVectorToText(stream, "templates", templates);
+    LuaSerializerHelper::addStringVectorToText(stream, "templates", templates);
     stream << "," << endl;
 
-    addStringVectorToText(stream, "lootgroups", lootGroups);
+    LuaSerializerHelper::addStringVectorToText(stream, "lootgroups", lootGroups);
     stream << "," << endl;
 
-    addStringVectorToText(stream, "weapons", weapons);
+    LuaSerializerHelper::addStringVectorToText(stream, "weapons", weapons);
     stream << "," << endl;
 
-    addStringVariableToText(stream, "conversationTemplate", conversationTemplate);
+    LuaSerializerHelper::addStringVariableToText(stream, "conversationTemplate", conversationTemplate);
     stream << "," << endl;
 
     attacksVariableToText(stream, "attacks");
@@ -273,20 +274,7 @@ void CreatureObject::attacksVariableToText(QTextStream& stream, const QString& v
     stream << endl << "\t}";
 }
 
-void CreatureObject::addStringVectorToText(QTextStream& stream, const QString& varName, QVector<QString>& var) {
-    stream << "\t" << varName << " = {";
 
-    for (int i = 0; i < var.size(); ++i) {
-        QString value = var.at(i);
-
-        stream << "\"" << value << "\"";
-
-        if (i + 1 < var.size())
-            stream << ",";
-    }
-
-    stream << "}";
-}
 
 void CreatureObject::addDietBitmaskVariableToText(QTextStream& stream, const QString& varName) {
     QString data;
@@ -416,18 +404,6 @@ void CreatureObject::addPvpBitmaskVariableToText(QTextStream& stream, const QStr
     }
 
     stream << data;
-}
-
-void CreatureObject::addStringVariableToText(QTextStream& stream, const QString& varName, const QString& var) {
-    stream << "\t" << varName << " = \"" << var << "\"";
-}
-
-void CreatureObject::addIntVariableToText(QTextStream& stream, const QString& varName, int var) {
-    stream << "\t" << varName << " = " << var << "";
-}
-
-void CreatureObject::addFloatVariableToText(QTextStream& stream, const QString& varName, float var) {
-    stream << "\t" << varName << " = " << var << "";
 }
 
 void CreatureObject::setVariable(const QString& name, const QString& data) {

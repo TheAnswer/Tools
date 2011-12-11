@@ -58,7 +58,14 @@ WorldMap::~WorldMap() {
 void WorldMap::loadPlanetImage() {
     QString fileName = "ui_map_" + mapName + ".jpg";
 
-    QImage image(fileName);
+    QImage image;
+
+    if (!image.load(fileName)) {
+        MainWindow::instance->outputToConsole("could not load imagefile " + fileName);
+        return;
+    } else
+        MainWindow::instance->outputToConsole("loaded " + fileName);
+
     addPixmap(QPixmap::fromImage(image));
 }
 

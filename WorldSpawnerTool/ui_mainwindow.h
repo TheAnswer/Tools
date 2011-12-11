@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon 22. Aug 20:29:47 2011
+** Created: Sat 10. Dec 17:00:01 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -46,6 +46,7 @@ public:
     QAction *actionLoad;
     QAction *actionPreOR_Creatures;
     QAction *actionChange_Planet;
+    QAction *actionLair_Tool;
     QWidget *centralWidget;
     QGridLayout *gridLayout_5;
     QGraphicsView *graphicsView;
@@ -107,6 +108,8 @@ public:
         actionPreOR_Creatures->setObjectName(QString::fromUtf8("actionPreOR_Creatures"));
         actionChange_Planet = new QAction(MainWindow);
         actionChange_Planet->setObjectName(QString::fromUtf8("actionChange_Planet"));
+        actionLair_Tool = new QAction(MainWindow);
+        actionLair_Tool->setObjectName(QString::fromUtf8("actionLair_Tool"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_5 = new QGridLayout(centralWidget);
@@ -322,6 +325,8 @@ public:
         menuTest->addAction(actionConnect_to_database);
         menuTest->addAction(actionConsole);
         menuCreature_Manager->addAction(actionLoad);
+        menuCreature_Manager->addAction(actionLair_Tool);
+        menuCreature_Manager->addSeparator();
         menuCreature_Manager->addAction(actionPreOR_Creatures);
 
         retranslateUi(MainWindow);
@@ -340,6 +345,7 @@ public:
         actionLoad->setText(QApplication::translate("MainWindow", "Creatures", 0, QApplication::UnicodeUTF8));
         actionPreOR_Creatures->setText(QApplication::translate("MainWindow", "PreOR Creatures", 0, QApplication::UnicodeUTF8));
         actionChange_Planet->setText(QApplication::translate("MainWindow", "Change Planet", 0, QApplication::UnicodeUTF8));
+        actionLair_Tool->setText(QApplication::translate("MainWindow", "Lair Template Tool", 0, QApplication::UnicodeUTF8));
         load->setText(QApplication::translate("MainWindow", "Reload Planet", 0, QApplication::UnicodeUTF8));
         pushButton_SavePlanet->setText(QApplication::translate("MainWindow", "Save Planet", 0, QApplication::UnicodeUTF8));
         pushButton_ChangePlanet->setText(QApplication::translate("MainWindow", "Change Planet", 0, QApplication::UnicodeUTF8));

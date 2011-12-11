@@ -35,7 +35,13 @@ SOURCES += insertwindow.cpp \
     staticspawn.cpp \
     staticspawntableitem.cpp \
     planetselection.cpp \
-    commands.cpp
+    commands.cpp \
+    lairluamanager.cpp \
+    lairtemplate.cpp \
+    lairtypes.cpp \
+    LuaSerializerHelper.cpp \
+    lairname.cpp \
+    newlairmobile.cpp
 HEADERS += insertwindow.h \
     dynamicspawnarea.h \
     nobuildzone.h \
@@ -61,7 +67,13 @@ HEADERS += insertwindow.h \
     staticspawn.h \
     staticspawntableitem.h \
     planetselection.h \
-    commands.h
+    commands.h \
+    lairluamanager.h \
+    lairtemplate.h \
+    lairtypes.h \
+    LuaSerializerHelper.h \
+    lairname.h \
+    newlairmobile.h
 FORMS += insertwindow.ui \
     console.ui \
     connect.ui \
@@ -70,5 +82,19 @@ FORMS += insertwindow.ui \
     creaturemanager.ui \
     preorcreaturemanager.ui \
     lairtool.ui \
-    planetselection.ui
+    planetselection.ui \
+    lairtypes.ui \
+    lairname.ui \
+    newlairmobile.ui
 RESOURCES += Resources.qrc
+
+
+
+
+
+
+
+
+
+
+

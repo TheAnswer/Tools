@@ -295,6 +295,8 @@
      <string>Tools</string>
     </property>
     <addaction name="actionLoad"/>
+    <addaction name="actionLair_Tool"/>
+    <addaction name="separator"/>
     <addaction name="actionPreOR_Creatures"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -347,6 +349,11 @@
   <action name="actionChange_Planet">
    <property name="text">
     <string>Change Planet</string>
+   </property>
+  </action>
+  <action name="actionLair_Tool">
+   <property name="text">
+    <string>Lair Template Tool</string>
    </property>
   </action>
  </widget>

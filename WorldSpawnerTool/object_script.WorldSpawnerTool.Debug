@@ -23,6 +23,12 @@ INPUT(
 ./debug/staticspawntableitem.o
 ./debug/planetselection.o
 ./debug/commands.o
+./debug/lairluamanager.o
+./debug/lairtemplate.o
+./debug/lairtypes.o
+./debug/LuaSerializerHelper.o
+./debug/lairname.o
+./debug/newlairmobile.o
 ./debug/moc_insertwindow.o
 ./debug/moc_console.o
 ./debug/moc_databaseconnection.o
@@ -33,5 +39,8 @@ INPUT(
 ./debug/moc_preorcreaturemanager.o
 ./debug/moc_lairtool.o
 ./debug/moc_planetselection.o
+./debug/moc_lairtypes.o
+./debug/moc_lairname.o
+./debug/moc_newlairmobile.o
 ./debug/qrc_Resources.o
 );

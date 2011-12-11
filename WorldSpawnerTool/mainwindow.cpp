@@ -22,6 +22,8 @@
 #include <QUndoView>
 #include "commands.h"
 #include "utils.h"
+#include "lairtool.h"
+#include "lairtypes.h"
 
 using namespace utils;
 
@@ -47,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     luaManager = new CreatureLuaManager();
     preORManager = new PreORCreatureManager();
     spawnLuaManager = new SpawnLuaManager();
+    lairLuaManager = new LairLuaManager();
+    lairTypes = new LairTypes(lairLuaManager);
 
     setWindowTitle(getApplicationFullName());
 
@@ -82,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->regionY, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionYChanged()));
     connect(ui->tier, SIGNAL(valueChanged(int)), this, SLOT(spawnRegionTierChanged()));
     connect(ui->constant, SIGNAL(valueChanged(int)), this, SLOT(spawnRegionTierChanged()));
+    connect(ui->actionLair_Tool, SIGNAL(triggered()), lairTypes, SLOT(show()));
 
     ui->graphicsView->setMouseTracking(true);
 
@@ -119,6 +124,8 @@ MainWindow::~MainWindow() {
     delete preORManager;
     delete spawnLuaManager;
     delete planetSelection;
+    delete lairTypes;
+    delete lairLuaManager;
 }
 
 void MainWindow::createActions() {
