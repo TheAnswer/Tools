@@ -41,7 +41,11 @@ SOURCES += insertwindow.cpp \
     lairtypes.cpp \
     LuaSerializerHelper.cpp \
     lairname.cpp \
-    newlairmobile.cpp
+    newlairmobile.cpp \
+    lairspawneditor.cpp \
+    lairgroup.cpp \
+    loadingdialog.cpp \
+    addlairtypetospawn.cpp
 HEADERS += insertwindow.h \
     dynamicspawnarea.h \
     nobuildzone.h \
@@ -73,7 +77,11 @@ HEADERS += insertwindow.h \
     lairtypes.h \
     LuaSerializerHelper.h \
     lairname.h \
-    newlairmobile.h
+    newlairmobile.h \
+    lairspawneditor.h \
+    lairgroup.h \
+    loadingdialog.h \
+    addlairtypetospawn.h
 FORMS += insertwindow.ui \
     console.ui \
     connect.ui \
@@ -85,8 +93,26 @@ FORMS += insertwindow.ui \
     planetselection.ui \
     lairtypes.ui \
     lairname.ui \
-    newlairmobile.ui
+    newlairmobile.ui \
+    lairspawneditor.ui \
+    loadingdialog.ui \
+    addlairtypetospawn.ui
 RESOURCES += Resources.qrc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

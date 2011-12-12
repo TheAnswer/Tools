@@ -24,12 +24,14 @@ public:
     explicit LairTypes(LairLuaManager* manager, QWidget *parent = 0);
     ~LairTypes();
 
+    QList<QString> getLairTypes();
+
 public slots:
     void createLair();
-    void saveLairs();
+    void saveLairs(bool forceUpdate = false);
     void removeLair();
     void editLair();
-    void loadCurrentLairTypes();
+    void loadCurrentLairTypes(bool skipDialog = false);
 
 private:
     Ui::LairTypes *ui;

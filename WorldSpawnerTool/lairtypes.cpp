@@ -34,8 +34,17 @@ LairTypes::~LairTypes() {
     delete lairName;
 }
 
-void LairTypes::loadCurrentLairTypes() {
-    if (!QMessageBox::question (this, "Load lair templates", "Are you sure?\n All current changes will be lost", QMessageBox::Ok, QMessageBox::Abort) == QMessageBox::Ok)
+QList<QString> LairTypes::getLairTypes() {
+    QList<QString> lairTypes;
+
+    if (lairTemplates == NULL)
+        return lairTypes;
+
+    return lairTemplates->keys();
+}
+
+void LairTypes::loadCurrentLairTypes(bool skipDialog) {
+    if (!skipDialog && !QMessageBox::question (this, "Load lair templates", "Are you sure?\n All current changes will be lost", QMessageBox::Ok, QMessageBox::Abort) == QMessageBox::Ok)
         return;
 
     ui->listWidget_lairs->clear();
@@ -81,8 +90,8 @@ void LairTypes::editLair() {
     tool->exec();
 }
 
-void LairTypes::saveLairs() {
-    if (!QMessageBox::question (this, "Save lair templates", "Are you sure?", QMessageBox::Ok, QMessageBox::Abort) == QMessageBox::Ok)
+void LairTypes::saveLairs(bool forceUpdate) {
+    if (!forceUpdate && !QMessageBox::question (this, "Save lair templates", "Are you sure?", QMessageBox::Ok, QMessageBox::Abort) == QMessageBox::Ok)
         return;
 
     Settings* settings = MainWindow::instance->getSettings();

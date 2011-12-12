@@ -76,7 +76,7 @@
    <item row="2" column="0">
     <widget class="QPushButton" name="pushButton_load">
      <property name="text">
-      <string>Load</string>
+      <string>Reload</string>
      </property>
     </widget>
    </item>

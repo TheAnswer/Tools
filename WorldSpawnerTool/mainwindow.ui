@@ -164,12 +164,33 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>Dynamic Spawns</string>
+         <string>Spawns</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
+      <item row="2" column="0" colspan="3">
        <widget class="QListWidget" name="spawnsList"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="pushButton_addSpawn">
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QPushButton" name="pushButton_removeSpawn">
+        <property name="text">
+         <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QPushButton" name="pushButton_editSpawn">
+        <property name="text">
+         <string>Edit</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

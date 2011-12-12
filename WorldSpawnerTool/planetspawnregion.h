@@ -57,6 +57,16 @@ public:
         spawns.append(sp);
     }
 
+    inline void removeSpawn(const QString& name) {
+        //spawns.remove();
+        for (int i = 0; i < spawns.size(); ++i) {
+            if (spawns.at(i) == name) {
+                spawns.remove(i);
+
+                return;
+            }
+        }
+    }
 
 
 };

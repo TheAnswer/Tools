@@ -97,6 +97,9 @@ public slots:
     void spawnRegionTierChanged();
     void spawnRegionRadiusChanged();
     void spawnRegionConstantChanged();
+    void editSpawn();
+    void addSpawn();
+    void removeSpawn();
 
     void changeWorldMap();
     void saveMap();
@@ -142,6 +145,10 @@ public:
 
     inline WorldMap* getCurrentWorldMap() {
         return mapVector.value(currentMap, NULL);
+    }
+
+    inline LairTypes* getLairTypes() {
+        return lairTypes;
     }
 
 

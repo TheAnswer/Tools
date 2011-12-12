@@ -14,17 +14,11 @@
 #include "staticspawn.h"
 
 WorldMap::WorldMap(const QString& name) {
-    //connect(this, SIGNAL(selectionChanged()), this, SLOT(selectItem()));
-    //connect()
-    //connect(this, SIGNAL(updateCurrentItemPosition(float, float)), MainWindow::instance, SLOT(updateCurrentItemPosition(float, float)));
-
     selectedRegion = NULL;
 
     mapName = name;
 
     loadPlanetImage();
-
-    //this->set
 }
 
 WorldMap::~WorldMap() {
@@ -38,7 +32,8 @@ WorldMap::~WorldMap() {
         for (int i = 0; i < spawns->size(); ++i) {
             StaticSpawn* spawn = spawns->at(i);
 
-            removeItem(spawn);
+            if (spawn->scene() != NULL)
+                removeItem(spawn);
             delete spawn;
         }
 
