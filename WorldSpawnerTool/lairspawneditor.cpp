@@ -61,8 +61,12 @@ void LairSpawnEditor::maxSpawnLimitChanged() {
 
 void LairSpawnEditor::addLairType() {
     AddLairTypeToSpawn tool(this);
-    tool.exec();
+    int res = tool.exec();
 
+    if (!res)
+        return;
+
+   // if (tool.accepted();)
     QString selectedLair = tool.getSelectedLair();
 
     if (selectedLair.isEmpty())

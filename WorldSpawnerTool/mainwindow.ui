@@ -126,6 +126,9 @@
       </item>
       <item row="4" column="2">
        <widget class="QDoubleSpinBox" name="regionRadius">
+        <property name="minimum">
+         <double>-1.000000000000000</double>
+        </property>
         <property name="maximum">
          <double>512.000000000000000</double>
         </property>

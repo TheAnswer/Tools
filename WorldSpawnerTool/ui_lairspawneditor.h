@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'lairspawneditor.ui'
 **
-** Created: Mon 12. Dec 06:27:05 2011
+** Created: Mon 12. Dec 16:37:28 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -70,7 +70,7 @@ public:
 
         spinBox_maxSpawnLimit = new QSpinBox(LairSpawnEditor);
         spinBox_maxSpawnLimit->setObjectName(QString::fromUtf8("spinBox_maxSpawnLimit"));
-        spinBox_maxSpawnLimit->setMaximum(500);
+        spinBox_maxSpawnLimit->setMaximum(2048);
 
         gridLayout_2->addWidget(spinBox_maxSpawnLimit, 0, 1, 1, 2);
 

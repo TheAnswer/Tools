@@ -41,7 +41,8 @@ QString AddLairTypeToSpawn::getSelectedLair() {
 void AddLairTypeToSpawn::openLairTool() {
     LairTypes* lairs = MainWindow::instance->getLairTypes();
 
-    lairs->exec();
+    if (!lairs->exec())
+        return;
 
     reloadMobileList();
 }

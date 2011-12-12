@@ -27,7 +27,7 @@
    <item row="0" column="1" colspan="2">
     <widget class="QSpinBox" name="spinBox_maxSpawnLimit">
      <property name="maximum">
-      <number>500</number>
+      <number>2048</number>
      </property>
     </widget>
    </item>

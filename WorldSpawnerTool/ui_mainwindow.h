@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon 12. Dec 06:27:05 2011
+** Created: Mon 12. Dec 16:12:39 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -195,6 +195,7 @@ public:
 
         regionRadius = new QDoubleSpinBox(centralWidget);
         regionRadius->setObjectName(QString::fromUtf8("regionRadius"));
+        regionRadius->setMinimum(-1);
         regionRadius->setMaximum(512);
 
         gridLayout->addWidget(regionRadius, 4, 2, 1, 1);
