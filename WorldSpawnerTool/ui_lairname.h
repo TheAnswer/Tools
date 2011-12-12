@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'lairname.ui'
 **
-** Created: Sat 10. Dec 12:24:03 2011
+** Created: Mon 12. Dec 06:27:05 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

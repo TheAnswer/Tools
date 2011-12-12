@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'settings.ui'
 **
-** Created: Sat 3. Dec 01:37:23 2011
+** Created: Mon 12. Dec 06:27:05 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -91,7 +91,7 @@ public:
     void retranslateUi(QDialog *Settings)
     {
         Settings->setWindowTitle(QApplication::translate("Settings", "Dialog", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("Settings", "Core3 Server Directory", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("Settings", "Core3 MMOCoreORB Server Directory", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("Settings", "Open", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("Settings", "SWG Tre Directory", 0, QApplication::UnicodeUTF8));
         pushButton_2->setText(QApplication::translate("Settings", "Open", 0, QApplication::UnicodeUTF8));

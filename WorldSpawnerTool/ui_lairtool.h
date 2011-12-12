@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'lairtool.ui'
 **
-** Created: Sat 10. Dec 14:55:58 2011
+** Created: Mon 12. Dec 06:27:05 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -198,7 +198,7 @@ public:
     void retranslateUi(QDialog *LairTool)
     {
         LairTool->setWindowTitle(QApplication::translate("LairTool", "Dialog", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("LairTool", "Mobiles and Level", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("LairTool", "Mobiles and Default level", 0, QApplication::UnicodeUTF8));
         pushButton_addMobile->setText(QApplication::translate("LairTool", "Add", 0, QApplication::UnicodeUTF8));
         pushButton_removeMobile->setText(QApplication::translate("LairTool", "Remove", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("LairTool", "Spawn Limit", 0, QApplication::UnicodeUTF8));

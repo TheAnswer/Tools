@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newlairmobile.ui'
 **
-** Created: Sun 11. Dec 01:18:53 2011
+** Created: Mon 12. Dec 06:27:05 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -64,6 +64,7 @@ public:
 
         spinBox_level = new QSpinBox(NewLairMobile);
         spinBox_level->setObjectName(QString::fromUtf8("spinBox_level"));
+        spinBox_level->setMaximum(50000);
 
         gridLayout->addWidget(spinBox_level, 2, 1, 1, 1);
 

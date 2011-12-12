@@ -128,7 +128,7 @@ void SpawnLuaManager::saveLairGroups() {
         if (oldData.contains(fileName.toAscii())) {
             MainWindow::instance->outputToConsole("include contains " + fileName);
         } else {
-            objectFile.seek(objectFile.size() - 1);
+            objectFile.seek(objectFile.size());
 
             QTextStream stream(&objectFile);
             stream << endl;

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'lairtypes.ui'
 **
-** Created: Sat 10. Dec 16:54:15 2011
+** Created: Mon 12. Dec 06:27:05 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -117,7 +117,7 @@ public:
         pushButton_remove->setText(QApplication::translate("LairTypes", "Remove", 0, QApplication::UnicodeUTF8));
         pushButton_edit->setText(QApplication::translate("LairTypes", "Edit", 0, QApplication::UnicodeUTF8));
         pushButton_save->setText(QApplication::translate("LairTypes", "Save", 0, QApplication::UnicodeUTF8));
-        pushButton_load->setText(QApplication::translate("LairTypes", "Load", 0, QApplication::UnicodeUTF8));
+        pushButton_load->setText(QApplication::translate("LairTypes", "Reload", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

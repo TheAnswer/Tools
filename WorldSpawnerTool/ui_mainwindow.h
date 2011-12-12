@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat 10. Dec 17:00:01 2011
+** Created: Mon 12. Dec 06:27:05 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -70,6 +70,9 @@ public:
     QGridLayout *gridLayout_3;
     QLabel *label_6;
     QListWidget *spawnsList;
+    QPushButton *pushButton_addSpawn;
+    QPushButton *pushButton_removeSpawn;
+    QPushButton *pushButton_editSpawn;
     QGridLayout *gridLayout_4;
     QLabel *label_StaticSpawns;
     QLabel *label_7;
@@ -232,7 +235,22 @@ public:
         spawnsList = new QListWidget(centralWidget);
         spawnsList->setObjectName(QString::fromUtf8("spawnsList"));
 
-        gridLayout_3->addWidget(spawnsList, 2, 0, 1, 1);
+        gridLayout_3->addWidget(spawnsList, 2, 0, 1, 3);
+
+        pushButton_addSpawn = new QPushButton(centralWidget);
+        pushButton_addSpawn->setObjectName(QString::fromUtf8("pushButton_addSpawn"));
+
+        gridLayout_3->addWidget(pushButton_addSpawn, 3, 0, 1, 1);
+
+        pushButton_removeSpawn = new QPushButton(centralWidget);
+        pushButton_removeSpawn->setObjectName(QString::fromUtf8("pushButton_removeSpawn"));
+
+        gridLayout_3->addWidget(pushButton_removeSpawn, 3, 1, 1, 1);
+
+        pushButton_editSpawn = new QPushButton(centralWidget);
+        pushButton_editSpawn->setObjectName(QString::fromUtf8("pushButton_editSpawn"));
+
+        gridLayout_3->addWidget(pushButton_editSpawn, 3, 2, 1, 1);
 
 
         gridLayout_5->addLayout(gridLayout_3, 3, 1, 1, 4);
@@ -355,7 +373,10 @@ public:
         label_3->setText(QApplication::translate("MainWindow", "Radius", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("MainWindow", "Tier", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("MainWindow", "Constant", 0, QApplication::UnicodeUTF8));
-        label_6->setText(QApplication::translate("MainWindow", "Dynamic Spawns", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("MainWindow", "Spawns", 0, QApplication::UnicodeUTF8));
+        pushButton_addSpawn->setText(QApplication::translate("MainWindow", "Add", 0, QApplication::UnicodeUTF8));
+        pushButton_removeSpawn->setText(QApplication::translate("MainWindow", "Remove", 0, QApplication::UnicodeUTF8));
+        pushButton_editSpawn->setText(QApplication::translate("MainWindow", "Edit", 0, QApplication::UnicodeUTF8));
         label_StaticSpawns->setText(QApplication::translate("MainWindow", "Static Spawns", 0, QApplication::UnicodeUTF8));
         label_7->setText(QApplication::translate("MainWindow", "Search", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem = tableWidget_StaticSpawns->horizontalHeaderItem(0);
