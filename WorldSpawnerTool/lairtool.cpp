@@ -17,6 +17,7 @@ LairTool::LairTool(QWidget *parent) : QDialog(parent), ui(new Ui::LairTool) {
     connect(ui->pushButton_RemoveBuilding, SIGNAL(clicked()), this, SLOT(removeBuilding()));
     connect(ui->pushButton_removeMobile, SIGNAL(clicked()), this, SLOT(removeMobile()));
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(commitToTemplate()));
+    connect(ui->pushButton_view3d, SIGNAL(clicked()), this, SLOT(view3d()));
 }
 
 LairTool::~LairTool() {
@@ -25,6 +26,32 @@ LairTool::~LairTool() {
     delete ui;
     delete nameMobileForm;
     delete nameBuildingForm;
+}
+
+void LairTool::view3d(){
+    QListWidget* list = getCurrentBuildingList();
+
+    if (list == NULL)
+        return;
+
+    QListWidgetItem* item = list->currentItem();
+
+    if (item == NULL)
+        return;
+
+    QString file = item->text();
+
+    if (file.isEmpty())
+        return;
+
+    int idx = file.lastIndexOf("/");
+
+    if (idx < 0)
+        return;
+
+    file = file.insert(idx + 1, "shared_");
+
+    MainWindow::instance->startSwgOSG(file);
 }
 
 void LairTool::commitBuildings(QListWidget* list, int type) {

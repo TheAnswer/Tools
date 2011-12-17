@@ -24,6 +24,10 @@ public:
         return settings->getServerDirectory();
     }
 
+    QString getTreDirectory() {
+        return settings->getTreDirectory();
+    }
+
 public slots:
     void setServerDirectory();
     void setTreDirectory();

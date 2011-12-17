@@ -110,7 +110,11 @@
     </widget>
    </item>
    <item row="4" column="5">
-    <widget class="QSpinBox" name="spinBox_weighting"/>
+    <widget class="QSpinBox" name="spinBox_weighting">
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
    </item>
    <item row="5" column="0">
     <widget class="QLabel" name="label_4">

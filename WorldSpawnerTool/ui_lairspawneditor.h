@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'lairspawneditor.ui'
 **
-** Created: Mon 12. Dec 16:37:28 2011
+** Created: Tue 13. Dec 21:55:02 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -129,6 +129,7 @@ public:
 
         spinBox_weighting = new QSpinBox(LairSpawnEditor);
         spinBox_weighting->setObjectName(QString::fromUtf8("spinBox_weighting"));
+        spinBox_weighting->setValue(0);
 
         gridLayout_2->addWidget(spinBox_weighting, 4, 5, 1, 1);
 

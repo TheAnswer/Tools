@@ -28,6 +28,7 @@
 #include "loadingdialog.h"
 #include <QProgressBar>
 #include <QInputDialog>
+#include <QProcess>
 
 using namespace utils;
 
@@ -94,6 +95,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->pushButton_editSpawn, SIGNAL(clicked()), this, SLOT(editSpawn()));
     connect(ui->pushButton_addSpawn, SIGNAL(clicked()), this, SLOT(addSpawn()));
     connect(ui->pushButton_removeSpawn, SIGNAL(clicked()), this, SLOT(removeSpawn()));
+    connect(ui->action_3dviewer, SIGNAL(triggered()), this, SLOT(open3dViewer()));
 
     ui->graphicsView->setMouseTracking(true);
 
@@ -133,6 +135,26 @@ MainWindow::~MainWindow() {
     delete planetSelection;
     delete lairTypes;
     delete lairLuaManager;
+}
+
+void MainWindow::open3dViewer() {
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("3d tool"), tr("CLIENT Template: (if its an object template it contains _shared)"), QLineEdit::Normal, "object/mobile/shared_krayt_dragon.iff", &ok);
+
+    if (ok && !text.isEmpty()) {
+        startSwgOSG(text);
+    }
+}
+
+void MainWindow::startSwgOSG(const QString& file) {
+    QString program = "./swgOSG/bin/swgOSG";
+    QStringList arguments;
+    arguments << settings->getTreDirectory() << file;
+    QProcess swgOSG;
+    swgOSG.start(program, arguments);
+
+    if (swgOSG.waitForStarted())
+        swgOSG.waitForFinished();
 }
 
 void MainWindow::createActions() {

@@ -791,6 +791,13 @@
          </item>
         </layout>
        </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pushButton_view3d">
+         <property name="text">
+          <string>View 3d model</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>

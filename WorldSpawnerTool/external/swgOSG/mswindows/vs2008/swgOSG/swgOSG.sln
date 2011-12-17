@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "swgOSG", "swgOSG\swgOSG.vcproj", "{211BB693-C3F4-4AC3-9227-847CE094A09B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{211BB693-C3F4-4AC3-9227-847CE094A09B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{211BB693-C3F4-4AC3-9227-847CE094A09B}.Debug|Win32.Build.0 = Debug|Win32
+		{211BB693-C3F4-4AC3-9227-847CE094A09B}.Release|Win32.ActiveCfg = Release|Win32
+		{211BB693-C3F4-4AC3-9227-847CE094A09B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

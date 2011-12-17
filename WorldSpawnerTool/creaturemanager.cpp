@@ -33,6 +33,7 @@ CreatureManager::CreatureManager(MainWindow* mainWindow, QWidget *parent) :
     connect(ui->removeTemplate, SIGNAL(clicked()), this, SLOT(removeTemplate()));
     connect(ui->comboBox_OptionsBitmask, SIGNAL(currentIndexChanged(int)), this, SLOT(optionBitSelectionChanged()));
     connect(ui->checkBox_optionsBitmask, SIGNAL(stateChanged(int)), this, SLOT(optionBitValueChanged()));
+    connect(ui->pushButton_view3d, SIGNAL(clicked()), this, SLOT(view3d()));
 }
 
 CreatureManager::~CreatureManager() {
@@ -140,6 +141,22 @@ void CreatureManager::loadCreatureObjects() {
     mainWindow->outputToConsole("creature files loaded");
     */
 
+}
+
+void CreatureManager::view3d() {
+    QString file = ui->templates->currentText();
+
+    if (file.isEmpty())
+        return;
+
+    int idx = file.lastIndexOf("/");
+
+    if (idx < 0)
+        return;
+
+    file = file.insert(idx + 1, "shared_");
+
+    MainWindow::instance->startSwgOSG(file);
 }
 
 void CreatureManager::findCreatureFile(const QString& str) {

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'creaturemanager.ui'
 **
-** Created: Mon 12. Dec 06:27:05 2011
+** Created: Sat 17. Dec 21:18:11 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -133,6 +133,7 @@ public:
     QLineEdit *newTemplate;
     QGridLayout *gridLayout_5;
     QPushButton *addTemplate;
+    QPushButton *pushButton_view3d;
     QGridLayout *gridLayout_8;
     QLabel *label_40;
     QComboBox *lootGroups;
@@ -715,6 +716,11 @@ public:
 
         gridLayout_9->addLayout(gridLayout_5, 1, 1, 1, 1);
 
+        pushButton_view3d = new QPushButton(CreatureManager);
+        pushButton_view3d->setObjectName(QString::fromUtf8("pushButton_view3d"));
+
+        gridLayout_9->addWidget(pushButton_view3d, 1, 0, 1, 1);
+
 
         gridLayout_12->addLayout(gridLayout_9, 1, 0, 1, 1);
 
@@ -897,6 +903,7 @@ public:
         removeTemplate->setText(QApplication::translate("CreatureManager", "Remove Template", 0, QApplication::UnicodeUTF8));
         label_36->setText(QApplication::translate("CreatureManager", "Template", 0, QApplication::UnicodeUTF8));
         addTemplate->setText(QApplication::translate("CreatureManager", "Add Template", 0, QApplication::UnicodeUTF8));
+        pushButton_view3d->setText(QApplication::translate("CreatureManager", "View 3d model", 0, QApplication::UnicodeUTF8));
         label_40->setText(QApplication::translate("CreatureManager", "Loot Groups", 0, QApplication::UnicodeUTF8));
         removeLootGroup->setText(QApplication::translate("CreatureManager", "Remove", 0, QApplication::UnicodeUTF8));
         addLoutGroup->setText(QApplication::translate("CreatureManager", "Add Loot Group", 0, QApplication::UnicodeUTF8));

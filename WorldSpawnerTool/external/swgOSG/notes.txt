@@ -1,0 +1,20 @@
+Unable to find in file archive:
+appearance/component/thm_nboo_thed_power_generator.cmp
+appearance/component/thm_nboo_thed_theed_palace.cmp
+appearance/component/frn_all_lamp_candlestick_free_s2_lit_l0.cmp
+
+
+Segfaults:
+appearance/component/thm_tato_fort_tusken_r0_mesh.cmp
+appearance/component/aaa_bluebolt.cmp
+
+loadFile called with null filename:
+object/building/military/shared_outpost_starport.iff
+
+Missing geometry:
+appearance/mesh/ackbar_l0.mgn
+
+Not a shader. File is type: OPST
+shader/skin_body.sht
+
+

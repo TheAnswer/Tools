@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "meshlib", "meshlib\meshlib.vcproj", "{CCE74CB2-87AF-41B7-9E5A-ED9A60B387BC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "readSWG", "readSWG\readSWG.vcproj", "{72A70BAD-44A4-42CA-86AF-A2CE46CDBD89}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CCE74CB2-87AF-41B7-9E5A-ED9A60B387BC} = {CCE74CB2-87AF-41B7-9E5A-ED9A60B387BC}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "readTRN", "readTRN\readTRN.vcproj", "{08C555C1-0ACE-4845-AD9C-B0D30F23FE17}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CCE74CB2-87AF-41B7-9E5A-ED9A60B387BC} = {CCE74CB2-87AF-41B7-9E5A-ED9A60B387BC}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCE74CB2-87AF-41B7-9E5A-ED9A60B387BC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CCE74CB2-87AF-41B7-9E5A-ED9A60B387BC}.Debug|Win32.Build.0 = Debug|Win32
+		{CCE74CB2-87AF-41B7-9E5A-ED9A60B387BC}.Release|Win32.ActiveCfg = Release|Win32
+		{CCE74CB2-87AF-41B7-9E5A-ED9A60B387BC}.Release|Win32.Build.0 = Release|Win32
+		{72A70BAD-44A4-42CA-86AF-A2CE46CDBD89}.Debug|Win32.ActiveCfg = Debug|Win32
+		{72A70BAD-44A4-42CA-86AF-A2CE46CDBD89}.Debug|Win32.Build.0 = Debug|Win32
+		{72A70BAD-44A4-42CA-86AF-A2CE46CDBD89}.Release|Win32.ActiveCfg = Release|Win32
+		{72A70BAD-44A4-42CA-86AF-A2CE46CDBD89}.Release|Win32.Build.0 = Release|Win32
+		{08C555C1-0ACE-4845-AD9C-B0D30F23FE17}.Debug|Win32.ActiveCfg = Debug|Win32
+		{08C555C1-0ACE-4845-AD9C-B0D30F23FE17}.Debug|Win32.Build.0 = Debug|Win32
+		{08C555C1-0ACE-4845-AD9C-B0D30F23FE17}.Release|Win32.ActiveCfg = Release|Win32
+		{08C555C1-0ACE-4845-AD9C-B0D30F23FE17}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

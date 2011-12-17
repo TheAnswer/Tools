@@ -75,6 +75,8 @@ public:
     void updateStaticSpawnTableItem(StaticSpawn* spawn);
     QString getApplicationFullName();
 
+    void startSwgOSG(const QString& file);
+
 public slots:
     void outputToConsole(const QString& str);
     void warning(const QString& str);
@@ -100,6 +102,7 @@ public slots:
     void editSpawn();
     void addSpawn();
     void removeSpawn();
+    void open3dViewer();
 
     void changeWorldMap();
     void saveMap();

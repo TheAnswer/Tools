@@ -322,6 +322,7 @@
     <addaction name="actionLair_Tool"/>
     <addaction name="separator"/>
     <addaction name="actionPreOR_Creatures"/>
+    <addaction name="action_3dviewer"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -378,6 +379,11 @@
   <action name="actionLair_Tool">
    <property name="text">
     <string>Lair Template Tool</string>
+   </property>
+  </action>
+  <action name="action_3dviewer">
+   <property name="text">
+    <string>3d model viewer</string>
    </property>
   </action>
  </widget>

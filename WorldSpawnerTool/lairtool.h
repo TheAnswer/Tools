@@ -30,6 +30,7 @@ public slots:
     void removeMobile();
 
     void commitToTemplate();
+    void view3d();
 
 private:
     Ui::LairTool *ui;

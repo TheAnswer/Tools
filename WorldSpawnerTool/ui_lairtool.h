@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'lairtool.ui'
 **
-** Created: Mon 12. Dec 06:27:05 2011
+** Created: Sat 17. Dec 22:02:11 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -58,6 +58,7 @@ public:
     QListWidget *listWidget_veryHard;
     QPushButton *pushButton_AddBuilding;
     QPushButton *pushButton_RemoveBuilding;
+    QPushButton *pushButton_view3d;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *LairTool)
@@ -167,12 +168,17 @@ public:
         pushButton_AddBuilding = new QPushButton(LairTool);
         pushButton_AddBuilding->setObjectName(QString::fromUtf8("pushButton_AddBuilding"));
 
-        gridLayout_7->addWidget(pushButton_AddBuilding, 2, 0, 1, 1);
+        gridLayout_7->addWidget(pushButton_AddBuilding, 3, 0, 1, 1);
 
         pushButton_RemoveBuilding = new QPushButton(LairTool);
         pushButton_RemoveBuilding->setObjectName(QString::fromUtf8("pushButton_RemoveBuilding"));
 
-        gridLayout_7->addWidget(pushButton_RemoveBuilding, 2, 1, 1, 1);
+        gridLayout_7->addWidget(pushButton_RemoveBuilding, 3, 1, 1, 1);
+
+        pushButton_view3d = new QPushButton(LairTool);
+        pushButton_view3d->setObjectName(QString::fromUtf8("pushButton_view3d"));
+
+        gridLayout_7->addWidget(pushButton_view3d, 2, 0, 1, 2);
 
 
         gridLayout_8->addLayout(gridLayout_7, 1, 0, 1, 1);
@@ -182,7 +188,7 @@ public:
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        gridLayout_8->addWidget(buttonBox, 2, 0, 1, 1);
+        gridLayout_8->addWidget(buttonBox, 3, 0, 1, 1);
 
 
         retranslateUi(LairTool);
@@ -210,6 +216,7 @@ public:
         tabWidget_buildings->setTabText(tabWidget_buildings->indexOf(tab_5), QApplication::translate("LairTool", "Very Hard", 0, QApplication::UnicodeUTF8));
         pushButton_AddBuilding->setText(QApplication::translate("LairTool", "Add", 0, QApplication::UnicodeUTF8));
         pushButton_RemoveBuilding->setText(QApplication::translate("LairTool", "Remove", 0, QApplication::UnicodeUTF8));
+        pushButton_view3d->setText(QApplication::translate("LairTool", "View 3d model", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
