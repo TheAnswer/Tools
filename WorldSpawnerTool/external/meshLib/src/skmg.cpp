@@ -292,10 +292,23 @@ unsigned int skmg::readBLT( std::istream &file, blt &newBlt )
     bltSize += 8;
     std::cout << "Found BLT form" << std::endl;
 
+
     total += readBLTINFO( file, newBlt );
 
-    total += readBLTPOSN( file, newBlt.numPos );
-    total += readBLTNORM( file, newBlt.numNorm );
+	std::string peekType, peekForm;
+	unsigned int peekSize;
+	peekHeader(file, peekForm, peekSize, peekType);
+
+	if (peekForm == "POSN") {
+		total += readBLTPOSN( file, newBlt.numPos );
+
+		peekHeader(file, peekForm, peekSize, peekType);
+	}
+
+	if (peekForm == "NORM") {
+		total += readBLTNORM( file, newBlt.numNorm );
+	}
+
     if( total < bltSize )
       {
 	total += readDOT3( file );

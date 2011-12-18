@@ -69,7 +69,7 @@ unsigned int stot::readSTOT( std::istream &file )
 	total += readSTOTXXXX( file );
       }*/
 
-	base::readUnknown(file, size - 4);
+	total += base::readUnknown(file, size - 4);
 
 
 
