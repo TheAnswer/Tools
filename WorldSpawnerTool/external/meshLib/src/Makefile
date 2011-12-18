@@ -18,6 +18,7 @@ OBJS = \
 	ckat.o \
 	cmp.o \
 	cshd.o \
+	cldf.o \
 	cstb.o \
 	dtii.o \
 	eft.o \
@@ -118,6 +119,9 @@ cmp.o: cmp.cpp $(MESH_INC)/meshLib/cmp.hpp $(MESH_INC)/meshLib/vector3.hpp \
 
 cshd.o: cshd.cpp $(MESH_INC)/meshLib/cshd.hpp sht.o
 	$(CXX) $(CFLAG) -c cshd.cpp
+
+cldf.o: cldf.cpp $(MESH_INC)/meshLib/cldf.hpp
+	$(CXX) $(CFLAG) -c cldf.cpp
 
 eft.o: eft.cpp $(MESH_INC)/meshLib/eft.hpp
 	$(CXX) $(CFLAG) -c eft.cpp

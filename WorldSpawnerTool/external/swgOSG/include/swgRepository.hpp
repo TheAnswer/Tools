@@ -73,6 +73,7 @@ public:
   osg::ref_ptr< osg::Node > loadSCOT( std::auto_ptr<std::istream> iffFile );
   osg::ref_ptr< osg::Node > loadTRN( std::auto_ptr<std::istream> iffFile );
   osg::ref_ptr< osg::Node > loadWSNP( std::auto_ptr<std::istream> iffFile );
+  osg::ref_ptr< osg::Node > loadCLDF( std::auto_ptr<std::istream> iffFile );
   osg::ref_ptr< osgAnimation::Skeleton >
   loadSKTM( std::auto_ptr<std::istream> iffFile );
 

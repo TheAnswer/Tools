@@ -68,6 +68,8 @@ unsigned int scot::readSCOT( std::istream &file )
 
     total += readSTOT( file );
 
+//	total += readSHOT( file );
+
     if( scotSize == total )
     {
 	std::cout << "Finished reading SCOT" << std::endl;

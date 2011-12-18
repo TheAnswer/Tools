@@ -54,6 +54,11 @@ namespace ml
     {
       return appearanceFilename;
     }
+
+	const std::string &getClientDataFile() const 
+	{
+		return clientDataFile;
+	}
   
     void setPortalLayoutFilename( const std::string &filename )
     {

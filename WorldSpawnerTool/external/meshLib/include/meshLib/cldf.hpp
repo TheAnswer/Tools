@@ -1,6 +1,6 @@
 /** -*-c++-*-
- *  \class  apt
- *  \file   apt.hpp
+ *  \class  cldf
+ *  \file   cldf.hpp
  *  \author Kenneth R. Sewell III
 
  meshLib is used for the parsing and exporting .msh models.
@@ -27,32 +27,35 @@
 #include <fstream>
 #include <string>
 
-#ifndef APT_HPP
-#define APT_HPP
+#ifndef CLDF_HPP
+#define CLDF_HPP
 
 namespace ml
 {
-  class apt : public base
+  class cldf : public base
   {
   public:
-    apt();
-    ~apt();
+    cldf();
+    ~cldf();
     bool isRightType( std::istream &file )
     {
-      return isOfType( file, "APT " );
+      return isOfType( file, "CLDF" );
     }
-    unsigned int readAPT( std::istream &file );
-    void print() const;
-    std::string getChildFilename() const
+    unsigned int readCLDF( std::istream &file );
+	unsigned int readWEAR( std::istream &file );
+	void print() const {
+	}
+    
+	std::vector<std::string>& getWearMeshes()
     {
-      return childFilename;
+      return wearMeshes;
     }
     
   protected:
-    unsigned int readNAME( std::istream &file, std::string &filename );
+    //unsigned int readNAME( std::istream &file, std::string &filename );
     
   private:
-    std::string childFilename;
+	  std::vector<std::string> wearMeshes;
   };
 }
 

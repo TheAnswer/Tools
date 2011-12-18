@@ -301,8 +301,15 @@ unsigned int shot::readXXXX( std::istream &file )
       }
     else if( property == "clientDataFile" )
       {
-	file.seekg( xxxxSize - (property.size() + 1 ), std::ios_base::cur );
-	total += xxxxSize - ( property.size() + 1 );
+	/*file.seekg( xxxxSize - (property.size() + 1 ), std::ios_base::cur );
+	total += xxxxSize - ( property.size() + 1 );*/
+
+		  total += base::read(file, enabled);
+
+		  if (enabled > 0) {
+			  total += base::read(file, clientDataFile);
+
+		  }
       }
     else if( property == "collisionMaterialFlags" )
       {

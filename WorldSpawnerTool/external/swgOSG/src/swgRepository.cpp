@@ -33,6 +33,7 @@
 #include <meshLib/prto.hpp>
 #include <meshLib/sbot.hpp>
 #include <meshLib/sht.hpp>
+#include <meshLib/cldf.hpp>
 #include <meshLib/skmg.hpp>
 #include <meshLib/sktm.hpp>
 #include <meshLib/stat.hpp>
@@ -172,6 +173,10 @@ swgRepository::loadFile( const std::string &filename )
   else if ("SMAT" == type) 
   {
 	newNode = loadSMAT( iffFile );
+  }
+  else if ("CLDF" == type)
+  {
+	  newNode = loadCLDF(iffFile);
   }
   
   if( NULL != newNode )
@@ -877,7 +882,40 @@ swgRepository::loadSCOT( std::auto_ptr<std::istream> iffFile ) {
 	  std::cout << "appearenceMesh = NULL" << std::endl;
   }
 
+
+  std::string filename( swgSCOT.getClientDataFile() );
+  osg::ref_ptr<osg::Node> wearMesh( loadFile( filename ) );
+  if( NULL != wearMesh )
+    {
+      stotMesh->addChild( wearMesh );
+    }
+
   return stotMesh;
+}
+
+osg::ref_ptr< osg::Node > 
+swgRepository::loadCLDF( std::auto_ptr<std::istream> iffFile ) {
+	ml::cldf swgCLDF;
+	swgCLDF.readCLDF(*iffFile);
+
+	osg::ref_ptr<osg::Group> cldf( new osg::Group );
+
+	std::vector<std::string> meshes = swgCLDF.getWearMeshes();
+
+	for (unsigned int i = 0; i < meshes.size(); ++i) {
+		osg::ref_ptr<osg::Node> appearanceMesh( loadFile( meshes.at(i) ) );
+
+		if( NULL != appearanceMesh )
+		{
+			//std::cout << "appearenceMesh in loadSMAT != NULL" << std::endl;
+			cldf->addChild( appearanceMesh.get() );
+		}
+		else {
+			std::cout << "appearenceMesh in loadCLDF = NULL" << std::endl;
+		}
+	}
+
+	return cldf;
 }
 
 osg::ref_ptr< osg::Node > 
@@ -889,9 +927,8 @@ swgRepository::loadSMAT( std::auto_ptr<std::istream> iffFile ) {
 
 	osg::ref_ptr<osg::Group> smatMesh( new osg::Group );
 
-	if (meshes.size() > 0) {
-
-		osg::ref_ptr<osg::Node> appearanceMesh( loadFile( meshes.at(0) ) );
+	for (unsigned int i = 0; i < meshes.size(); ++i) {
+		osg::ref_ptr<osg::Node> appearanceMesh( loadFile( meshes.at(i) ) );
 
 		if( NULL != appearanceMesh )
 		{
@@ -901,9 +938,7 @@ swgRepository::loadSMAT( std::auto_ptr<std::istream> iffFile ) {
 		else {
 			std::cout << "appearenceMesh in loadSMAT = NULL" << std::endl;
 		}
-
-	} else
-		std::cout << "meshes size 0" << std::endl;
+	}
 
 	return smatMesh;
 }

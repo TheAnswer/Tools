@@ -394,6 +394,15 @@ unsigned int skmg::readFOZC( std::istream &file )
 
 unsigned int skmg::readOZC( std::istream &file )
 {
+	 unsigned int xxxxSize;
+    std::string type;
+    unsigned int total = readRecordHeader( file, type, xxxxSize );
+
+	base::readUnknown(file, xxxxSize);
+
+	return xxxxSize + 8;
+
+	/*
     std::string type;
     unsigned int ozcSize;
     unsigned int total = readRecordHeader( file, type, ozcSize );
@@ -426,7 +435,7 @@ unsigned int skmg::readOZC( std::istream &file )
                   << std::endl;
      }
 
-    return total;
+    return total;*/
 }
 
 unsigned int skmg::readZTO( std::istream &file )
