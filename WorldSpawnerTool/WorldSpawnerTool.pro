@@ -1,16 +1,18 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-07-01T02:38:14
 # -------------------------------------------------
-QT += sql
+QT += sql \
+    gui \
+    opengl
+
 TARGET = WorldSpawnerTool
 TEMPLATE = app
 LIBS += -L/opt/local/lib -Ld:/workspace/SWGQTemplateLib/SWGQTemplateLib-build-desktop/debug -Ld:/workspace/QTIffStream/QTIffStream-build-desktop/debug \
-        -Ld:/workspace/QTTreLib/QTTreLib-build-desktop/debug \
-    -llua
+        -Ld:/workspace/QTTreLib/QTTreLib-build-desktop/debug -llua5.1
 
 INCLUDEPATH += /opt/local/include
 
-QMAKE_CXXFLAGS += -Wno-multichar -Wno-unused
+#QMAKE_CXXFLAGS += -Wno-multichar -Wno-unused
 
 SOURCES += insertwindow.cpp \
     dynamicspawnarea.cpp \
@@ -45,7 +47,12 @@ SOURCES += insertwindow.cpp \
     lairspawneditor.cpp \
     lairgroup.cpp \
     loadingdialog.cpp \
-    addlairtypetospawn.cpp
+    addlairtypetospawn.cpp \
+    lootitemeditor.cpp \
+    osgqtviewer.cpp \
+    lootitemtemplate.cpp \
+    lootluamanager.cpp \
+    objectmodel3dviewer.cpp
 HEADERS += insertwindow.h \
     dynamicspawnarea.h \
     nobuildzone.h \
@@ -81,7 +88,11 @@ HEADERS += insertwindow.h \
     lairspawneditor.h \
     lairgroup.h \
     loadingdialog.h \
-    addlairtypetospawn.h
+    addlairtypetospawn.h \
+    lootitemeditor.h \
+    lootitemtemplate.h \
+    lootluamanager.h \
+    objectmodel3dviewer.h
 FORMS += insertwindow.ui \
     console.ui \
     connect.ui \
@@ -96,31 +107,14 @@ FORMS += insertwindow.ui \
     newlairmobile.ui \
     lairspawneditor.ui \
     loadingdialog.ui \
-    addlairtypetospawn.ui
+    addlairtypetospawn.ui \
+    lootitemeditor.ui \
+    objectmodel3dviewer.ui
 RESOURCES += Resources.qrc
 
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../osg_vs9/OpenSceneGraph-3.0.1-build/lib/ -L$$PWD/external/meshLib/lib -L$$PWD/external/treLib/lib -L$$PWD/external/lua -L$$PWD/external/swgOSG/lib -lswgRepository -lmeshLib -ltreLib -losg -losgViewer -losgText -losgDB -losgGA -losgAnimation -losgQt -lOpenThreads
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../osg_vs9/OpenSceneGraph-3.0.1-build/lib/ -L$$PWD/external/meshLib/lib -L$$PWD/external/treLib/lib -L$$PWD/external/swgOSG/lib -L$$PWD/external/lua -lswgRepositoryd -lmeshLibd -ltreLibd  -losgd -losgViewerd -losgTextd -losgDBd -losgGAd -losgAnimationd -losgQtd -losgQtd -lOpenThreadsd
+else:unix:!symbian: LIBS += -L$$PWD/../../osg_vs9/OpenSceneGraph-3.0.1-build/lib/ -L$$PWD/external/meshLib/lib -L$$PWD/external/treLib/lib -L$$PWD/external/swgOSG/lib  -lswgRepository -lswg -lswgMsh -losg -losgViewer -ltreLib  -losgText -losgDB -losgGA -losgAnimation -losgQt
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INCLUDEPATH += $$PWD/../../osg_vs9/OpenSceneGraph-3.0.1/include $$PWD/external/treLib/include $$PWD/external/lua/include $$PWD/external/meshLib/include $$PWD/external/swgOSG/include $$PWD/../../osg_mingw/boost_1_45_0
+DEPENDPATH += $$PWD/../../osg_vs9/OpenSceneGraph-3.0.1/include $$PWD/external/treLib/include $$PWD/external/lua/include $$PWD/external/meshLib/include $$PWD/external/swgOSG/include $$PWD/../../osg_mingw/boost_1_45_0

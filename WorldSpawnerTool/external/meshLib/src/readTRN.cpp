@@ -43,7 +43,7 @@ int main( int argc, char **argv )
     if( !terrainFile.is_open() )
     {
 	std::cout << "Unable to open file: " << argv[1] << std::endl;
-	exit( 0 );
+	throw std::exception();
     }
 
     ml::trn terrain;

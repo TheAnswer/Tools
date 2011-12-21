@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C++ Express 2008
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "swgOSG", "swgOSG\swgOSG.vcproj", "{211BB693-C3F4-4AC3-9227-847CE094A09B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "swgRepository", "swgRepository\swgRepository.vcproj", "{3E0A425F-319D-4D92-A832-75DFF17F6DFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{211BB693-C3F4-4AC3-9227-847CE094A09B}.Debug|Win32.Build.0 = Debug|Win32
 		{211BB693-C3F4-4AC3-9227-847CE094A09B}.Release|Win32.ActiveCfg = Release|Win32
 		{211BB693-C3F4-4AC3-9227-847CE094A09B}.Release|Win32.Build.0 = Release|Win32
+		{3E0A425F-319D-4D92-A832-75DFF17F6DFA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3E0A425F-319D-4D92-A832-75DFF17F6DFA}.Debug|Win32.Build.0 = Debug|Win32
+		{3E0A425F-319D-4D92-A832-75DFF17F6DFA}.Release|Win32.ActiveCfg = Release|Win32
+		{3E0A425F-319D-4D92-A832-75DFF17F6DFA}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

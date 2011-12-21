@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="treDump"
 	ProjectGUID="{FE46EAEC-0388-45C1-90D7-A4312145DDA2}"
 	RootNamespace="treDump"
@@ -143,7 +143,7 @@
 				AdditionalDependencies="zdll.lib"
 				OutputFile="../../../bin/treDump.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../../../zlib/lib"
+				AdditionalLibraryDirectories="C:\Users\TheAnswer\Desktop\emu\zlib\lib"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"

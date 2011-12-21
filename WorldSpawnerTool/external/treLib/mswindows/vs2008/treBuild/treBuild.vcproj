@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="treBuild"
 	ProjectGUID="{7DA78126-8134-476B-95D1-501C2EA677D5}"
 	RootNamespace="treBuild"
@@ -143,7 +143,7 @@
 				AdditionalDependencies="zdll.lib"
 				OutputFile="../../../bin/treBuild.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../../../zlib/lib"
+				AdditionalLibraryDirectories="C:\Users\TheAnswer\Desktop\emu\zlib\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

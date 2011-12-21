@@ -29,11 +29,12 @@
 #include <QProgressBar>
 #include <QInputDialog>
 #include <QProcess>
+#include "objectmodel3dviewer.h"
 
 using namespace utils;
 
 MainWindow* MainWindow::instance = NULL;
-float MainWindow::VERSION = 0.02;
+float MainWindow::VERSION = 0.03;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -56,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     spawnLuaManager = new SpawnLuaManager();
     lairLuaManager = new LairLuaManager();
     lairTypes = new LairTypes(lairLuaManager);
+    objectModel3dViewer = new ObjectModel3dViewer();
 
     setWindowTitle(getApplicationFullName());
 
@@ -95,7 +97,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->pushButton_editSpawn, SIGNAL(clicked()), this, SLOT(editSpawn()));
     connect(ui->pushButton_addSpawn, SIGNAL(clicked()), this, SLOT(addSpawn()));
     connect(ui->pushButton_removeSpawn, SIGNAL(clicked()), this, SLOT(removeSpawn()));
-    connect(ui->action_3dviewer, SIGNAL(triggered()), this, SLOT(open3dViewer()));
+    //connect(ui->action_3dviewer, SIGNAL(triggered()), this, SLOT(open3dViewer()));
+    connect(ui->action_3dviewer, SIGNAL(triggered()), objectModel3dViewer, SLOT(show()));
 
     ui->graphicsView->setMouseTracking(true);
 
@@ -135,26 +138,24 @@ MainWindow::~MainWindow() {
     delete planetSelection;
     delete lairTypes;
     delete lairLuaManager;
+    delete objectModel3dViewer;
 }
 
 void MainWindow::open3dViewer() {
-    bool ok;
-    QString text = QInputDialog::getText(this, tr("3d tool"), tr("CLIENT Template: (if its an object template it contains _shared)"), QLineEdit::Normal, "object/mobile/shared_krayt_dragon.iff", &ok);
-
-    if (ok && !text.isEmpty()) {
-        startSwgOSG(text);
-    }
+    objectModel3dViewer->show();
 }
 
 void MainWindow::startSwgOSG(const QString& file) {
-    QString program = "./swgOSG/bin/swgOSG";
+
+  objectModel3dViewer->loadFile(file);
+    /*QString program = "./swgOSG/bin/swgOSG";
     QStringList arguments;
     arguments << settings->getTreDirectory() << file;
-    QProcess swgOSG;
-    swgOSG.start(program, arguments);
+    QProcess* swgOSG = new QProcess(this);
+    swgOSG->start(program, arguments);
 
-    if (swgOSG.waitForStarted())
-        swgOSG.waitForFinished();
+    if (swgOSG->waitForStarted())
+        swgOSG->waitForFinished();*/
 }
 
 void MainWindow::createActions() {
@@ -534,6 +535,10 @@ void MainWindow::reloadPlanet() {
     dialog.setProgress(80);
     dialog.setText("lair types");
     lairTypes->loadCurrentLairTypes(true);
+
+    dialog.setProgress(90);
+    dialog.setText("parsing tres");
+    objectModel3dViewer->setTreDirectory(settings->getTreDirectory());
 
     dialog.setProgress(100);
     dialog.setText("done");

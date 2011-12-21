@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>1206</width>
-    <height>1096</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -302,7 +294,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1206</width>
+     <width>817</width>
      <height>21</height>
     </rect>
    </property>

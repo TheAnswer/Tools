@@ -64,7 +64,7 @@ unsigned int shot::readSHOT( std::istream &file )
     if( form != "FORM" )
     {
 	std::cout << "Expected Form" << std::endl;
-	exit( 0 );
+	throw std::exception();
     }
     std::cout << "Found form of type: " << type<< std::endl;
 
@@ -102,7 +102,7 @@ unsigned int shot::readDERV( std::istream &file, std::string &filename )
     if( type != "XXXX" )
     {
         std::cout << "Expected record of type XXXX: " << type << std::endl;
-        exit( 0 );
+        throw std::exception();
     }
     std::cout << "Found " << type << std::endl;
 
@@ -135,14 +135,14 @@ unsigned int shot::readPCNT( std::istream &file, unsigned int &num )
     if( type != "PCNT" )
     {
         std::cout << "Expected record of type PCNT: " << type << std::endl;
-        exit( 0 );
+        throw std::exception();
     }
     std::cout << "Found " << type << std::endl;
 
     if( 4 != pcntSize )
       {
         std::cout << "Expected size 4: " << pcntSize << std::endl;
-        exit( 0 );
+        throw std::exception();
       }
     pcntSize += 8;
 
@@ -171,7 +171,7 @@ unsigned int shot::readXXXX( std::istream &file )
     if( type != "XXXX" )
     {
         std::cout << "Expected record of type XXXX: " << type << std::endl;
-        exit( 0 );
+        throw std::exception();
     }
     std::cout << "Found " << type << std::endl;
     
@@ -389,7 +389,7 @@ unsigned int shot::readXXXX( std::istream &file )
     else
       {
 	std::cout << "Unknown: " << property << std::endl;
-	exit( 0 );
+	throw std::exception();
       }
 
     if( xxxxSize == (total-8) )

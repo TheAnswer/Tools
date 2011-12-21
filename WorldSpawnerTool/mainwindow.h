@@ -28,6 +28,7 @@ class QUndoView;
 class QUndoCommand;
 class LairTypes;
 class LairLuaManager;
+class ObjectModel3dViewer;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -47,6 +48,7 @@ private:
     PlanetSelection* planetSelection;
     LairTypes* lairTypes;
     LairLuaManager* lairLuaManager;
+    ObjectModel3dViewer* objectModel3dViewer;
 
     QMap<QString, QAction*> actions;
 

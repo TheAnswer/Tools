@@ -6,6 +6,8 @@ LoadingDialog::LoadingDialog(QWidget *parent) :
     ui(new Ui::LoadingDialog) {
     ui->setupUi(this);
 
+    setWindowTitle("Progress");
+
     ui->progressBar->setMinimum(0);
     ui->progressBar->setMaximum(100);
 }

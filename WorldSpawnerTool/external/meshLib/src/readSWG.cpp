@@ -68,7 +68,7 @@ int main( int argc, char **argv )
       if( !infile.is_open() )
 	{
 	  std::cout << "Unable to open file: " << argv[1] << std::endl;
-	  exit( 0 );
+	  throw std::exception();
 	}
 	
       std::string fileType = ml::base::getType( infile );
@@ -263,7 +263,7 @@ int main( int argc, char **argv )
       if( !infile.is_open() )
 	{
 	  std::cout << "Unable to open file: " << argv[2] << std::endl;
-	  exit( 0 );
+	  throw std::exception();
 	}
 
       char temp[512];
@@ -277,7 +277,7 @@ int main( int argc, char **argv )
 	  if( !outfile.is_open() )
 	    {
 	      std::cout << "Unable to create file: " << argv[2] << std::endl;
-	      exit( 0 );
+	      throw std::exception();
 	    }
 
 	  ml::ilf interior;
@@ -291,7 +291,7 @@ int main( int argc, char **argv )
 	  if( !outfile.is_open() )
 	    {
 	      std::cout << "Unable to create file: " << argv[2] << std::endl;
-	      exit( 0 );
+	      throw std::exception();
 	    }
 
 	  ml::ws exterior;

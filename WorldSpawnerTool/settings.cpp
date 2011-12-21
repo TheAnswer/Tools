@@ -19,7 +19,7 @@ Settings::Settings(MainWindow* mainWindow, QWidget *parent) :
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(setTreDirectory()));
 
     connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), mainWindow, SLOT(show()));
-    connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), mainWindow, SLOT(reloadPlanet()));
+    connect(ui->buttonBox, SIGNAL(accepted()), mainWindow, SLOT(reloadPlanet()));
 }
 
 Settings::~Settings() {

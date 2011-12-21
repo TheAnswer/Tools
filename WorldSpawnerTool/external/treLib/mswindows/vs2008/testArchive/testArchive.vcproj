@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="testArchive"
 	ProjectGUID="{1800148E-8F75-4201-A23C-E37FF6898D68}"
 	RootNamespace="testArchive"
@@ -143,7 +143,7 @@
 				AdditionalDependencies="zdll.lib"
 				OutputFile="../../../bin/testArchive.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../../../zlib/lib"
+				AdditionalLibraryDirectories="C:\Users\TheAnswer\Desktop\emu\zlib\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

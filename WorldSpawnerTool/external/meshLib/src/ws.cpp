@@ -197,7 +197,7 @@ unsigned int ws::readWS( std::istream &file )
     if( form != "FORM" )
     {
 	std::cout << "Expected FORM: " << form << std::endl;
-	exit( 0 );
+	throw std::exception();
     }
 #if DEBUG
     std::cout << "Found " << form << " " << type
@@ -370,7 +370,7 @@ unsigned int ws::readNODE( std::istream &file, unsigned int level )
     if( type != "DATA" )
     {
 	std::cout << "Expected record of type DATA: " << type << std::endl;
-	exit( 0 );
+	throw std::exception();
     }
 #if DEBUG
     std::cout << "Found DATA record"
@@ -381,7 +381,7 @@ unsigned int ws::readNODE( std::istream &file, unsigned int level )
     if( size != 52 )
     {
 	std::cout << "Expected size of 52: " << size << std::endl;
-	exit( 0 );
+	throw std::exception();
     }
 
     wsNode node;
@@ -462,7 +462,7 @@ unsigned int ws::readOTNL( std::istream &file )
     if( type != "OTNL" )
     {
 	std::cout << "Expected record of type OTNL: " << type << std::endl;
-	exit( 0 );
+	throw std::exception();
     }
 #if DEBUG
     std::cout << "Found OTNL record"

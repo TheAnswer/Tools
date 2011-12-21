@@ -3,9 +3,9 @@ BIN = ../bin
 INC = ../include
 LIB = ../lib
 
-CFLAG = -I$(INC) -g -pipe -W -Wall -pedantic -fPIC
+CFLAG = -I$(INC) -I/local/include -g -pipe -W -Wall -pedantic -fPIC
 OBJS = treArchive.o treClass.o treFileRecord.o treDataBlock.o md5.o
-LIBS = -L$(LIB) -ltreLib -lz
+LIBS = -L$(LIB) -L/local/lib -ltreLib -lz
 
 all: $(BIN)/treDump $(BIN)/treBuild $(BIN)/testArchive \
 	$(LIB)/libtreLib.so $(LIB)/libtreLib.a

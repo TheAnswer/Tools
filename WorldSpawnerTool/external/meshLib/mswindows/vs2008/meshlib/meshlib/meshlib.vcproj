@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../../include;../../../../../boost_1_45_0"
+				AdditionalIncludeDirectories="../../../../include;C:\Users\TheAnswer\Desktop\emu\boost_1_45_0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\$(ProjectName)D.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -105,7 +106,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="../../../../include; ../../../../../boost_1_45_0"
+				AdditionalIncludeDirectories="../../../../include;C:\Users\TheAnswer\Desktop\emu\boost_1_45_0"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				IgnoreStandardIncludePath="false"
 				RuntimeLibrary="2"
@@ -174,6 +175,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\src\ckat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\src\cldf.cpp"
 				>
 			</File>
 			<File
@@ -360,6 +365,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\include\meshLib\ckat.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\include\meshLib\cldf.hpp"
 				>
 			</File>
 			<File

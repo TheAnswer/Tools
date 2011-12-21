@@ -101,7 +101,7 @@ unsigned int scot::readSCOTXXXX( std::istream &file )
     if( type != "XXXX" )
     {
         std::cout << "Expected record of type XXXX: " << type << std::endl;
-        exit( 0 );
+        throw std::exception();
     }
     std::cout << "Found " << type << std::endl;
 
@@ -149,7 +149,7 @@ unsigned int scot::readSCOTXXXX( std::istream &file )
     else
       {
 	std::cout << "Unknown: " << property << std::endl;
-	exit( 0 );
+	throw std::exception();
       }
 
     if( xxxxSize == (total-8) )

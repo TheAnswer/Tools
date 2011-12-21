@@ -80,9 +80,18 @@ public:
   osg::ref_ptr< osg::Node > loadFile( const std::string &filename );
   osg::ref_ptr< osg::Texture2D > loadTextureFile( const std::string &filename );
 
-  
+  void cleanCurrentObjects() {
+	  nodeMap.clear();
+	  stateMap.clear();
+	  materialMap.clear();
+	  textureMap.clear();
+  }
 
   void createArchive( const std::string &basePath );
+
+  treArchive* getTreArchive() {
+	  return &archive;
+  }
 
 
 protected:

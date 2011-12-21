@@ -53,7 +53,7 @@ unsigned int smat::readSMAT( std::istream &file )
     if( form != "FORM" )
     {
 	std::cout << "Expected FORM: " << form << std::endl;
-	exit( 0 );
+	throw std::exception();
     }
     std::cout << "Found " << form << " " << type
 	      << ": " << size-4 << " bytes"
@@ -90,7 +90,7 @@ unsigned int smat::readINFO( std::istream &file )
     if( type != "INFO" )
     {
         std::cout << "Expected record of type INFO: " << type << std::endl;
-        exit( 0 );
+        throw std::exception();
     }
     std::cout << "Found " << type << std::endl;
     
@@ -125,7 +125,7 @@ unsigned int smat::readMSGN( std::istream &file )
     if( type != "MSGN" )
     {
         std::cout << "Expected record of type MSGN: " << type << std::endl;
-        exit( 0 );
+        throw std::exception();
     }
     std::cout << "Found " << type << std::endl;
 
@@ -161,7 +161,7 @@ unsigned int smat::readSKTI( std::istream &file )
     if( type != "SKTI" )
     {
         std::cout << "Expected record of type SKTI: " << type << std::endl;
-        exit( 0 );
+        throw std::exception();
     }
     std::cout << "Found " << type << std::endl;
 
@@ -198,7 +198,7 @@ unsigned int smat::readLATX( std::istream &file )
     if( type != "LATX" )
     {
         std::cout << "Expected record of type LATX: " << type << std::endl;
-        exit( 0 );
+        throw std::exception();
     }
     std::cout << "Found " << type << ": " << latxSize-8 << " bytes"
 	      << std::endl;
@@ -246,7 +246,7 @@ unsigned int smat::readLDTB( std::istream &file )
     if( form != "FORM" )
     {
 	std::cout << "Expected FORM: " << form << std::endl;
-	exit( 0 );
+	throw std::exception();
     }
     std::cout << "Found " << form << " " << type
 	      << ": " << size-4 << " bytes"
@@ -279,7 +279,7 @@ unsigned int smat::readLDTBINFO( std::istream &file )
     if( type != "INFO" )
     {
         std::cout << "Expected record of type INFO: " << type << std::endl;
-        exit( 0 );
+        throw std::exception();
     }
     std::cout << "Found " << type << ": " << infoSize-8 << " bytes"
 	      << std::endl;

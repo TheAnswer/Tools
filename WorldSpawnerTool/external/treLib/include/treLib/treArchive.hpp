@@ -53,6 +53,8 @@ public:
 
   void printArchiveContents() const;
 
+  std::list<std::string>* getArchiveContents() const;
+
   std::stringstream *getFileStream( const std::string &filename );
 
 protected:

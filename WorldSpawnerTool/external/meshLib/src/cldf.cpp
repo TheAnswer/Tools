@@ -52,7 +52,7 @@ unsigned int cldf::readCLDF( std::istream &file )
   if( form != "FORM" )
     {
       std::cout << "Expected FORM: " << form << std::endl;
-      exit( 0 );
+      throw std::exception();
     }
   std::cout << "Found " << form << " " << type << std::endl;
    

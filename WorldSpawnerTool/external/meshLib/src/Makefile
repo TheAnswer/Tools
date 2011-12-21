@@ -3,7 +3,7 @@ MESH_LIB = ../lib
 MESH_BIN = ../bin
 
 
-CFLAG = -I$(MESH_INC) -g -pipe -W -Wall -pedantic -fPIC
+CFLAG = -I$(MESH_INC) -I../../../../../OpenSceneGraph-3.0.1-VS9.0.30729-x86-release-12741/include -I../../../../../boost_1_45_0 -g -pipe -W -Wall -pedantic -fPIC
 LIBS =
 
 OBJS = \
@@ -68,13 +68,17 @@ MESH_OBJS = \
 
 all: $(MESH_BIN)/iffDump $(MESH_BIN)/readMSH $(MESH_BIN)/readLOD \
 	$(MESH_BIN)/readTRN $(MESH_BIN)/readSWG \
-	$(MESH_LIB)/libswgMsh.so $(MESH_LIB)/libswg.so
+	$(MESH_LIB)/libswgMsh.a $(MESH_LIB)/libswg.a
 
-$(MESH_LIB)/libswg.so: $(OBJS)
-	$(CXX) -shared $(OBJS) -o $(MESH_LIB)/libswg.so
+$(MESH_LIB)/libswg.a: $(OBJS)
+	#$(CXX) $(OBJS) -o $(MESH_LIB)/libswg.s
+	ar cru $(MESH_LIB)/libswg.a $(OBJS)
+	#ranlib $(MESH_LIB)/libswg.a
 
-$(MESH_LIB)/libswgMsh.so: $(MESH_OBJS)
-	$(CXX) -shared $(MESH_OBJS) -o $(MESH_LIB)/libswgMsh.so
+$(MESH_LIB)/libswgMsh.a: $(MESH_OBJS)
+	#$(CXX) -shared $(MESH_OBJS) -o $(MESH_LIB)/libswgMsh.so
+	ar cru $(MESH_LIB)/libswgMsh.a $(MESH_OBJS)
+	#ranlib $(MESH_LIB)/libswgMsh.a
 
 $(MESH_BIN)/iffDump: iffDump.cpp
 	$(CXX) $(CFLAG) iffDump.cpp $(LIBS) -o $(MESH_BIN)/iffDump

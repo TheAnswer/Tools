@@ -1,0 +1,410 @@
+argc: 3
+Reading file from archive: object/tangible/food/foraged/shared_foraged_fruit_s3.iff
+Calculated MD5: f11615c6e1f6fff7affa5dd78f71166
+Found STOT form
+Found DERV form
+Found XXXX
+Finished reading DERV
+Found FORM:0007
+PCNT0x0 0x0 0x0 0x4 0x7 0x0 0x0 0x0 XXXX0x0 0x0 0x0 0x28 paletteColorCustomizationVariables0x0 0x1 0x0 0x0 0x0 0x0 XXXX0x0 0x0 0x0 0x25 rangedIntCustomizationVariables0x0 0x1 0x0 0x0 0x0 0x0 XXXX0x0 0x0 0x0 0x27 constStringCustomizationVariables0x0 0x1 0x0 0x0 0x0 0x0 XXXX0x0 0x0 0x0 0x18 socketDestinations0x0 0x1 0x0 0x0 0x0 0x0 XXXX0x0 0x0 0x0 0x1c structureFootprintFileName0x0 0x0 XXXX0x0 0x0 0x0 0x1e useStructureFootprintOutline0x0 0x0 XXXX0x0 0x0 0x0 0xc targetable0x0 0x0 
+Found SHOT form
+Found DERV form
+Found XXXX
+Finished reading DERV
+Found form of type: 0007
+Found PCNT
+num: 26
+Finished reading PCNT
+Found XXXX
+Property: objectName
+objectName: food_name foraged_fruit_3
+Finished reading XXXX
+Found XXXX
+Property: detailedDescription
+detailedDescription: food_detail foraged_fruit_3
+Finished reading XXXX
+Found XXXX
+Property: lookAtText
+lookAtText: food_lookat foraged_fruit_3
+Finished reading XXXX
+Found XXXX
+Property: snapToTerrain
+Finished reading XXXX
+Found XXXX
+Property: containerType
+Finished reading XXXX
+Found XXXX
+Property: containerVolumeLimit
+Finished reading XXXX
+Found XXXX
+Property: tintPalette
+Finished reading XXXX
+Found XXXX
+Property: slotDescriptorFilename
+Finished reading XXXX
+Found XXXX
+Property: arrangementDescriptorFilename
+Finished reading XXXX
+Found XXXX
+Property: appearanceFilename
+appearanceFilename: appearance/edb_food_fruit_s3.apt
+Finished reading XXXX
+Found XXXX
+Property: portalLayoutFilename
+portalLayoutFilename: 
+Finished reading XXXX
+Found XXXX
+Property: clientDataFile
+Finished reading XXXX
+Found XXXX
+Property: collisionMaterialFlags
+Finished reading XXXX
+Found XXXX
+Property: collisionMaterialPassFlags
+Finished reading XXXX
+Found XXXX
+Property: collisionMaterialBlockFlags
+Finished reading XXXX
+Found XXXX
+Property: collisionActionFlags
+Finished reading XXXX
+Found XXXX
+Property: collisionActionPassFlags
+Finished reading XXXX
+Found XXXX
+Property: collisionActionBlockFlags
+Finished reading XXXX
+Found XXXX
+Property: scale
+Finished reading XXXX
+Found XXXX
+Property: gameObjectType
+Finished reading XXXX
+Found XXXX
+Property: sendToClient
+Finished reading XXXX
+Found XXXX
+Property: scaleThresholdBeforeExtentTest
+Finished reading XXXX
+Found XXXX
+Property: clearFloraRadius
+Finished reading XXXX
+Found XXXX
+Property: surfaceType
+Finished reading XXXX
+Found XXXX
+Property: noBuildRadius
+Finished reading XXXX
+Found XXXX
+Property: onlyVisibleInTools
+Finished reading XXXX
+Finished reading SHOT
+Finished reading STOT
+Reading file from archive: appearance/edb_food_fruit_s3.apt
+Calculated MD5: 3d9fe01b54163ffcc99b3495e7a69db1
+Found APT form
+Found form of type: 0000
+Found NAME
+Finished reading NAME
+Finished reading APT
+Reading file from archive: appearance/lod/edb_food_fruit_s3.lod
+Calculated MD5: 5e2ef3c373223170e19415edc3da6156
+Found DTLA form
+Found form of type: 0007
+Found APPR form
+Found 0003 form
+Found EXBX form
+Found 0001 form
+Found EXSP form
+Found 0001 form
+Found SPHR record
+Bounding sphere center and radius: 
+  ( -0.0146051, 0.0265141, -0.0154853 ) ( 0.163461 ) 
+Finished reading SPHR.
+Finished reading EXSP.
+Found BOX record
+Bounding box corners: 
+   0.141232, 0.0537351, 0.0256651
+   -0.170442, -0.000706911, -0.0566358
+Finished reading BOX.
+Finished reading EXBX.
+Found NULL form
+
+Finished reading NULL.
+FORM0x0 0x0 0x0 0x4 HPTS
+Found FLOR form
+Size: 1
+Finished reading FLOR.
+Finished reading APPR.
+Found PIVT record
+0x0 
+Found INFO record
+0: 10...1000
+1: 5...10
+2: 0...5
+Found DATA form
+Found CHLD record
+0: appearance/mesh/edb_food_fruit_s3_l2.msh
+Finished reading CHLD
+Found CHLD record
+1: appearance/mesh/edb_food_fruit_s3_l1.msh
+Finished reading CHLD
+Found CHLD record
+2: appearance/mesh/edb_food_fruit_s3_l0.msh
+Finished reading CHLD
+Found RADR form
+Found INFO record
+Num nodes: 0
+Finished reading RADR
+Found TEST form
+Found INFO record
+Num nodes: 0
+Finished reading TEST
+Found WRIT form
+Found INFO record
+Num nodes: 0
+Finished reading WRIT
+Finished reading DTLA
+Num LODs: 3
+Reading file from archive: appearance/mesh/edb_food_fruit_s3_l2.msh
+Calculated MD5: 60faac8f6ff55e2f5084cfc31a5262b5
+Found MESH form
+Found FORM 0004: 2449 bytes
+Found APPR form
+Found 0003 form
+Found EXBX form
+Found 0001 form
+Found EXSP form
+Found 0001 form
+Found SPHR record
+Bounding sphere center and radius: 
+  ( -0.0128312, 0.0258067, -0.0153824 ) ( 0.160944 ) 
+Finished reading SPHR.
+Finished reading EXSP.
+Found BOX record
+Bounding box corners: 
+   0.141232, 0.0519671, 0.0231316
+   -0.166894, -0.000353622, -0.0538963
+Finished reading BOX.
+Finished reading EXBX.
+Found NULL form
+
+Finished reading NULL.
+FORM0x0 0x0 0x0 0x4 HPTS
+Found FLOR form
+Size: 1
+Finished reading FLOR.
+Finished reading APPR.
+Found SPS form
+CNT: 1
+Shader file: shader/edb_food_fruit_s3_sm.sht
+Info: 1
+9
+1
+D3D Flexible Vertex Format Bits: 00000000000000000001000100000101
+ - Num textures: 1
+ -Vertex format includes the position of a transformed vertex.
+ -Vertex format includes 1 set of tex coords.
+ - The last beta field in the vertex position data will be of type UBYTE4.
+Num Vertices: 55
+Bytes per vertex: 32
+Vertex size is supported
+Finished reading DATA
+Reading INDX record.
+size: 334
+Num index: 165
+Num triangles: 55
+Bytes per index: 2
+Reading 330 indices
+Index data: 0
+Finished reading Geometry.
+Finished reading Geode.
+Finished reading SPS.
+Finished reading MESH
+Adding 55 vertices
+Num indices: 165
+Reading shader from archive: shader/edb_food_fruit_s3_sm.sht
+Calculated MD5: dde0a8fe301a60898ca4b56558372a8
+Found SSHT form: 271 bytes
+Found FORM 0000: 259 bytes
+Found FORM MATS: 100 bytes
+Found FORM 0000: 88 bytes
+Found TAG : 4 bytes
+Material texture tag: NIAM
+Found record MATL: 68 bytes
+Ambient: 1.000000 1.000000 1.000000 1.000000
+Diffuse: 1.000000 1.000000 1.000000 1.000000
+Specular: 0.000000 0.000000 0.000000 0.000000
+Emissive: 1.000000 0.500000 0.500000 0.500000
+Shininess: 20.000000
+Finished reading MATS
+Found FORM TXMS: 84 bytes
+Found FORM TXM : 72 bytes
+Found FORM 0001: 60 bytes
+Texture tag: NIAM
+0x0 0x0 0x0 0x0 0x2 0x2 0x2 
+Texture name: texture/edb_food_fruit_s3_sm.dds
+Finished reading TXM
+Finished reading TXMS
+Found FORM TCSS: 13 bytes
+Found record 0000: 5 bytes
+Texture type: NIAM Texture unit: 0
+Finished reading TCSS
+Effect file: effect/a_spec.eft
+Finished reading NAME
+Finished reading SSHT
+Reading file from archive: texture/edb_food_fruit_s3_sm.dds
+Calculated MD5: f52653304b504eb2999258b42455e40
+Loaded texture: texture/edb_food_fruit_s3_sm.dds
+Creating material: shader/edb_food_fruit_s3_sm.sht
+Material created: shader/edb_food_fruit_s3_sm.sht
+Reading file from archive: appearance/mesh/edb_food_fruit_s3_l1.msh
+Calculated MD5: 63d04e91df3c4af777e5d027b6991d7
+Found MESH form
+Found FORM 0004: 4944 bytes
+Found APPR form
+Found 0003 form
+Found EXBX form
+Found 0001 form
+Found EXSP form
+Found 0001 form
+Found SPHR record
+Bounding sphere center and radius: 
+  ( -0.014605, 0.026334, -0.016752 ) ( 0.163059 ) 
+Finished reading SPHR.
+Finished reading EXSP.
+Found BOX record
+Bounding box corners: 
+   0.141232, 0.053022, 0.023132
+   -0.170442, -0.000354, -0.056636
+Finished reading BOX.
+Finished reading EXBX.
+Found NULL form
+
+Finished reading NULL.
+FORM0x0 0x0 0x0 0x4 HPTS
+Found FLOR form
+Size: 1
+Finished reading FLOR.
+Finished reading APPR.
+Found SPS form
+CNT: 1
+Shader file: shader/edb_food_fruit_s3.sht
+Info: 1
+9
+1
+D3D Flexible Vertex Format Bits: 00000000000000000001000100000101
+ - Num textures: 1
+ -Vertex format includes the position of a transformed vertex.
+ -Vertex format includes 1 set of tex coords.
+ - The last beta field in the vertex position data will be of type UBYTE4.
+Num Vertices: 122
+Bytes per vertex: 32
+Vertex size is supported
+Finished reading DATA
+Reading INDX record.
+size: 688
+Num index: 342
+Num triangles: 114
+Bytes per index: 2
+Reading 684 indices
+Index data: 0
+Finished reading Geometry.
+Finished reading Geode.
+Finished reading SPS.
+Finished reading MESH
+Adding 122 vertices
+Num indices: 342
+Reading shader from archive: shader/edb_food_fruit_s3.sht
+Calculated MD5: 16619fff415e365c2dee6fc4c83d377
+Found SSHT form: 268 bytes
+Found FORM 0000: 256 bytes
+Found FORM MATS: 100 bytes
+Found FORM 0000: 88 bytes
+Found TAG : 4 bytes
+Material texture tag: NIAM
+Found record MATL: 68 bytes
+Ambient: 1.000000 1.000000 1.000000 1.000000
+Diffuse: 1.000000 1.000000 1.000000 1.000000
+Specular: 0.000000 0.000000 0.000000 0.000000
+Emissive: 1.000000 0.500000 0.500000 0.500000
+Shininess: 20.000000
+Finished reading MATS
+Found FORM TXMS: 81 bytes
+Found FORM TXM : 69 bytes
+Found FORM 0001: 57 bytes
+Texture tag: NIAM
+0x0 0x0 0x0 0x0 0x2 0x2 0x2 
+Texture name: texture/edb_food_fruit_s3.dds
+Finished reading TXM
+Finished reading TXMS
+Found FORM TCSS: 13 bytes
+Found record 0000: 5 bytes
+Texture type: NIAM Texture unit: 0
+Finished reading TCSS
+Effect file: effect/a_spec.eft
+Finished reading NAME
+Finished reading SSHT
+Reading file from archive: texture/edb_food_fruit_s3.dds
+Calculated MD5: 778af5dc824437376f5478186144269
+Loaded texture: texture/edb_food_fruit_s3.dds
+Creating material: shader/edb_food_fruit_s3.sht
+Material created: shader/edb_food_fruit_s3.sht
+Reading file from archive: appearance/mesh/edb_food_fruit_s3_l0.msh
+Calculated MD5: e9175e2f4ff36b2c86c66aa24f2760e0
+Found MESH form
+Found FORM 0004: 6522 bytes
+Found APPR form
+Found 0003 form
+Found EXBX form
+Found 0001 form
+Found EXSP form
+Found 0001 form
+Found SPHR record
+Bounding sphere center and radius: 
+  ( -0.014538, 0.026514, -0.015354 ) ( 0.163364 ) 
+Finished reading SPHR.
+Finished reading EXSP.
+Found BOX record
+Bounding box corners: 
+   0.141232, 0.053735, 0.025665
+   -0.170308, -0.000707, -0.056374
+Finished reading BOX.
+Finished reading EXBX.
+Found NULL form
+
+Finished reading NULL.
+FORM0x0 0x0 0x0 0x4 HPTS
+Found FLOR form
+Size: 1
+Finished reading FLOR.
+Finished reading APPR.
+Found SPS form
+CNT: 1
+Shader file: shader/edb_food_fruit_s3.sht
+Info: 1
+9
+1
+D3D Flexible Vertex Format Bits: 00000000000000000001000100000101
+ - Num textures: 1
+ -Vertex format includes the position of a transformed vertex.
+ -Vertex format includes 1 set of tex coords.
+ - The last beta field in the vertex position data will be of type UBYTE4.
+Num Vertices: 155
+Bytes per vertex: 32
+Vertex size is supported
+Finished reading DATA
+Reading INDX record.
+size: 1210
+Num index: 603
+Num triangles: 201
+Bytes per index: 2
+Reading 1206 indices
+Index data: 0
+Finished reading Geometry.
+Finished reading Geode.
+Finished reading SPS.
+Finished reading MESH
+Adding 155 vertices
+Num indices: 603
+Shader already loaded: shader/edb_food_fruit_s3.sht

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'lairspawneditor.ui'
 **
-** Created: Tue 13. Dec 21:55:02 2011
+** Created: Mon 19. Dec 23:05:47 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

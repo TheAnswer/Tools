@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'preorcreaturemanager.ui'
 **
-** Created: Mon 12. Dec 23:32:07 2011
+** Created: Mon 19. Dec 23:05:46 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

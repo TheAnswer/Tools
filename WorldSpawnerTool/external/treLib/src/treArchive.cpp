@@ -106,6 +106,32 @@ bool treArchive::removeFile( const std::string &filename )
   return false;
 }
 
+std::list<std::string>* treArchive::getArchiveContents() const
+{
+	std::list<std::string>* files = new std::list<std::string>();
+if( !treList.empty() )
+    {
+      // Loop through all tre files
+      for( std::list<treClass *>::const_iterator i = treList.begin();
+	   i != treList.end();
+	   ++i 
+	   )
+	{
+	  // For each tre file list loop through its contents
+	  for( std::vector<treFileRecord>::const_iterator j = 
+		 (*i)->getFileRecordList().begin();
+	       j != (*i)->getFileRecordList().end();
+	       ++j
+	       )
+	    {
+			files->push_back(j->getFileName());
+	    }
+	}
+    }
+
+	return files;
+}
+
 void treArchive::printArchiveContents() const
 {
   // Don't bother if list is empty
