@@ -52,6 +52,8 @@ public slots:
     void addTemplate();
     void removeTemplate();
     void view3d();
+    void addAttack();
+    void removeAttack();
 
     //void loadFiles(QByteArray& includeFile);
 

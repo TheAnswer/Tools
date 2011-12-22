@@ -109,6 +109,8 @@ ObjectModel3dViewer::ObjectModel3dViewer(QWidget *parent) :
   connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(loadFile()));
   connect(ui->lineEdit_template, SIGNAL(textChanged(QString)), this, SLOT(modelTextChanged()));
   //connect(ui->toolButton_list, SIGNAL(clicked()), this, SLOT(listFiles()));
+
+  this->setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 }
 
 ObjectModel3dViewer::~ObjectModel3dViewer() {

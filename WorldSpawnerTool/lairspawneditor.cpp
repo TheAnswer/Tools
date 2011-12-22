@@ -22,6 +22,8 @@ LairSpawnEditor::LairSpawnEditor(LairGroup* group, QWidget *parent) :
     connect(ui->spinBox_maxSpawnLimit, SIGNAL(valueChanged(int)), this, SLOT(maxSpawnLimitChanged()));
     connect(ui->listWidget_lairs, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(updateCurrentLair(QListWidgetItem*,QListWidgetItem*)));
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(acceptedChanges()));
+
+    this->setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
     //connect()
 }
 

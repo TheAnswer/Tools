@@ -17,7 +17,7 @@ PlanetSelection::PlanetSelection(QWidget *parent) :
 
     setWindowTitle("Planet");
 
-    connect(ui->pushButton, SIGNAL(clicked()), parent, SLOT(showMaximized()));
+    connect(ui->pushButton, SIGNAL(clicked()), parent, SLOT(show()));
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(hide()));
     connect(ui->pushButton, SIGNAL(clicked()), parent, SLOT(changeWorldMap()));
 }

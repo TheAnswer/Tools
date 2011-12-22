@@ -27,6 +27,8 @@ LairTypes::LairTypes(LairLuaManager* manager, QWidget *parent) :
     connect(ui->pushButton_edit, SIGNAL(clicked()), this, SLOT(editLair()));
     connect(ui->pushButton_save, SIGNAL(clicked()), this, SLOT(saveLairs()));
     connect(ui->pushButton_load, SIGNAL(clicked()), this, SLOT(loadCurrentLairTypes()));
+
+    this->setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 }
 
 LairTypes::~LairTypes() {
@@ -85,9 +87,9 @@ void LairTypes::editLair() {
 
     item->setText(lair + "*");
 
-    QSharedPointer<LairTool> tool(new LairTool());
+    LairTool* tool(new LairTool());
     tool->setTemplate(lairTemplate);
-    tool->exec();
+    tool->show();
 }
 
 void LairTypes::saveLairs(bool forceUpdate) {
@@ -222,7 +224,7 @@ void LairTypes::createLair() {
 
     ui->listWidget_lairs->addItem(name + "*");
 
-    QSharedPointer<LairTool> tool(new LairTool());
+    LairTool* tool(new LairTool());
     tool->setTemplate(lair);
-    tool->exec();
+    tool->show();
 }

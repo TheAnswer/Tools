@@ -7,6 +7,7 @@
 #include "CreatureObject.h"
 #include <QMessageBox>
 #include "creatureluamanager.h"
+#include <QInputDialog>
 
 CreatureManager::CreatureManager(MainWindow* mainWindow, QWidget *parent) :
     QDialog(parent), ui(new Ui::CreatureManager) {
@@ -34,6 +35,10 @@ CreatureManager::CreatureManager(MainWindow* mainWindow, QWidget *parent) :
     connect(ui->comboBox_OptionsBitmask, SIGNAL(currentIndexChanged(int)), this, SLOT(optionBitSelectionChanged()));
     connect(ui->checkBox_optionsBitmask, SIGNAL(stateChanged(int)), this, SLOT(optionBitValueChanged()));
     connect(ui->pushButton_view3d, SIGNAL(clicked()), this, SLOT(view3d()));
+    connect(ui->pushButton_addAttack, SIGNAL(clicked()), this, SLOT(addAttack()));
+    connect(ui->pushButton_removeAttack, SIGNAL(clicked()), this, SLOT(removeAttack()));
+
+    this->setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 }
 
 CreatureManager::~CreatureManager() {
@@ -77,6 +82,31 @@ void CreatureManager::loadFiles(QByteArray& buffer) {
 void CreatureManager::addCreatureObject(const QString& key, CreatureObject* value) {
     creatureMap[key] = value;
     ui->comboBox->addItem(key);
+}
+
+void CreatureManager::addAttack() {
+  bool ok;
+  QString text = QInputDialog::getText(this, "Add Attack", "Attack name", QLineEdit::Normal, "", &ok);
+
+  if (!ok)
+    return;
+
+  QString argument = QInputDialog::getText(this, "Add Attack", "Attack argument", QLineEdit::Normal, "", &ok);
+
+  if (!ok)
+    return;
+
+  if (text.isEmpty())
+    return;
+
+  ui->attackList->addItem(text + ":" + argument);
+}
+
+
+void CreatureManager::removeAttack() {
+  int row = ui->attackList->currentRow();
+
+  delete ui->attackList->takeItem(row);
 }
 
 void CreatureManager::loadCreatureObjects() {
@@ -284,7 +314,7 @@ void CreatureManager::saveCurrentCreature() {
         dietBitmask |= CreatureObject::HERBIVORE;
 
     if (ui->carnivore->isChecked())
-        creatureBitmask |= CreatureObject::CARNIVORE;
+        dietBitmask |= CreatureObject::CARNIVORE;
 
     currentCreatureObject->setDietBitmask(dietBitmask);
 
@@ -335,6 +365,21 @@ void CreatureManager::saveCurrentCreature() {
 
     currentCreatureObject->setLootGroups(lootGroups);
 
+    QMap<QString, QString>* attacks = currentCreatureObject->getAttacks();
+
+    attacks->clear();
+
+    for (int i = 0; i < ui->attackList->count(); ++i) {
+        QListWidgetItem* item = ui->attackList->item(i);
+
+        QString text = item->text();
+
+        QString command = text.section(':', 0, 0);
+        QString args = text.section(':', 1, 1);
+
+        attacks->insert(command, args);
+      }
+
     //mainWindow->outputToConsole(currentCreatureObject->serializeToLua());
 
     QString filename = currentCreatureObject->getFileName();
@@ -359,19 +404,6 @@ void CreatureManager::saveCurrentCreature() {
 
         return;
     }
-
-    /*
-    ui->attackList->clear();
-
-    QMap<QString, QString>* attacks = currentCreatureObject->getAttacks();
-
-    QMapIterator<QString, QString> i(*attacks);
-
-    while (i.hasNext()) {
-        i.next();
-
-        ui->attackList->addItem(i.key() + ":" + i.value());
-    }*/
 }
 
 void CreatureManager::reloadCreature() {
