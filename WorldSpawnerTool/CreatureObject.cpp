@@ -346,6 +346,13 @@ void CreatureObject::addCreatureBitmaskVariableToText(QTextStream& stream, const
         dataStream << "STALKER";
     }
 
+    if (hasCreatureFlag(HEALER)) {
+        if (!data.isEmpty())
+            dataStream << " + ";
+
+        dataStream << "HEALER";
+    }
+
     if (hasCreatureFlag(BABY)) {
         if (!data.isEmpty())
             dataStream << " + ";
@@ -512,6 +519,9 @@ void CreatureObject::parseCreatureBitmask(const QString& data) {
 
     if (data.contains("STALKER"))
         creatureBitmask |= STALKER;
+
+    if (data.contains("HEALER"))
+        creatureBitmask |= HEALER;
 
     if (data.contains("BABY"))
         creatureBitmask |= BABY;

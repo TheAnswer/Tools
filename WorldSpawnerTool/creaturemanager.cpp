@@ -306,6 +306,9 @@ void CreatureManager::saveCurrentCreature() {
     if (ui->stalker->isChecked())
         creatureBitmask |= CreatureObject::STALKER;
 
+    if (ui->checkBox_healer->isChecked())
+        creatureBitmask |= CreatureObject::HEALER;
+
     currentCreatureObject->setCreatureBitmask(creatureBitmask);
 
     int dietBitmask = 0;
@@ -432,6 +435,7 @@ void CreatureManager::reloadCreature() {
     ui->baby->setChecked(currentCreatureObject->hasCreatureFlag(CreatureObject::BABY));
     ui->lair->setChecked(currentCreatureObject->hasCreatureFlag(CreatureObject::LAIR));
     ui->stalker->setChecked(currentCreatureObject->hasCreatureFlag(CreatureObject::STALKER));
+    ui->checkBox_healer->setChecked(currentCreatureObject->hasCreatureFlag(CreatureObject::HEALER));
 
     ui->herbivore->setChecked(currentCreatureObject->hasDietFlag(CreatureObject::HERBIVORE));
     ui->carnivore->setChecked(currentCreatureObject->hasDietFlag(CreatureObject::CARNIVORE));

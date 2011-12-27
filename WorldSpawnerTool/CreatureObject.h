@@ -71,6 +71,7 @@ public:
     const static int STALKER = 8;
     const static int BABY = 16;
     const static int LAIR = 0x20;
+    const static int HEALER = 0x40;
 
     const static int HERBIVORE = 2;
     const static int CARNIVORE = 1;

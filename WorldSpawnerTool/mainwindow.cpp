@@ -78,6 +78,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->pushButton_InsertStaticSpawn, SIGNAL(clicked()), insertWindow, SLOT(show()));
     connect(ui->actionGeneral_settings, SIGNAL(triggered()), settings, SLOT(show()));
     connect(ui->actionLoad, SIGNAL(triggered()), creatureManager, SLOT(show()));
+    connect(ui->actionLoad, SIGNAL(triggered()), creatureManager, SLOT(raise()));
     connect(ui->load, SIGNAL(clicked()), this, SLOT(promptToReloadPlanet()));
     connect(ui->regions, SIGNAL(currentIndexChanged(QString)), this, SLOT(updateCurrentSpawnRegionSelection(QString)));
     connect(ui->actionPreOR_Creatures, SIGNAL(triggered()), preORManager, SLOT(show()));
@@ -87,6 +88,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->pushButton_SavePlanet, SIGNAL(clicked()), this, SLOT(saveMap()));
     connect(ui->pushButton_ChangePlanet, SIGNAL(clicked()), this, SLOT(promptToChangePlanet()));
     connect(ui->actionChange_Planet, SIGNAL(triggered()), planetSelection, SLOT(show()));
+    connect(ui->actionChange_Planet, SIGNAL(triggered()), planetSelection, SLOT(raise()));
     connect(ui->tableWidget_StaticSpawns, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(staticSpawnChanged(QTableWidgetItem*)));
     connect(ui->regionRadius, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionRadiusChanged()));
     connect(ui->regionX, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionXChanged()));
@@ -94,11 +96,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->tier, SIGNAL(valueChanged(int)), this, SLOT(spawnRegionTierChanged()));
     connect(ui->constant, SIGNAL(valueChanged(int)), this, SLOT(spawnRegionTierChanged()));
     connect(ui->actionLair_Tool, SIGNAL(triggered()), lairTypes, SLOT(show()));
+    connect(ui->actionLair_Tool, SIGNAL(triggered()), lairTypes, SLOT(raise()));
     connect(ui->pushButton_editSpawn, SIGNAL(clicked()), this, SLOT(editSpawn()));
     connect(ui->pushButton_addSpawn, SIGNAL(clicked()), this, SLOT(addSpawn()));
     connect(ui->pushButton_removeSpawn, SIGNAL(clicked()), this, SLOT(removeSpawn()));
     //connect(ui->action_3dviewer, SIGNAL(triggered()), this, SLOT(open3dViewer()));
     connect(ui->action_3dviewer, SIGNAL(triggered()), objectModel3dViewer, SLOT(show()));
+    connect(ui->action_3dviewer, SIGNAL(triggered()), objectModel3dViewer, SLOT(raise()));
 
     ui->graphicsView->setMouseTracking(true);
 

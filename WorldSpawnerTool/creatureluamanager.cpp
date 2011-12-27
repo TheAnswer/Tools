@@ -38,6 +38,7 @@ void CreatureLuaManager::registerGlobals() {
     setGlobalInt("STALKER", CreatureObject::STALKER);
     setGlobalInt("BABY", CreatureObject::BABY);
     setGlobalInt("LAIR", CreatureObject::LAIR);
+    setGlobalInt("HEALER", CreatureObject::HEALER);
 
     setGlobalInt("CARNIVORE", CreatureObject::CARNIVORE);
     setGlobalInt("HERBIVORE", CreatureObject::HERBIVORE);
