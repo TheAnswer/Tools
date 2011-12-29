@@ -53,9 +53,7 @@ class CreatureObject {
     QString conversationTemplate;
 
 public:
-    CreatureObject(const QString& objectName) {
-        this->luaObjectName = objectName;
-    }
+    CreatureObject(const QString& objectName);
 
     CreatureObject() {
     }

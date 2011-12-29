@@ -42,6 +42,7 @@ public slots:
     void promptToSave();
     void optionBitSelectionChanged();
     void optionBitValueChanged();
+    void addNewCreature();
 
     void addWeapon();
     void removeWeapon();
