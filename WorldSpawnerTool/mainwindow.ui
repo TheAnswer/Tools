@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>817</width>
+    <height>772</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -122,7 +130,7 @@
          <double>-1.000000000000000</double>
         </property>
         <property name="maximum">
-         <double>512.000000000000000</double>
+         <double>999999999.000000000000000</double>
         </property>
        </widget>
       </item>

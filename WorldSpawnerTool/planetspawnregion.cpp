@@ -106,8 +106,8 @@ void PlanetSpawnRegion::wheelEvent(QGraphicsSceneWheelEvent* event) {
 
     float newRadius = getRadius() + delta;
 
-    if (newRadius > 512)
-        newRadius = 512;
+    /*if (newRadius > 512)
+        newRadius = 512;*/
 
     //setRadius(newRadius);
 
