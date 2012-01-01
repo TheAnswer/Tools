@@ -6,6 +6,7 @@
 #include <QVector>
 #include <QByteArray>
 #include <QTableWidgetItem>
+#include <treLib/treArchive.hpp>
 
 namespace Ui {
     class MainWindow;
@@ -52,7 +53,6 @@ private:
     LairLuaManager* lairLuaManager;
     ObjectModel3dViewer* objectModel3dViewer;
     InsertBadgeForm* insertBadgeForm;
-
     QMap<QString, QAction*> actions;
 
     QUndoStack* undoStack;
@@ -177,7 +177,6 @@ public:
     inline QAction* getAction(const QString& name) {
       return actions.value(name, NULL);
     }
-
 
 signals:
     void printToConsole(const QString& str);

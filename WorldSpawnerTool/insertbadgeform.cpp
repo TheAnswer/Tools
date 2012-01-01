@@ -1,6 +1,7 @@
 #include "insertbadgeform.h"
 #include "ui_insertbadgeform.h"
 #include "mainwindow.h"
+#include <meshLib/dtii.hpp>
 
 InsertBadgeForm::InsertBadgeForm(QWidget *parent) :
   QDialog(parent),
@@ -10,12 +11,27 @@ InsertBadgeForm::InsertBadgeForm(QWidget *parent) :
   ui->doubleSpinBox_radius->setValue(30);
 
   connect(ui->buttonBox, SIGNAL(accepted()), MainWindow::instance, SLOT(insertBadgeFromWindow()));
+  //connect(ui->toolButton, SIGNAL(clicked()), this, SLOT(showBadgeMap()));
 
   setWindowTitle("Insert new badge");
 }
 
 InsertBadgeForm::~InsertBadgeForm() {
   delete ui;
+}
+
+void InsertBadgeForm::showBadgeMap() {
+  if (badgeTable != NULL)
+    return;
+/*
+  badgeTable = new QTableWidget();
+  badgeTable->setRowCount(2);
+  badgeTable->setColumnCount(2);
+
+  ui->gridLayout_4->addWidget(badgeTable, 0, 1);*/
+
+  //table->exec();
+
 }
 
 void InsertBadgeForm::setBadgeX(float val) {

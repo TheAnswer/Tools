@@ -1527,26 +1527,15 @@ swgRepository::loadTRN( std::auto_ptr<std::istream> trnFile )
 void swgRepository::createArchive( const std::string &basePath )
 {
   archive.addFile( basePath+"bottom.tre" );
-  archive.addFile( basePath+"data_animation_00.tre" );
   archive.addFile( basePath+"data_music_00.tre" );
-  archive.addFile( basePath+"data_other_00.tre" );
   archive.addFile( basePath+"data_sample_00.tre" );
   archive.addFile( basePath+"data_sample_01.tre" );
   archive.addFile( basePath+"data_sample_02.tre" );
   archive.addFile( basePath+"data_sample_03.tre" );
   archive.addFile( basePath+"data_sample_04.tre" );
+  archive.addFile( basePath+"data_animation_00.tre" );
   archive.addFile( basePath+"data_skeletal_mesh_00.tre" );
   archive.addFile( basePath+"data_skeletal_mesh_01.tre" );
-  archive.addFile( basePath+"data_sku1_00.tre" );
-  archive.addFile( basePath+"data_sku1_01.tre" );
-  archive.addFile( basePath+"data_sku1_02.tre" );
-  archive.addFile( basePath+"data_sku1_03.tre" );
-  archive.addFile( basePath+"data_sku1_04.tre" );
-  archive.addFile( basePath+"data_sku1_05.tre" );
-  archive.addFile( basePath+"data_sku1_06.tre" );
-  archive.addFile( basePath+"data_sku1_07.tre" );
-  archive.addFile( basePath+"data_static_mesh_00.tre" );
-  archive.addFile( basePath+"data_static_mesh_01.tre" );
   archive.addFile( basePath+"data_texture_00.tre" );
   archive.addFile( basePath+"data_texture_01.tre" );
   archive.addFile( basePath+"data_texture_02.tre" );
@@ -1555,7 +1544,9 @@ void swgRepository::createArchive( const std::string &basePath )
   archive.addFile( basePath+"data_texture_05.tre" );
   archive.addFile( basePath+"data_texture_06.tre" );
   archive.addFile( basePath+"data_texture_07.tre" );
-  archive.addFile( basePath+"default_patch.tre" );
+  archive.addFile( basePath+"data_static_mesh_00.tre" );
+  archive.addFile( basePath+"data_static_mesh_01.tre" );
+  archive.addFile( basePath+"data_other_00.tre" );
   archive.addFile( basePath+"patch_00.tre" );
   archive.addFile( basePath+"patch_01.tre" );
   archive.addFile( basePath+"patch_02.tre" );
@@ -1567,12 +1558,26 @@ void swgRepository::createArchive( const std::string &basePath )
   archive.addFile( basePath+"patch_08.tre" );
   archive.addFile( basePath+"patch_09.tre" );
   archive.addFile( basePath+"patch_10.tre" );
+  archive.addFile( basePath+"data_sku1_00.tre" );
+  archive.addFile( basePath+"data_sku1_01.tre" );
+  archive.addFile( basePath+"data_sku1_02.tre" );
+  archive.addFile( basePath+"data_sku1_03.tre" );
+  archive.addFile( basePath+"data_sku1_04.tre" );
+  archive.addFile( basePath+"data_sku1_05.tre" );
   archive.addFile( basePath+"patch_11_00.tre" );
   archive.addFile( basePath+"patch_11_01.tre" );
+  archive.addFile( basePath+"data_sku1_06.tre" );
   archive.addFile( basePath+"patch_11_02.tre" );
+  archive.addFile( basePath+"data_sku1_07.tre" );
   archive.addFile( basePath+"patch_11_03.tre" );
   archive.addFile( basePath+"patch_12_00.tre" );
+  archive.addFile( basePath+"patch_sku1_12_00.tre" );
   archive.addFile( basePath+"patch_13_00.tre" );
+  archive.addFile( basePath+"patch_sku1_13_00.tre" );
+  archive.addFile( basePath+"patch_14_00.tre" );
+  archive.addFile( basePath+"patch_sku1_14_00.tre" );
+  archive.addFile( basePath+"default_patch.tre" );
+  
 #if 1
   archive.addFile( basePath+"hotfix_24_client_00.tre" );
   archive.addFile( basePath+"hotfix_24_shared_00.tre" );

@@ -2,6 +2,7 @@
 #define INSERTBADGEFORM_H
 
 #include <QDialog>
+#include <QTableWidget>
 
 namespace Ui {
   class InsertBadgeForm;
@@ -25,10 +26,11 @@ public:
   int getBadgeID();
 
 public slots:
-
+  void showBadgeMap();
   
 private:
   Ui::InsertBadgeForm *ui;
+  QTableWidget* badgeTable;
 };
 
 #endif // INSERTBADGEFORM_H
