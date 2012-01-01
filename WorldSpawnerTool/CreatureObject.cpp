@@ -1,6 +1,7 @@
 #include "CreatureObject.h"
 #include "creatureluamanager.h"
 #include "LuaSerializerHelper.h"
+#include "mainwindow.h"
 
 CreatureObject::CreatureObject(const QString& objectName) {
   this->luaObjectName = objectName;
@@ -69,17 +70,25 @@ void CreatureObject::readObject(lua_State* l) {
   lua_pushstring(l, "resists");
   lua_gettable(l, -2);
 
+
+  resists.clear();
+
   int resTableSize = luaL_getn(l, -1);
 
   if (resTableSize == 9) {
       for (int i = 1; i < 10; ++i) {
+
           lua_rawgeti(l, -1, i);
           float result = (float)lua_tonumber(l, -1);
           lua_pop(l, 1);
 
           resists.append(result);
         }
-    }
+
+
+    } else {
+    MainWindow::instance->outputToConsole("no fucking resists or what the fuck");
+  }
 
   lua_pop(l, 1);
 
@@ -87,6 +96,8 @@ void CreatureObject::readObject(lua_State* l) {
   //LuaObject temps = templateData->getObjectField("templates");
   lua_pushstring(l, "templates");
   lua_gettable(l, -2);
+
+  templates.clear();;
 
   int templatesTableSize = luaL_getn(l, -1);
 
@@ -106,6 +117,8 @@ void CreatureObject::readObject(lua_State* l) {
 
   int lootgroupsTableSize = luaL_getn(l, -1);
 
+  lootGroups.clear();
+
   for (int i = 1; i <= lootgroupsTableSize; ++i) {
       lua_rawgeti(l, -1, i);
       const char* result = lua_tostring(l, -1);
@@ -119,6 +132,8 @@ void CreatureObject::readObject(lua_State* l) {
   lua_gettable(l, -2);
 
   int weaponsTableSize = luaL_getn(l, -1);
+
+  weapons.clear();
 
   for (int i = 1; i <= weaponsTableSize; ++i) {
       lua_rawgeti(l, -1, i);
