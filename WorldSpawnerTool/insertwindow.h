@@ -1,17 +1,16 @@
 #ifndef INSERTWINDOW_H
 #define INSERTWINDOW_H
 
-#include <QtGui/QWidget>
+#include <QtGui/QDialog>
 #include "ui_insertwindow.h"
 
 class MainWindow;
 
-class InsertWindow : public QWidget {
+class InsertWindow : public QDialog {
     Q_OBJECT
 
-
 public:
-    InsertWindow(MainWindow* main, QWidget *parent = 0);
+    InsertWindow(MainWindow* main);
     ~InsertWindow();
 
     inline void setPositionX(float x) {

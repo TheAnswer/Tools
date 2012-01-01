@@ -963,12 +963,15 @@ void MainWindow::updateCurrentBadgeSelection(const QString& name) {
   ui->doubleSpinBox_badge_Y->setValue(badge->getWorldY());
   ui->doubleSpinBox_badgeRadius->setValue(badge->getRadius());
   ui->spinBox_badgeID->setValue(badge->getBadgeID());
+
+  ui->tabWidget_main->setCurrentIndex(2);
 }
 
 void MainWindow::updateCurrentStaticSpawnSelection(StaticSpawn* spawn) {
   searchStaticMobileSpawn(spawn->getMobile());
 
   ui->tableWidget_StaticSpawns->setCurrentItem(getStaticSpawnTableItem(spawn));
+  ui->tabWidget_main->setCurrentIndex(1);
 }
 
 void MainWindow::updateCurrentSpawnRegionSelection(const QString& name) {
@@ -1007,6 +1010,8 @@ void MainWindow::updateCurrentSpawnRegionSelection(const QString& name) {
     //region->setSelected(true);
 
     worldMap->selectPlanetSpawnRegion(name);
+
+    ui->tabWidget_main->setCurrentIndex(0);
   }
 
 }

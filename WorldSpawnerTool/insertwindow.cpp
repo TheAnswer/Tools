@@ -3,8 +3,8 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 
-InsertWindow::InsertWindow(MainWindow* main, QWidget *parent)
-    : QWidget(parent) {
+InsertWindow::InsertWindow(MainWindow* main)
+    : QDialog(main) {
     ui.setupUi(this);
 
     mainWindow = main;
