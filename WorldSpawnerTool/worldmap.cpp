@@ -12,6 +12,9 @@
 #include <QList>
 #include "planetspawnregion.h"
 #include "staticspawn.h"
+#include "badge.h"
+#include <QGraphicsView>
+#include <QMenu>
 
 WorldMap::WorldMap(const QString& name) {
     selectedRegion = NULL;
@@ -48,6 +51,39 @@ WorldMap::~WorldMap() {
 
         delete mapIteratorRegions.value();
     }
+
+    QMapIterator<QString, Badge* > mapIteratorBadges(badges);
+
+    while (mapIteratorBadges.hasNext()) {
+        mapIteratorBadges.next();
+
+        Badge* badge = mapIteratorBadges.value();
+
+        if (badge->scene() != NULL)
+          removeItem(badge);
+
+        delete badge;
+    }
+}
+
+void WorldMap::wheelEvent(QGraphicsSceneWheelEvent* event) {
+    int delta = event->delta();
+
+    QList<QGraphicsView*> view = views();
+
+    if (view.size() == 0) {
+      QGraphicsScene::wheelEvent(event);
+
+      return;
+    }
+
+    float val = delta > 0 ? 1.1 : 0.9;
+
+    for (int i = 0; i < view.size(); ++i) {
+      view.at(i)->scale(val, val);
+    }
+
+    event->accept();
 }
 
 void WorldMap::loadPlanetImage() {
@@ -146,11 +182,31 @@ void WorldMap::toWorldPos(qreal x, qreal y, float& worldX, float& worldY) {
     worldY = ((y * 16) - MAXY) * -1;
 }
 
+void WorldMap::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
+  QPointF point = event->scenePos();
+
+  qreal x = point.x();
+  qreal y = point.y();
+
+  float worldPosX;
+  float worldPosY;
+
+  toWorldPos(x, y, worldPosX, worldPosY);
+
+  QMenu menu;
+  MainWindow::instance->setInsertWindowStaticSpawnCoordinates(worldPosX, worldPosY);
+  MainWindow::instance->setInsertWindowBadgeSpawnCoordinates(worldPosX, worldPosY);
+
+  menu.addAction("Insert static spawn", MainWindow::instance, SLOT(showInsertStaticSpawnWindow()));
+  menu.addAction("Insert badge", MainWindow::instance, SLOT(showInsertBadgeWindow()));
+  menu.exec(event->screenPos());
+}
+
 void WorldMap::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     /*if (mouseEvent->button() != Qt::LeftButton)
         return;*/
 
-    QPointF point = mouseEvent->scenePos();
+    /*QPointF point = mouseEvent->scenePos();
 
     if (mouseEvent->button() == Qt::RightButton) {
         QPointF point = mouseEvent->scenePos();
@@ -167,7 +223,7 @@ void WorldMap::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
         MainWindow::instance->showInsertWindow(worldPosX, worldPosY);
 
         //mouseEvent->accept();
-    }
+    }*/
 
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
@@ -238,6 +294,38 @@ void WorldMap::addStaticSpawns(const QVector<StaticSpawn* >& vec) {
     //staticSpawns += vec;
 }
 
+void WorldMap::addBadges(const QVector<Badge*>& vec) {
+  for (int i = 0; i < vec.size(); ++i) {
+    Badge* badge = vec.at(i);
+
+    addBadge(badge);
+  }
+}
+
+void WorldMap::addBadge(Badge* badge) {
+  badges.insert(badge->getName(), badge);
+
+  float x = badge->getWorldX();
+  float y = badge->getWorldY();
+  float radius = badge->getRadius() / 16.f;
+
+  badge->setPos((MAXX + x) / 16, (MAXY - y) / 16);
+  badge->setRect(-radius/2, -radius/2, radius, radius);
+
+  addItem(badge);
+}
+
+void WorldMap::removeBadge(Badge* badge) {
+  if (!badges.contains(badge->getName()))
+      return;
+
+  removeItem(badge);
+
+  badges.remove(badge->getName());
+
+  update((MAXX + badge->getWorldX()) / 16 - 1, (MAXY + badge->getWorldY()) / 16 - 1, 256, 256);
+}
+
 void WorldMap::removeStaticSpawn(StaticSpawn* spawn) {
     if (staticSpawns.contains(spawn->getMobile())) {
         QVector<StaticSpawn* >* spawns = staticSpawns.value(spawn->getMobile());
@@ -278,7 +366,7 @@ void WorldMap::updateStaticSpawnView(StaticSpawn* spawn) {
 
 }
 
-void WorldMap::updateSpawnRegionView(PlanetSpawnRegion* region) {
+void WorldMap::updateSpawnRegionView(Region* region) {
     float x = region->getWorldX();
     float y = region->getWorldY();
     float radius = region->getRadius() / 16.f;

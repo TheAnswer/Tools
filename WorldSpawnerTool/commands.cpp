@@ -4,6 +4,7 @@
 #include "staticspawn.h"
 #include "worldmap.h"
 #include "planetspawnregion.h"
+#include "badge.h"
 
 InsertStaticSpawnCommand::InsertStaticSpawnCommand(StaticSpawn* spawn, QUndoCommand* parent) : QUndoCommand(parent) {
     this->spawn = spawn;
@@ -32,6 +33,32 @@ void InsertStaticSpawnCommand::redo() {
     undid = false;
 }
 
+InsertBadgeCommand::InsertBadgeCommand(Badge* badge) {
+  this->badge = badge;
+  undid = false;
+
+  setText("Insert: badge " + badge->getName());
+}
+
+InsertBadgeCommand::~InsertBadgeCommand() {
+  if (undid) {
+      delete badge;
+      badge = NULL;
+  }
+}
+
+void InsertBadgeCommand::undo() {
+  MainWindow::instance->removeBadge(badge);
+
+  undid = true;
+}
+
+void InsertBadgeCommand::redo() {
+  MainWindow::instance->insertBadge(badge);
+
+  undid = false;
+}
+
 RemoveStaticSpawnCommand::RemoveStaticSpawnCommand(StaticSpawn* spawn, QUndoCommand* parent) : QUndoCommand(parent) {
     this->spawn = spawn;
 
@@ -57,6 +84,33 @@ void RemoveStaticSpawnCommand::redo() {
     MainWindow::instance->removeStaticSpawn(spawn);
 
     undid = false;
+}
+
+RemoveBadgeCommand::RemoveBadgeCommand(Badge* badge) {
+  this->badge = badge;
+
+  undid = false;
+
+  setText("Remove: badge " + badge->getName());
+}
+
+RemoveBadgeCommand::~RemoveBadgeCommand() {
+  if (!undid) {
+      delete badge;
+      badge = NULL;
+  }
+}
+
+void RemoveBadgeCommand::undo() {
+  MainWindow::instance->insertBadge(badge);
+
+  undid = true;
+}
+
+void RemoveBadgeCommand::redo() {
+  MainWindow::instance->removeBadge(badge);
+
+  undid = false;
 }
 
 SpawnMoveCommand::SpawnMoveCommand(Spawn* spawn, float newX, float newY, float newZ) : QUndoCommand(NULL) {
@@ -168,3 +222,30 @@ void StaticSpawnChangeCommand::redo() {
         spawn->setParentID(newParentID);
 }
 
+BadgeChangedCommand::BadgeChangedCommand(Badge* badge, int newID, float newRadius){
+    setText("Badge change");
+
+    this->badge = badge;
+
+    oldRadius = badge->getRadius();
+    oldID = badge->getBadgeID();
+
+    this->newID = newID;
+    this->newRadius = newRadius;
+}
+
+void BadgeChangedCommand::undo(){
+  if (oldRadius != badge->getRadius())
+    badge->setRadius(oldRadius);
+
+  if (oldID != badge->getBadgeID())
+    badge->setBadgeID(oldID);
+}
+
+void BadgeChangedCommand::redo() {
+  if (newRadius != badge->getRadius())
+    badge->setRadius(newRadius);
+
+  if (newID != badge->getBadgeID())
+    badge->setBadgeID(newID);
+}

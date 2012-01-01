@@ -6,6 +6,7 @@
 #include "CreatureObject.h"
 #include "settings.h"
 #include "lairgroup.h"
+#include "badge.h"
 
 using namespace utils;
 
@@ -49,6 +50,47 @@ SpawnLuaManager::~SpawnLuaManager() {
 
        delete i.value();
     }
+}
+
+QVector<Badge*> SpawnLuaManager::loadBadges(const QString& planetName, const QString& serverDirectory) {
+  QVector<Badge*> badges;
+
+  runFile(serverDirectory + "/bin/scripts/managers/spawn_manager/" + planetName + ".lua");
+
+  lua_getglobal(L, QString(planetName + "_badges").toAscii());
+
+  if (!lua_istable(L, -1)) {
+      lua_pop(L, 1);
+      return badges;
+  }
+
+  int tableSize = luaL_getn(L, -1);
+
+  for (int i = 1; i <= tableSize; ++i) {
+      lua_rawgeti(L, -1, i);
+
+      if (lua_istable(L, -1)) {
+          QString name = getStringAt(1);
+          float x = getFloatAt(2);
+          float y = getFloatAt(3);
+          float radius = getFloatAt(4);
+          int id = getIntAt(5);
+
+          Badge* badge = new Badge(name);
+          badge->setRadius(radius);
+          badge->setWorldX(x);
+          badge->setWorldY(y);
+          badge->setBadgeID(id);
+
+          badges.append(badge);
+      }
+
+      lua_pop(L, 1);
+  }
+
+  lua_pop(L, 1);
+
+  return badges;
 }
 
 QVector<PlanetSpawnRegion*> SpawnLuaManager::loadPlanetRegions(const QString& planetName, const QString& serverDirectory) {
@@ -229,6 +271,21 @@ QString SpawnLuaManager::serializePlanetRegions(const QList<PlanetSpawnRegion*>&
     stream << "}";
 
     return data;
+}
+
+QString SpawnLuaManager::serializeBadges(const QList<Badge*>& badges, const QString& planet) {
+  QString data;
+  QTextStream stream(&data);
+
+  stream << planet << "_badges = {" << endl;
+
+  for (int i = 0; i < badges.size(); ++i) {
+      stream << "\t" << badges.at(i)->toLua() << "," << endl;
+  }
+
+  stream << "}";
+
+  return data;
 }
 
 QString SpawnLuaManager::serializeStaticSpawns(const QList<QVector<StaticSpawn* >* >& regions, const QString& planet) {

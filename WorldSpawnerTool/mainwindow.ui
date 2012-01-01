@@ -6,63 +6,156 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>817</width>
-    <height>772</height>
+    <width>1062</width>
+    <height>789</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_5">
-    <item row="0" column="0" rowspan="4">
-     <widget class="QGraphicsView" name="graphicsView">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="verticalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOn</enum>
-      </property>
-      <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOn</enum>
-      </property>
-     </widget>
+   <layout class="QGridLayout" name="gridLayout_8">
+    <item row="1" column="0" rowspan="5">
+     <layout class="QGridLayout" name="gridLayout_7">
+      <item row="2" column="0">
+       <widget class="QGraphicsView" name="graphicsView">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_StaticSpawns">
+          <property name="text">
+           <string>Static Spawns</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Search</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QComboBox" name="comboBox_StaticSpawns"/>
+        </item>
+        <item row="3" column="0">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0" rowspan="3">
+           <widget class="QTableWidget" name="tableWidget_StaticSpawns">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>100</height>
+             </size>
+            </property>
+            <column>
+             <property name="text">
+              <string>X</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Y</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Heading</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Respawn</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>ParentID</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pushButton_InsertStaticSpawn">
+            <property name="text">
+             <string>Insert</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="pushButton_RemoveStaticSpawn">
+            <property name="text">
+             <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="lineEdit_StaticSpawnSearch">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <widget class="QTextBrowser" name="textBrowser">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item row="0" column="1">
-     <widget class="QTextBrowser" name="textBrowser">
-      <property name="maximumSize">
-       <size>
-        <width>100</width>
-        <height>25</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="2">
+    <item row="1" column="1">
      <widget class="QPushButton" name="load">
       <property name="text">
        <string>Reload Planet</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
+    <item row="1" column="2">
      <widget class="QPushButton" name="pushButton_SavePlanet">
       <property name="text">
        <string>Save Planet</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="4">
+    <item row="1" column="3">
      <widget class="QPushButton" name="pushButton_ChangePlanet">
       <property name="text">
        <string>Change Planet</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1" colspan="4">
+    <item row="3" column="3">
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="2">
        <widget class="QLabel" name="label_8">
@@ -162,7 +255,7 @@
       </item>
      </layout>
     </item>
-    <item row="3" column="1" colspan="4">
+    <item row="4" column="1" colspan="3">
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="1" column="0">
        <widget class="QLabel" name="label_6">
@@ -197,90 +290,106 @@
       </item>
      </layout>
     </item>
-    <item row="4" column="0">
-     <layout class="QGridLayout" name="gridLayout_4">
+    <item row="5" column="1" colspan="3">
+     <layout class="QGridLayout" name="gridLayout_6">
       <item row="0" column="0">
-       <widget class="QLabel" name="label_StaticSpawns">
-        <property name="text">
-         <string>Static Spawns</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>Search</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QComboBox" name="comboBox_StaticSpawns"/>
-      </item>
-      <item row="3" column="0">
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0" rowspan="3">
-         <widget class="QTableWidget" name="tableWidget_StaticSpawns">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>100</height>
-           </size>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>Badges</string>
           </property>
-          <column>
-           <property name="text">
-            <string>X</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Z</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Y</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Heading</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Respawn</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>ParentID</string>
-           </property>
-          </column>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="pushButton_InsertStaticSpawn">
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_10">
           <property name="text">
-           <string>Insert</string>
+           <string>x</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QPushButton" name="pushButton_RemoveStaticSpawn">
-          <property name="text">
-           <string>Remove</string>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_badgeX">
+          <property name="minimum">
+           <double>-999999999.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>999999999.000000000000000</double>
           </property>
          </widget>
         </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_11">
+          <property name="text">
+           <string>y</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_badge_Y">
+          <property name="minimum">
+           <double>-9999999.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>999999999.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>0.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_12">
+          <property name="text">
+           <string>Radius</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_badgeRadius">
+          <property name="maximum">
+           <double>9999999.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>Badge id</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="spinBox_badgeID"/>
+        </item>
        </layout>
       </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEdit_StaticSpawnSearch">
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
+      <item row="0" column="1" colspan="2">
+       <widget class="QListWidget" name="listWidget_badges"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="pushButton_addBadge">
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="pushButton_removeBadge">
+        <property name="text">
+         <string>Remove</string>
         </property>
        </widget>
       </item>
@@ -302,7 +411,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>817</width>
+     <width>1062</width>
      <height>21</height>
     </rect>
    </property>

@@ -93,7 +93,7 @@ void PlanetSpawnRegion::setConstant(int v) {
     MainWindow::instance->updateCurrentSpawnRegionSelection(regionName);
 }
 
-void PlanetSpawnRegion::wheelEvent(QGraphicsSceneWheelEvent* event) {
+/*void PlanetSpawnRegion::wheelEvent(QGraphicsSceneWheelEvent* event) {
     WorldMap* map = dynamic_cast<WorldMap*>(scene());
 
     if (map == NULL) {
@@ -106,17 +106,12 @@ void PlanetSpawnRegion::wheelEvent(QGraphicsSceneWheelEvent* event) {
 
     float newRadius = getRadius() + delta;
 
-    /*if (newRadius > 512)
-        newRadius = 512;*/
-
-    //setRadius(newRadius);
-
     if (radius != newRadius) {
         MainWindow::instance->pushUndoCommand(new PlanetSpawnRegionChangeCommand(this, tier, constant, newRadius));
 
         event->accept();
     }
-}
+}*/
 
 QVariant PlanetSpawnRegion::itemChange(GraphicsItemChange change, const QVariant& value) {
     WorldMap* map = dynamic_cast<WorldMap*>(scene());

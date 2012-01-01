@@ -6,16 +6,15 @@
 #include "region.h"
 #include "spawn.h"
 
-class PlanetSpawnRegion : public Region, public Spawn {
+class PlanetSpawnRegion : public Region {
     QString regionName;
-    float radius;
     int tier, constant;
 
     QVector<QString> spawns;
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant& value);
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
-    void wheelEvent(QGraphicsSceneWheelEvent* event);
+    //void wheelEvent(QGraphicsSceneWheelEvent* event);
 public:
     PlanetSpawnRegion();
 
@@ -35,10 +34,6 @@ public:
 
     inline QString& getRegionName() {
         return regionName;
-    }
-
-    inline float getRadius() {
-        return radius;
     }
 
     inline int getTier() {

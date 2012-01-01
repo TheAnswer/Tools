@@ -9,6 +9,7 @@ using namespace utils;
 class StaticSpawn;
 class Spawn;
 class PlanetSpawnRegion;
+class Badge;
 
 class InsertStaticSpawnCommand : public QUndoCommand {
     StaticSpawn* spawn;
@@ -76,6 +77,39 @@ public:
 
 };
 
+class BadgeChangedCommand : public QUndoCommand {
+    Badge* badge;
 
+    float oldRadius, newRadius;
+    int oldID, newID;
+
+public:
+    BadgeChangedCommand(Badge* badge, int newID, float newRadius);
+
+    void undo();
+    void redo();
+};
+
+class InsertBadgeCommand : public QUndoCommand {
+    Badge* badge;
+    bool undid;
+public:
+    InsertBadgeCommand(Badge* badge);
+    ~InsertBadgeCommand();
+
+    void undo();
+    void redo();
+};
+
+class RemoveBadgeCommand : public QUndoCommand {
+  Badge* badge;
+  bool undid;
+public:
+  RemoveBadgeCommand(Badge* badge);
+  ~RemoveBadgeCommand();
+
+  void undo();
+  void redo();
+};
 
 #endif // COMMANDS_H

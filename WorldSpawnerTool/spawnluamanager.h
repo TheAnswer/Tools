@@ -8,6 +8,7 @@
 class PlanetSpawnRegion;
 class StaticSpawn;
 class LairGroup;
+class Badge;
 
 class SpawnLuaManager : public LuaParser {
     static QString currentFile;
@@ -25,12 +26,14 @@ public:
 
     QVector<PlanetSpawnRegion*> loadPlanetRegions(const QString& planetName, const QString& serverDirectory);
     QVector<StaticSpawn* > loadStaticSpawns(const QString& planetName, const QString& serverDirectory);
+    QVector<Badge*> loadBadges(const QString& planetName, const QString& serverDirectory);
     void loadSpawnGroups(const QString& serverDirectory);
 
     void saveLairGroups();
 
     QString serializePlanetRegions(const QList<PlanetSpawnRegion*>& regions, const QString& planet);
     QString serializeStaticSpawns(const QList<QVector<StaticSpawn* >* >& regions, const QString& planet);
+    QString serializeBadges(const QList<Badge*>& badges, const QString& planet);
 
     LairGroup* getLairGroup(const QString& name) {
         return lairGroups.value(name, NULL);

@@ -29,6 +29,8 @@ class QUndoCommand;
 class LairTypes;
 class LairLuaManager;
 class ObjectModel3dViewer;
+class Badge;
+class InsertBadgeForm;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -49,6 +51,7 @@ private:
     LairTypes* lairTypes;
     LairLuaManager* lairLuaManager;
     ObjectModel3dViewer* objectModel3dViewer;
+    InsertBadgeForm* insertBadgeForm;
 
     QMap<QString, QAction*> actions;
 
@@ -85,14 +88,20 @@ public slots:
     void loadDataFromDatabase();
     void updateCurrentItemPosition(float x, float y);
     void insertSingleSpawn(InsertWindow* window);
+    void insertBadgeFromWindow();
     void reloadPlanet();
     void updateCurrentSpawnRegionSelection(const QString& name);
     void updateCurrentStaticSpawnSelection(StaticSpawn* spawn);
+    void updateCurrentBadgeSelection(const QString& name);
     void updateStaticSpawnsTable();
     void searchStaticMobileSpawn(const QString& name);
     void removeCurrentStaticSpawnSelection();
     void removeStaticSpawn(StaticSpawn* spawn);
     void staticSpawnChanged(QTableWidgetItem* item);
+    void badgeXChanged();
+    void badgeYChanged();
+    void badgeRadiusChanged();
+    void badgeIDChanged();
     void promptToChangePlanet();
     void promptToReloadPlanet();
     void promptToDeleteStaticSpawn();
@@ -105,11 +114,13 @@ public slots:
     void addSpawn();
     void removeSpawn();
     void open3dViewer();
-
+    void searchBadge(const QString& str);
     void changeWorldMap();
     void saveMap();
-
-    void showInsertWindow(float x, float y);
+    void removeCurrentBadge();
+    void promptToInsertBadge();
+    void showInsertStaticSpawnWindow();
+    void showInsertBadgeWindow();
 
 protected:
     void changeEvent(QEvent *e);
@@ -119,7 +130,14 @@ protected:
 
     void insertStaticSpawnToTable(StaticSpawn* spawn);
 
+    Badge* getCurrentBadge();
+
 public:
+    void setInsertWindowStaticSpawnCoordinates(float x, float y);
+    void setInsertWindowBadgeSpawnCoordinates(float x, float y);
+    void insertBadge(Badge* badge);
+    void removeBadge(Badge* badge);
+
     inline QList<QString> getMapList() {
         return mapVector.keys();
     }
@@ -154,6 +172,10 @@ public:
 
     inline LairTypes* getLairTypes() {
         return lairTypes;
+    }
+
+    inline QAction* getAction(const QString& name) {
+      return actions.value(name, NULL);
     }
 
 

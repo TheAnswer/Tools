@@ -21,6 +21,8 @@ void CreatureLuaManager::registerGlobals() {
     lua_register(L, "addDynamicGroup", addDynamicGroup);
     lua_register(L, "addStaticGroup", addStaticGroup);
     lua_register(L, "addConversationTemplate", addConversationTemplate);
+    lua_register(L, "addLairTemplate", addConversationTemplate);
+    lua_register(L, "addLairGroup", addConversationTemplate);
 
     setGlobalInt("NONE", 0);
     setGlobalInt("ATTACKABLE", CreatureObject::ATTACKABLE);

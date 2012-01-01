@@ -7,6 +7,8 @@
 
 class PlanetSpawnRegion;
 class StaticSpawn;
+class Badge;
+class Region;
 
 class WorldMap : public QGraphicsScene {
     Q_OBJECT
@@ -15,6 +17,7 @@ class WorldMap : public QGraphicsScene {
     PlanetSpawnRegion* selectedRegion;
     QMap<QString, QVector<StaticSpawn* >* > staticSpawns;
     QString mapName;
+    QMap<QString, Badge*> badges;
 
 public:
     const static int MAXX = 8192;
@@ -25,6 +28,7 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
    // void dragMoveEvent(QGraphicsSceneDragDropEvent* event);
     void loadPlanetImage();
+    void wheelEvent(QGraphicsSceneWheelEvent* event);
 
 public:
     WorldMap(const QString& name);
@@ -39,10 +43,12 @@ public:
 
     void addStaticSpawns(const QVector<StaticSpawn* >& vec);
     void addStaticSpawn(StaticSpawn* spawn);
+    void addBadges(const QVector<Badge*>& vec);
+    void addBadge(Badge* badge);
     void removeStaticSpawn(StaticSpawn* spawn);
-
+    void removeBadge(Badge* badge);
     void updateStaticSpawnView(StaticSpawn* spawn);
-    void updateSpawnRegionView(PlanetSpawnRegion* region);
+    void updateSpawnRegionView(Region* region);
 
     void clearMap();
 
@@ -50,6 +56,10 @@ public:
 
     inline QMap<QString, PlanetSpawnRegion*>* getSpawnRegions() {
         return &spawnRegions;
+    }
+
+    inline Badge* getBadge(const QString& name) {
+      return badges.value(name, NULL);
     }
 
     inline PlanetSpawnRegion* getSpawnRegion(const QString& name) {
@@ -64,10 +74,14 @@ public:
         return &staticSpawns;
     }
 
+    inline QMap<QString, Badge*>* getBadges() {
+        return &badges;
+    }
 public slots:
     //void selectItem();
 
     void selectPlanetSpawnRegion(const QString& name);
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 };
 
 #endif // WORLDMAP_H

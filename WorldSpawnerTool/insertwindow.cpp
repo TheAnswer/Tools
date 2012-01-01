@@ -11,6 +11,7 @@ InsertWindow::InsertWindow(MainWindow* main, QWidget *parent)
 
     connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(insertObject()));
     connect(this, SIGNAL(insertSingleSpawn(InsertWindow*)), mainWindow, SLOT(insertSingleSpawn(InsertWindow*)));
+    //connect(ui.)
     //connect(ui.lineEdit_Mobile, SIGNAL(returnPressed()), this, SLOT(insertObject()));
     //connect(this, ui.doubleSpinBox_Heading, SIGNAL())
 }
