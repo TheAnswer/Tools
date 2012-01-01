@@ -259,9 +259,9 @@ void CreatureManager::saveCurrentCreature() {
     if (currentCreatureObject == NULL)
         return;
 
-    currentCreatureObject->setObjectName(ui->objectName->text());
-    currentCreatureObject->setPvpFaction(ui->pvpFaction->text());
-    currentCreatureObject->setSocialGroup(ui->socialGroup->text());
+    currentCreatureObject->setObjectName(ui->objectName->text().trimmed());
+    currentCreatureObject->setPvpFaction(ui->pvpFaction->text().trimmed());
+    currentCreatureObject->setSocialGroup(ui->socialGroup->text().trimmed());
     currentCreatureObject->setArmor(ui->armor->value());
     currentCreatureObject->setBaseHAM(ui->baseHAM->value());
     currentCreatureObject->setBaseHAMmax(ui->baseHAMmax->value());
@@ -336,12 +336,12 @@ void CreatureManager::saveCurrentCreature() {
     currentCreatureObject->setResists(resists);
 
     currentCreatureObject->setMaxDamage(ui->maxDamage->value());
-    currentCreatureObject->setMeatType(ui->meatType->text());
+    currentCreatureObject->setMeatType(ui->meatType->text().trimmed());
     currentCreatureObject->setMeatAmount(ui->meatAmount->value());
-    currentCreatureObject->setHideType(ui->hideType->text());
+    currentCreatureObject->setHideType(ui->hideType->text().trimmed());
     currentCreatureObject->setHideAmount(ui->hideAmount->value());
     currentCreatureObject->setBoneAmount(ui->boneAmount->value());
-    currentCreatureObject->setBoneType(ui->boneType->text());
+    currentCreatureObject->setBoneType(ui->boneType->text().trimmed());
 
     currentCreatureObject->setMilk(ui->milk->value());
     currentCreatureObject->setTamingChance(ui->tamingChance->value());
@@ -349,14 +349,14 @@ void CreatureManager::saveCurrentCreature() {
 
     QVector<QString> templates;
     for (int i = 0; i < ui->templates->count(); ++i) {
-        templates.append(ui->templates->itemText(i));
+        templates.append(ui->templates->itemText(i).trimmed());
     }
 
     currentCreatureObject->setTemplates(templates);
 
     QVector<QString> weapons;
     for (int i = 0; i < ui->weapons->count(); ++i) {
-        weapons.append(ui->weapons->itemText(i));
+        weapons.append(ui->weapons->itemText(i).trimmed());
     }
 
     currentCreatureObject->setWeapons(weapons);
@@ -364,7 +364,7 @@ void CreatureManager::saveCurrentCreature() {
     QVector<QString> lootGroups;
 
     for (int i = 0; i < ui->lootGroups->count(); ++i)
-        lootGroups.append(ui->lootGroups->itemText(i));
+        lootGroups.append(ui->lootGroups->itemText(i).trimmed());
 
     currentCreatureObject->setLootGroups(lootGroups);
 
@@ -380,7 +380,7 @@ void CreatureManager::saveCurrentCreature() {
         QString command = text.section(':', 0, 0);
         QString args = text.section(':', 1, 1);
 
-        attacks->insert(command, args);
+        attacks->insert(command.trimmed(), args.trimmed());
       }
 
     //mainWindow->outputToConsole(currentCreatureObject->serializeToLua());

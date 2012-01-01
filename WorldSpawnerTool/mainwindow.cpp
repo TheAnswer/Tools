@@ -36,7 +36,7 @@
 using namespace utils;
 
 MainWindow* MainWindow::instance = NULL;
-float MainWindow::VERSION = 0.03;
+float MainWindow::VERSION = 0.04;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
