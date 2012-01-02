@@ -63,6 +63,8 @@ bool treArchive::addFile( const std::string &filename )
 
   // Else open was successful
   treClass *newTRE = new treClass();
+
+  try {
   if( newTRE->readFile( correctedFilename ) )
     {
       treList.push_front( newTRE );
@@ -74,6 +76,13 @@ bool treArchive::addFile( const std::string &filename )
       // Delete failed tre
       delete newTRE;
     }
+  } catch (std::exception& e) {
+	  delete newTRE;
+
+	  std::cout << "exception addingFile " << filename << std::endl;
+
+	  throw;
+  }
   
   return false;
 }

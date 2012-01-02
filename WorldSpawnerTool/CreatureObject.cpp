@@ -102,8 +102,10 @@ void CreatureObject::readObject(lua_State* l) {
   for (int i = 1; i <= templatesTableSize; ++i) {
     lua_rawgeti(l, -1, i);
     const char* result = lua_tostring(l, -1);
-    lua_pop(l, 1);
+
     templates.append(QString(result));
+
+    lua_pop(l, 1);
   }
 
   lua_pop(l, 1);

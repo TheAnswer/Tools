@@ -59,6 +59,7 @@ treClass::~treClass()
 	treFile.close();
     }
 
+	fileRecordList.clear();
 }
 
 bool treClass::readHeader( std::ifstream &file )

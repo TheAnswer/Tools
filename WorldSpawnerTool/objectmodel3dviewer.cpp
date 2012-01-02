@@ -158,7 +158,7 @@ void ObjectModel3dViewer::setTreDirectory(const QString& dir) {
    if (archive == NULL)
      return;
 
-   std::list<std::string>* files = archive->getArchiveContents();
+   /*std::list<std::string>* files = archive->getArchiveContents();
 
    if (files == NULL)
      return;
@@ -168,7 +168,7 @@ void ObjectModel3dViewer::setTreDirectory(const QString& dir) {
        repoContents.append(qstring);
      }
 
-   delete files;
+   delete files;*/
 
    /*QCompleter* completer = new QCompleter(repoContents, this);
    //completer->setCompletionMode();
