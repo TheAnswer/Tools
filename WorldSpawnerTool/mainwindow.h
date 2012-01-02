@@ -32,6 +32,7 @@ class LairLuaManager;
 class ObjectModel3dViewer;
 class Badge;
 class InsertBadgeForm;
+class STFViewer;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -54,7 +55,7 @@ private:
     ObjectModel3dViewer* objectModel3dViewer;
     InsertBadgeForm* insertBadgeForm;
     QMap<QString, QAction*> actions;
-
+    STFViewer* stfViewer;
     QUndoStack* undoStack;
     QUndoView* undoView;
 
@@ -118,9 +119,9 @@ public slots:
     void changeWorldMap();
     void saveMap();
     void removeCurrentBadge();
-    void promptToInsertBadge();
     void showInsertStaticSpawnWindow();
     void showInsertBadgeWindow();
+    void loadInSTFViewer(const QString& stringID);
 
 protected:
     void changeEvent(QEvent *e);
@@ -177,6 +178,12 @@ public:
     inline QAction* getAction(const QString& name) {
       return actions.value(name, NULL);
     }
+
+    inline ObjectModel3dViewer* getModel3DViewer() {
+      return objectModel3dViewer;
+    }
+
+    treArchive* getTreArchive();
 
 signals:
     void printToConsole(const QString& str);

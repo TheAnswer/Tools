@@ -64,6 +64,18 @@ public slots:
   void loadFinished(osg::Node* node);
   void modelTextChanged();
   void listFiles();
+
+public:
+  swgRepository* getSWGRepository() {
+    return repo;
+  }
+
+  treArchive* getTreArchive() {
+    if (repo == NULL)
+      return NULL;
+    else
+      return repo->getTreArchive();
+  }
   
 private:
   Ui::ObjectModel3dViewer *ui;

@@ -32,6 +32,7 @@
 #include "objectmodel3dviewer.h"
 #include "badge.h"
 #include "insertbadgeform.h"
+#include "stfviewer.h"
 
 using namespace utils;
 
@@ -61,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   lairTypes = new LairTypes(lairLuaManager);
   objectModel3dViewer = new ObjectModel3dViewer();
   insertBadgeForm = new InsertBadgeForm(this);
+  stfViewer = new STFViewer();
 
   setWindowTitle(getApplicationFullName());
 
@@ -75,21 +77,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   createActions();
 
   connect(ui->actionConnect_to_database, SIGNAL(triggered()), database, SLOT(show()));
-  connect(ui->actionConsole, SIGNAL(triggered()), console, SLOT(show()));
+  connect(ui->actionConsole, SIGNAL(triggered()), console, SLOT(showNormal()));
   connect(this, SIGNAL(printToConsole(QString)), console, SLOT(printLine(QString)));
   connect(database, SIGNAL(connectedToDatabase()), this, SLOT(loadDataFromDatabase()));
-  connect(ui->pushButton_InsertStaticSpawn, SIGNAL(clicked()), insertWindow, SLOT(show()));
-  connect(ui->actionGeneral_settings, SIGNAL(triggered()), settings, SLOT(show()));
-  connect(ui->actionLoad, SIGNAL(triggered()), creatureManager, SLOT(show()));
+  connect(ui->pushButton_InsertStaticSpawn, SIGNAL(clicked()), insertWindow, SLOT(showNormal()));
+  connect(ui->actionGeneral_settings, SIGNAL(triggered()), settings, SLOT(showNormal()));
+  connect(ui->actionLoad, SIGNAL(triggered()), creatureManager, SLOT(showNormal()));
   connect(ui->load, SIGNAL(clicked()), this, SLOT(promptToReloadPlanet()));
   connect(ui->regions, SIGNAL(currentIndexChanged(QString)), this, SLOT(updateCurrentSpawnRegionSelection(QString)));
-  connect(ui->actionPreOR_Creatures, SIGNAL(triggered()), preORManager, SLOT(show()));
+  connect(ui->actionPreOR_Creatures, SIGNAL(triggered()), preORManager, SLOT(showNormal()));
   connect(ui->comboBox_StaticSpawns, SIGNAL(currentIndexChanged(QString)), this, SLOT(updateStaticSpawnsTable()));
   connect(ui->lineEdit_StaticSpawnSearch, SIGNAL(textChanged(QString)), this, SLOT(searchStaticMobileSpawn(QString)));
   connect(ui->pushButton_RemoveStaticSpawn, SIGNAL(clicked()), this, SLOT(promptToDeleteStaticSpawn()));
   connect(ui->pushButton_SavePlanet, SIGNAL(clicked()), this, SLOT(saveMap()));
   connect(ui->pushButton_ChangePlanet, SIGNAL(clicked()), this, SLOT(promptToChangePlanet()));
-  connect(ui->actionChange_Planet, SIGNAL(triggered()), planetSelection, SLOT(show()));
+  connect(ui->actionChange_Planet, SIGNAL(triggered()), planetSelection, SLOT(showNormal()));
   connect(ui->tableWidget_StaticSpawns, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(staticSpawnChanged(QTableWidgetItem*)));
   connect(ui->regionRadius, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionRadiusChanged()));
   connect(ui->regionX, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionXChanged()));
@@ -98,23 +100,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   connect(ui->doubleSpinBox_badge_Y, SIGNAL(valueChanged(double)), this, SLOT(badgeYChanged()));
   connect(ui->doubleSpinBox_badgeRadius, SIGNAL(valueChanged(double)), this, SLOT(badgeRadiusChanged()));
   connect(ui->pushButton_removeBadge, SIGNAL(clicked()), this, SLOT(removeCurrentBadge()));
-  connect(ui->pushButton_addBadge, SIGNAL(clicked()), insertBadgeForm, SLOT(show()));
+  connect(ui->pushButton_addBadge, SIGNAL(clicked()), insertBadgeForm, SLOT(showNormal()));
   connect(ui->tier, SIGNAL(valueChanged(int)), this, SLOT(spawnRegionTierChanged()));
   connect(ui->constant, SIGNAL(valueChanged(int)), this, SLOT(spawnRegionTierChanged()));
-  connect(ui->actionLair_Tool, SIGNAL(triggered()), lairTypes, SLOT(show()));
+  connect(ui->actionLair_Tool, SIGNAL(triggered()), lairTypes, SLOT(showNormal()));
   connect(ui->pushButton_editSpawn, SIGNAL(clicked()), this, SLOT(editSpawn()));
   connect(ui->pushButton_addSpawn, SIGNAL(clicked()), this, SLOT(addSpawn()));
   connect(ui->pushButton_removeSpawn, SIGNAL(clicked()), this, SLOT(removeSpawn()));
   //connect(ui->action_3dviewer, SIGNAL(triggered()), this, SLOT(open3dViewer()));
-  connect(ui->action_3dviewer, SIGNAL(triggered()), objectModel3dViewer, SLOT(show()));
+  connect(ui->action_3dviewer, SIGNAL(triggered()), objectModel3dViewer, SLOT(showNormal()));
   connect(ui->listWidget_badges, SIGNAL(currentTextChanged(QString)), this, SLOT(updateCurrentBadgeSelection(QString)));
+  connect(ui->actionSTF_Viewer, SIGNAL(triggered()), stfViewer, SLOT(showNormal()));
 
   ui->graphicsView->setMouseTracking(true);
 
   if (settings->getServerDirectory().isEmpty())
-    settings->show();
+    settings->showNormal();
   else
-    planetSelection->show();
+    planetSelection->showNormal();
 
   emit printToConsole("WorldSpawnerTool started");
 }
@@ -513,8 +516,10 @@ void MainWindow::removeCurrentBadge() {
   pushUndoCommand(new RemoveBadgeCommand(badge));
 }
 
-void MainWindow::promptToInsertBadge() {
+void MainWindow::loadInSTFViewer(const QString& stringID) {
+  stfViewer->loadStringID(stringID);
 
+  stfViewer->showNormal();
 }
 
 void MainWindow::removeSpawn() {
@@ -1029,4 +1034,8 @@ void MainWindow::changeEvent(QEvent *e) {
 
 StaticSpawnTableItem* MainWindow::getStaticSpawnTableData(int row, int column) {
   return dynamic_cast<StaticSpawnTableItem*>(ui->tableWidget_StaticSpawns->item(row, column));
+}
+
+treArchive* MainWindow::getTreArchive() {
+  return objectModel3dViewer->getTreArchive();
 }

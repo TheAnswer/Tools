@@ -56,6 +56,8 @@ public slots:
     void addAttack();
     void removeAttack();
 
+    void openSTFWithName();
+
     //void loadFiles(QByteArray& includeFile);
 
     void addCreatureObject(const QString& key, CreatureObject* value);

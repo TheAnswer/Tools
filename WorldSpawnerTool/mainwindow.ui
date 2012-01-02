@@ -462,6 +462,7 @@
     <addaction name="separator"/>
     <addaction name="actionPreOR_Creatures"/>
     <addaction name="action_3dviewer"/>
+    <addaction name="actionSTF_Viewer"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -523,6 +524,11 @@
   <action name="action_3dviewer">
    <property name="text">
     <string>3d model viewer</string>
+   </property>
+  </action>
+  <action name="actionSTF_Viewer">
+   <property name="text">
+    <string>STF Viewer</string>
    </property>
   </action>
  </widget>

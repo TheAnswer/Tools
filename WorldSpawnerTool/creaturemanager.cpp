@@ -39,6 +39,7 @@ CreatureManager::CreatureManager(MainWindow* mainWindow, QWidget *parent) :
     connect(ui->pushButton_addAttack, SIGNAL(clicked()), this, SLOT(addAttack()));
     connect(ui->pushButton_removeAttack, SIGNAL(clicked()), this, SLOT(removeAttack()));
     connect(ui->pushButton_addCreature, SIGNAL(clicked()), this, SLOT(addNewCreature()));
+    connect(ui->toolButton_name, SIGNAL(clicked()), this, SLOT(openSTFWithName()));
 
     this->setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 }
@@ -55,6 +56,10 @@ CreatureManager::~CreatureManager() {
     creatureMap.clear();
 
     delete ui;
+}
+
+void CreatureManager::openSTFWithName() {
+  MainWindow::instance->loadInSTFViewer(ui->objectName->text());
 }
 
 void CreatureManager::addNewCreature() {
