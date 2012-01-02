@@ -29,8 +29,8 @@ treArchive::treArchive()
 {
 }
 
-treArchive::~treArchive()
-{
+treArchive::~treArchive() {
+	removeAllFiles();
 }
 
 void treArchive::fixSlash( std::string &filename )

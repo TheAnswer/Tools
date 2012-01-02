@@ -58,7 +58,7 @@ public:
   std::stringstream *getFileStream( const std::string &filename );
 
 protected:
-  std::list< treClass *> treList;
+	std::list< treClass* > treList;
 
 private:
 

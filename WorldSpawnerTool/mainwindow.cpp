@@ -909,6 +909,7 @@ void MainWindow::insertSingleSpawn(InsertWindow* window) {
   spawn->setMobile(templateFile);
   spawn->setHeading(heading);
   spawn->setParentID(parentid);
+  spawn->setToolTip(templateFile);
 
   undoStack->push(new InsertStaticSpawnCommand(spawn));
 }

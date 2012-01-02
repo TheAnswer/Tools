@@ -125,6 +125,7 @@ QVector<PlanetSpawnRegion*> SpawnLuaManager::loadPlanetRegions(const QString& pl
             region->setRadius(radius);
             region->setTier(tier);
             region->setConstant(constant);
+            region->setToolTip(name);
 
             int spawnsSize = luaL_getn(L, -1);
 
@@ -242,6 +243,7 @@ QVector<StaticSpawn* > SpawnLuaManager::loadStaticSpawns(const QString& planetNa
             spawn->setHeading(heading);
             spawn->setParentID(parentID);
             spawn->setRespawnTimer(respawn);
+            spawn->setToolTip(name);
 
             spawns.append(spawn);
         }

@@ -12,6 +12,8 @@ Badge::Badge(const QString& name) : Region(10) {
 
   this->name = name;
 
+  setToolTip(name);
+
   QPen pen;
   pen.setColor(Qt::yellow);
   pen.setWidthF(1);

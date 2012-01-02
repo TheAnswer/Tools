@@ -59,62 +59,79 @@ CreatureManager::~CreatureManager() {
 }
 
 void CreatureManager::openSTFWithName() {
-  MainWindow::instance->loadInSTFViewer(ui->objectName->text());
+    MainWindow::instance->loadInSTFViewer(ui->objectName->text());
 }
 
 void CreatureManager::addNewCreature() {
-  bool ok;
-  QString text = QInputDialog::getText(this, "Add Script", "Mobile name", QLineEdit::Normal, "", &ok);
+    bool ok;
+    QString text = QInputDialog::getText(this, "Add Script", "Mobile name", QLineEdit::Normal, "", &ok);
 
-  if (!ok || text.isEmpty())
-    return;
+    if (!ok || text.isEmpty())
+        return;
 
-  //if (ui->comboBox->findText())
+    //if (ui->comboBox->findText())
 
-  if (ui->comboBox->findText(text) != -1 || creatureMap.contains(text) || creatureMap.contains(text.toLower())) {
-      QMessageBox::warning(NULL, "Warning", "mobile already exists");
+    if (ui->comboBox->findText(text) != -1 || creatureMap.contains(text) || creatureMap.contains(text.toLower())) {
+        QMessageBox::warning(NULL, "Warning", "mobile already exists");
 
-      return;
-  }
+        return;
+    }
 
-  CreatureObject* creature = new CreatureObject(text);
-  addCreatureObject(text, creature);
-  //ui->comboBox->setCurrentIndex();
-  findCreatureFile(text);
-  currentCreatureChanged(text);
+    CreatureObject* creature = new CreatureObject(text);
+    addCreatureObject(text, creature);
+    //ui->comboBox->setCurrentIndex();
+    findCreatureFile(text);
+    currentCreatureChanged(text);
 }
 
 void CreatureManager::addCreatureObject(const QString& key, CreatureObject* value) {
+    if (creatureMap.contains(key))
+        delete creatureMap.value(key);
+
     creatureMap[key] = value;
     ui->comboBox->addItem(key);
 }
 
 void CreatureManager::addAttack() {
-  bool ok;
-  QString text = QInputDialog::getText(this, "Add Attack", "Attack name", QLineEdit::Normal, "", &ok);
+    bool ok;
+    QString text = QInputDialog::getText(this, "Add Attack", "Attack name", QLineEdit::Normal, "", &ok);
 
-  if (!ok)
-    return;
+    if (!ok)
+        return;
 
-  QString argument = QInputDialog::getText(this, "Add Attack", "Attack argument", QLineEdit::Normal, "", &ok);
+    QString argument = QInputDialog::getText(this, "Add Attack", "Attack argument", QLineEdit::Normal, "", &ok);
 
-  if (!ok)
-    return;
+    if (!ok)
+        return;
 
-  if (text.isEmpty())
-    return;
+    if (text.isEmpty())
+        return;
 
-  ui->attackList->addItem(text + ":" + argument);
+    ui->attackList->addItem(text + ":" + argument);
 }
 
 
 void CreatureManager::removeAttack() {
-  int row = ui->attackList->currentRow();
+    int row = ui->attackList->currentRow();
 
-  delete ui->attackList->takeItem(row);
+    delete ui->attackList->takeItem(row);
 }
 
 void CreatureManager::loadCreatureObjects() {
+    currentCreatureObject = NULL;
+
+    QMapIterator<QString, CreatureObject*> i(creatureMap);
+
+    while (i.hasNext()) {
+        i.next();
+
+        delete i.value();
+    }
+
+    creatureMap.clear();
+
+    ui->comboBox->clear();
+
     QString serverDir = mainWindow->getSettings()->getServerDirectory();
 
     QString fullName = serverDir + "/bin/scripts/mobile/creature/serverobjects.lua";
@@ -126,7 +143,7 @@ void CreatureManager::loadCreatureObjects() {
     QApplication::restoreOverrideCursor();
 
     return;
-/*
+    /*
     QFile objectsFile(fullName);
 
     if (!objectsFile.open(QIODevice::ReadOnly)) {
@@ -386,7 +403,7 @@ void CreatureManager::saveCurrentCreature() {
         QString args = text.section(':', 1, 1);
 
         attacks->insert(command.trimmed(), args.trimmed());
-      }
+    }
 
     //mainWindow->outputToConsole(currentCreatureObject->serializeToLua());
 
@@ -397,7 +414,7 @@ void CreatureManager::saveCurrentCreature() {
         MainWindow::instance->warning("No Core3 server directory specified");
 
         return;
-      }
+    }
 
     bool newFile = false;
 
@@ -413,7 +430,7 @@ void CreatureManager::saveCurrentCreature() {
         currentCreatureObject->setFileName(filename);
 
         newFile = true;
-      }
+    }
 
     QString fullDir = serverDir + "/bin/scripts/mobile/" + filename;
 
@@ -423,14 +440,14 @@ void CreatureManager::saveCurrentCreature() {
         out << currentCreatureObject->serializeToLua();
 
         file.close();
-      } else {
+    } else {
         MainWindow::instance->warning("Could not open " + fullDir);
 
         return;
-      }
+    }
 
     if (!newFile)
-      return;
+        return;
 
 
     QFile objectFile(serverDir + "/bin/scripts/mobile/serverobjects.lua");
@@ -444,13 +461,13 @@ void CreatureManager::saveCurrentCreature() {
 
     if (oldData.contains(currentCreatureObject->getLuaObjectName().toAscii())) {
         MainWindow::instance->outputToConsole("include contains " + currentCreatureObject->getLuaObjectName());
-      } else {
+    } else {
         objectFile.seek(objectFile.size());
 
         QTextStream stream(&objectFile);
         stream << endl;
         stream << "includeFile(\"" + filename + "\")";
-      }
+    }
 
     objectFile.close();
 
