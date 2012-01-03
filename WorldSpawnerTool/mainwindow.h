@@ -133,6 +133,8 @@ protected:
 
     Badge* getCurrentBadge();
 
+    void loadWorldSnapshot();
+
 public:
     void setInsertWindowStaticSpawnCoordinates(float x, float y);
     void setInsertWindowBadgeSpawnCoordinates(float x, float y);

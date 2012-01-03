@@ -60,7 +60,7 @@ WorldMap::~WorldMap() {
         Badge* badge = mapIteratorBadges.value();
 
         if (badge->scene() != NULL)
-          removeItem(badge);
+            removeItem(badge);
 
         delete badge;
     }
@@ -72,15 +72,15 @@ void WorldMap::wheelEvent(QGraphicsSceneWheelEvent* event) {
     QList<QGraphicsView*> view = views();
 
     if (view.size() == 0) {
-      QGraphicsScene::wheelEvent(event);
+        QGraphicsScene::wheelEvent(event);
 
-      return;
+        return;
     }
 
     float val = delta > 0 ? 1.1 : 0.9;
 
     for (int i = 0; i < view.size(); ++i) {
-      view.at(i)->scale(val, val);
+        view.at(i)->scale(val, val);
     }
 
     event->accept();
@@ -183,23 +183,30 @@ void WorldMap::toWorldPos(qreal x, qreal y, float& worldX, float& worldY) {
 }
 
 void WorldMap::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
-  QPointF point = event->scenePos();
+    QGraphicsScene::contextMenuEvent(event);
 
-  qreal x = point.x();
-  qreal y = point.y();
+    if (event->isAccepted())
+        return;
 
-  float worldPosX;
-  float worldPosY;
+    event->accept();
 
-  toWorldPos(x, y, worldPosX, worldPosY);
+    QPointF point = event->scenePos();
 
-  QMenu menu;
-  MainWindow::instance->setInsertWindowStaticSpawnCoordinates(worldPosX, worldPosY);
-  MainWindow::instance->setInsertWindowBadgeSpawnCoordinates(worldPosX, worldPosY);
+    qreal x = point.x();
+    qreal y = point.y();
 
-  menu.addAction("Insert static spawn", MainWindow::instance, SLOT(showInsertStaticSpawnWindow()));
-  menu.addAction("Insert badge", MainWindow::instance, SLOT(showInsertBadgeWindow()));
-  menu.exec(event->screenPos());
+    float worldPosX;
+    float worldPosY;
+
+    toWorldPos(x, y, worldPosX, worldPosY);
+
+    QMenu menu;
+    MainWindow::instance->setInsertWindowStaticSpawnCoordinates(worldPosX, worldPosY);
+    MainWindow::instance->setInsertWindowBadgeSpawnCoordinates(worldPosX, worldPosY);
+
+    menu.addAction("Insert static spawn", MainWindow::instance, SLOT(showInsertStaticSpawnWindow()));
+    menu.addAction("Insert badge", MainWindow::instance, SLOT(showInsertBadgeWindow()));
+    menu.exec(event->screenPos());
 }
 
 void WorldMap::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
@@ -295,35 +302,35 @@ void WorldMap::addStaticSpawns(const QVector<StaticSpawn* >& vec) {
 }
 
 void WorldMap::addBadges(const QVector<Badge*>& vec) {
-  for (int i = 0; i < vec.size(); ++i) {
-    Badge* badge = vec.at(i);
+    for (int i = 0; i < vec.size(); ++i) {
+        Badge* badge = vec.at(i);
 
-    addBadge(badge);
-  }
+        addBadge(badge);
+    }
 }
 
 void WorldMap::addBadge(Badge* badge) {
-  badges.insert(badge->getName(), badge);
+    badges.insert(badge->getName(), badge);
 
-  float x = badge->getWorldX();
-  float y = badge->getWorldY();
-  float radius = badge->getRadius() / 16.f;
+    float x = badge->getWorldX();
+    float y = badge->getWorldY();
+    float radius = badge->getRadius() / 16.f;
 
-  badge->setPos((MAXX + x) / 16, (MAXY - y) / 16);
-  badge->setRect(-radius/2, -radius/2, radius, radius);
+    badge->setPos((MAXX + x) / 16, (MAXY - y) / 16);
+    badge->setRect(-radius/2, -radius/2, radius, radius);
 
-  addItem(badge);
+    addItem(badge);
 }
 
 void WorldMap::removeBadge(Badge* badge) {
-  if (!badges.contains(badge->getName()))
-      return;
+    if (!badges.contains(badge->getName()))
+        return;
 
-  removeItem(badge);
+    removeItem(badge);
 
-  badges.remove(badge->getName());
+    badges.remove(badge->getName());
 
-  update((MAXX + badge->getWorldX()) / 16 - 1, (MAXY + badge->getWorldY()) / 16 - 1, 256, 256);
+    update((MAXX + badge->getWorldX()) / 16 - 1, (MAXY + badge->getWorldY()) / 16 - 1, 256, 256);
 }
 
 void WorldMap::removeStaticSpawn(StaticSpawn* spawn) {
@@ -373,6 +380,11 @@ void WorldMap::updateSpawnRegionView(Region* region) {
 
     region->setPos((MAXX + x) / 16, (MAXY - y) / 16);
     region->setRect(-radius/2, -radius/2, radius, radius);
+}
+
+void WorldMap::toScenePos(qreal x, qreal y, float& sceneX, float& sceneY) {
+    sceneX = (MAXX + x) / 16;
+    sceneY = (MAXY - y) / 16;
 }
 
 void WorldMap::addStaticSpawn(StaticSpawn* spawn) {

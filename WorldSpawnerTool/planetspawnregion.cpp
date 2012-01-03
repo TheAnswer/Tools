@@ -14,7 +14,7 @@ PlanetSpawnRegion::PlanetSpawnRegion() : Region(10) {
 
     QPen pen;
     pen.setColor(Qt::green);
-    pen.setWidthF(1);
+    pen.setWidthF(0.5);
 
     setBrush(brush);
     setPen(pen);

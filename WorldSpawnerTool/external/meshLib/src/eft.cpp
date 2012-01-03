@@ -183,7 +183,7 @@ unsigned int eft::readSCAP( std::istream &file )
     for( unsigned int i = 0; i < numScap; ++i )
     {
       total += base::read( file, data );
-      std::cout << std::bitset<32>( data ) << " " << std::endl;
+      std::cout << std::bitset<32>( (int)data ) << " " << std::endl;
     }
     total += scapSize;
 

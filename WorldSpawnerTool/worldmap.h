@@ -53,6 +53,7 @@ public:
     void clearMap();
 
     void toWorldPos(qreal x, qreal y, float& worldX, float& worldY);
+    void toScenePos(qreal x, qreal y, float& sceneX, float& sceneY);
 
     inline QMap<QString, PlanetSpawnRegion*>* getSpawnRegions() {
         return &spawnRegions;

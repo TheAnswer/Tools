@@ -145,7 +145,7 @@ unsigned int msh::readD3DFVF(
 #define D3DFVF_RESERVED2           0x6000
     
   base::read( file, codes );
-  std::bitset <32> bs( codes );
+  std::bitset <32> bs( (int) codes );
 
     std::cout << "D3D Flexible Vertex Format Bits: ";
     std::cout << bs << std::endl;

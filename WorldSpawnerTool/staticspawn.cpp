@@ -4,6 +4,11 @@
 #include "mainwindow.h"
 #include "worldmap.h"
 #include "commands.h"
+#include <QGraphicsSceneContextMenuEvent>
+#include <QMenu>
+#include "mainwindow.h"
+#include "creaturemanager.h"
+#include "CreatureObject.h"
 
 StaticSpawn::StaticSpawn() : QGraphicsEllipseItem(-1/2, -1/2, 1, 1) {
     setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -25,6 +30,46 @@ StaticSpawn::StaticSpawn() : QGraphicsEllipseItem(-1/2, -1/2, 1, 1) {
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+    //setFlag(QGraphicsItem::Item)
+}
+
+void StaticSpawn::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
+    event->accept();
+
+    QMenu menu;
+
+
+   /* menu.addAction("Insert static spawn", MainWindow::instance, SLOT(showInsertStaticSpawnWindow()));
+    menu.addAction("Insert badge", MainWindow::instance, SLOT(showInsertBadgeWindow()));*/
+    menu.addAction("View 3d model", this, SLOT(show3dModel()));
+    //menu.addAction("Remove");
+
+    menu.exec(event->screenPos());
+}
+
+void StaticSpawn::show3dModel() {
+    //MainWindow::startSwgOSG(mobile);
+    CreatureObject* creature = MainWindow::instance->getCreatureManager()->getMobile(mobile);
+
+    if (creature == NULL)
+        return;
+
+    QVector<QString>* templates = creature->getTemplates();
+
+    if (templates->size() == 0) {
+        MainWindow::instance->warning("This mobile doesnt have any templates specified");
+    }
+
+    QString file = templates->at(0);
+
+    int idx = file.lastIndexOf("/");
+
+    if (idx < 0)
+        return;
+
+    file = file.insert(idx + 1, "shared_");
+
+    MainWindow::instance->startSwgOSG(file);
 }
 
 void StaticSpawn::setWorldX(float v) {

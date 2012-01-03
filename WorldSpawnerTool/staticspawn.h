@@ -6,7 +6,8 @@
 #include <QSharedData>
 #include "spawn.h"
 
-class StaticSpawn : public QGraphicsEllipseItem, public Spawn {
+class StaticSpawn : public QObject, public QGraphicsEllipseItem, public Spawn  {
+    Q_OBJECT
 protected:
     QString mobile;
     unsigned int respawnTimer;
@@ -15,6 +16,11 @@ protected:
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant& value);
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+
+public slots:
+    void show3dModel();
+
 public:
     StaticSpawn();
 

@@ -26,6 +26,10 @@ public:
         return creatureMap.keys();
     }
 
+    CreatureObject* getMobile(const QString& name) {
+        return creatureMap.value(name, NULL);
+    }
+
 public slots:
     void loadCreatureObjects();
 
