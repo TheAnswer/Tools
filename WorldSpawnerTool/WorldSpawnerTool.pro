@@ -52,7 +52,12 @@ SOURCES += insertwindow.cpp \
     osgqtviewer.cpp \
     lootitemtemplate.cpp \
     lootluamanager.cpp \
-    objectmodel3dviewer.cpp
+    objectmodel3dviewer.cpp \
+    lootgroup.cpp \
+    lootitemtemplatemanager.cpp \
+    lootitemtemplatetablewidgetitem.cpp \
+    createnewlootgroup.cpp \
+    lootmanager.cpp
 HEADERS += insertwindow.h \
     dynamicspawnarea.h \
     nobuildzone.h \
@@ -92,7 +97,13 @@ HEADERS += insertwindow.h \
     lootitemeditor.h \
     lootitemtemplate.h \
     lootluamanager.h \
-    objectmodel3dviewer.h
+    objectmodel3dviewer.h \
+    lootgroup.h \
+    lootitemtemplatemanager.h \
+    lootitemtemplatetablewidgetitem.h \
+    createnewlootgroup.h \
+    lootmanager.h \
+    chancelineedit.h
 FORMS += insertwindow.ui \
     console.ui \
     connect.ui \
@@ -109,12 +120,15 @@ FORMS += insertwindow.ui \
     loadingdialog.ui \
     addlairtypetospawn.ui \
     lootitemeditor.ui \
-    objectmodel3dviewer.ui
+    objectmodel3dviewer.ui \
+    lootitemtemplatemanager.ui \
+    createnewlootgroup.ui \
+    lootmanager.ui
 RESOURCES += Resources.qrc
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../osg_vs9/OpenSceneGraph-3.0.1-build/lib/ -L$$PWD/external/meshLib/lib -L$$PWD/external/treLib/lib -L$$PWD/external/lua -L$$PWD/external/swgOSG/lib -lswgRepository -lmeshLib -ltreLib -losg -losgViewer -losgText -losgDB -losgGA -losgAnimation -losgQt -lOpenThreads
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../osg_vs9/OpenSceneGraph-3.0.1-build/lib/ -L$$PWD/external/meshLib/lib -L$$PWD/external/treLib/lib -L$$PWD/external/swgOSG/lib -L$$PWD/external/lua -lswgRepositoryd -lmeshLibd -ltreLibd  -losgd -losgViewerd -losgTextd -losgDBd -losgGAd -losgAnimationd -losgQtd -losgQtd -lOpenThreadsd
+win32:CONFIG(release, debug|release): LIBS += -LC:/Users/cRush/Desktop/OpenSceneGraph-3.0.1/lib/ -L$$PWD/external/meshLib/lib -L$$PWD/external/treLib/lib -L$$PWD/external/lua/include -L$$PWD/external/swgOSG/lib -lswgRepository -lmeshLib -ltreLib -losg -losgViewer -losgText -losgDB -losgGA -losgAnimation -losgQt -lOpenThreads
+else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Users/cRush/Desktop/OpenSceneGraph-3.0.1/lib/ -L$$PWD/external/meshLib/lib -L$$PWD/external/treLib/lib -L$$PWD/external/swgOSG/lib -L$$PWD/external/lua/include -lswgRepositoryd -lmeshLibd -ltreLibd  -losgd -losgViewerd -losgTextd -losgDBd -losgGAd -losgAnimationd -losgQtd -losgQtd -lOpenThreadsd
 else:unix:!symbian: LIBS += -L$$PWD/../../osg_vs9/OpenSceneGraph-3.0.1-build/lib/ -L$$PWD/external/meshLib/lib -L$$PWD/external/treLib/lib -L$$PWD/external/swgOSG/lib  -lswgRepository -lswg -lswgMsh -losg -losgViewer -ltreLib  -losgText -losgDB -losgGA -losgAnimation -losgQt
 
-INCLUDEPATH += $$PWD/../../osg_vs9/OpenSceneGraph-3.0.1/include $$PWD/external/treLib/include $$PWD/external/lua/include $$PWD/external/meshLib/include $$PWD/external/swgOSG/include $$PWD/../../osg_mingw/boost_1_45_0
-DEPENDPATH += $$PWD/../../osg_vs9/OpenSceneGraph-3.0.1/include $$PWD/external/treLib/include $$PWD/external/lua/include $$PWD/external/meshLib/include $$PWD/external/swgOSG/include $$PWD/../../osg_mingw/boost_1_45_0
+INCLUDEPATH += C:/Users/cRush/Desktop/OpenSceneGraph-3.0.1/include $$PWD/external/treLib/include $$PWD/external/lua/include $$PWD/external/meshLib/include $$PWD/external/swgOSG/include C:/Program Files/boost/boost_1_48_0
+DEPENDPATH += $$PWD/../../Desktop/OpenSceneGraph-3.0.1/include $$PWD/external/treLib/include $$PWD/external/lua/include $$PWD/external/meshLib/include $$PWD/external/swgOSG/include C:/Program Files/boost/boost_1_48_0

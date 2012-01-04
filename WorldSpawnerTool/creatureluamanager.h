@@ -13,8 +13,8 @@
 #include <QString>
 
 class CreatureLuaManager : public LuaParser {
-
     static QString currentFile;
+
 public:
     CreatureLuaManager();
 

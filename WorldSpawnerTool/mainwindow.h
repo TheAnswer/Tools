@@ -19,6 +19,8 @@ class InsertWindow;
 class Settings;
 class CreatureManager;
 class CreatureLuaManager;
+class LootLuaManager;
+class LootManager;
 class PreORCreatureManager;
 class SpawnLuaManager;
 class StaticSpawn;
@@ -36,6 +38,7 @@ class STFViewer;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
+
 private:
     Ui::MainWindow *ui;
 
@@ -47,6 +50,8 @@ private:
     Settings* settings;
     CreatureManager* creatureManager;
     CreatureLuaManager* luaManager;
+    LootLuaManager* lootLuaManager;
+    LootManager* lootManager;
     PreORCreatureManager* preORManager;
     SpawnLuaManager* spawnLuaManager;
     PlanetSelection* planetSelection;
@@ -115,6 +120,7 @@ public slots:
     void addSpawn();
     void removeSpawn();
     void open3dViewer();
+    void displayLootManager();
     void searchBadge(const QString& str);
     void changeWorldMap();
     void saveMap();
@@ -178,8 +184,16 @@ public:
         return lairTypes;
     }
 
+    inline LootLuaManager* getLootLuaManager() {
+        return lootLuaManager;
+    }
+
     inline QAction* getAction(const QString& name) {
       return actions.value(name, NULL);
+    }
+
+    inline LootManager* getLootManager() {
+        return lootManager;
     }
 
     inline ObjectModel3dViewer* getModel3DViewer() {
@@ -190,7 +204,6 @@ public:
 
 signals:
     void printToConsole(const QString& str);
-
 
 };
 

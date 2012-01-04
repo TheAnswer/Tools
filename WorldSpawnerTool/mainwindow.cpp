@@ -12,6 +12,8 @@
 #include <QMessageBox>
 #include "planetspawnregion.h"
 #include "creatureluamanager.h"
+#include "lootluamanager.h"
+#include "lootmanager.h"
 #include "spawnluamanager.h"
 #include "preorcreaturemanager.h"
 #include "staticspawn.h"
@@ -58,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     settings = new Settings(this);
     creatureManager = new CreatureManager(this);
     luaManager = new CreatureLuaManager();
+
     preORManager = new PreORCreatureManager();
     spawnLuaManager = new SpawnLuaManager();
     lairLuaManager = new LairLuaManager();
@@ -109,6 +112,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->action_3dviewer, SIGNAL(triggered()), objectModel3dViewer, SLOT(showNormal()));
     connect(ui->listWidget_badges, SIGNAL(currentTextChanged(QString)), this, SLOT(updateCurrentBadgeSelection(QString)));
     connect(ui->actionSTF_Viewer, SIGNAL(triggered()), stfViewer, SLOT(showNormal()));
+    connect(ui->actionLoot_Manager, SIGNAL(triggered()), this, SLOT(displayLootManager()));
 
     ui->graphicsView->setMouseTracking(true);
     ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
@@ -119,6 +123,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         planetSelection->showNormal();
 
     emit printToConsole("WorldSpawnerTool started");
+
+    lootLuaManager = new LootLuaManager();
+    lootLuaManager->loadLootData();
+
+    lootManager = new LootManager();
 }
 
 QString MainWindow::getApplicationFullName() {
@@ -144,6 +153,8 @@ MainWindow::~MainWindow() {
     delete settings;
     delete creatureManager;
     delete luaManager;
+    delete lootLuaManager;
+    delete lootManager;
     delete preORManager;
     delete spawnLuaManager;
     delete planetSelection;
@@ -727,6 +738,7 @@ void MainWindow::reloadPlanet() {
 
     dialog.setText("spawn groups");
     dialog.setProgress(30);
+
     spawnLuaManager->loadSpawnGroups(serverDir);
 
     dialog.setText("creature manager");
@@ -1187,6 +1199,11 @@ void MainWindow::changeEvent(QEvent *e) {
 
 StaticSpawnTableItem* MainWindow::getStaticSpawnTableData(int row, int column) {
     return dynamic_cast<StaticSpawnTableItem*>(ui->tableWidget_StaticSpawns->item(row, column));
+}
+
+void MainWindow::displayLootManager()
+{
+    lootManager->show();
 }
 
 treArchive* MainWindow::getTreArchive() {
