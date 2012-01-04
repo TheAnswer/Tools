@@ -15,6 +15,7 @@
 #include "badge.h"
 #include <QGraphicsView>
 #include <QMenu>
+#include "worldsnapshotobject.h"
 
 WorldMap::WorldMap(const QString& name) {
     selectedRegion = NULL;
@@ -25,6 +26,44 @@ WorldMap::WorldMap(const QString& name) {
 }
 
 WorldMap::~WorldMap() {
+   clearSpawnedObjects();
+}
+
+void WorldMap::wheelEvent(QGraphicsSceneWheelEvent* event) {
+    int delta = event->delta();
+
+    QList<QGraphicsView*> view = views();
+
+    if (view.size() == 0) {
+        QGraphicsScene::wheelEvent(event);
+
+        return;
+    }
+
+    float val = delta > 0 ? 1.1 : 0.9;
+
+    for (int i = 0; i < view.size(); ++i) {
+        view.at(i)->scale(val, val);
+    }
+
+    event->accept();
+}
+
+void WorldMap::loadPlanetImage() {
+    QString fileName = "ui_map_" + mapName + ".jpg";
+
+    QImage image;
+
+    if (!image.load(fileName)) {
+        MainWindow::instance->outputToConsole("could not load imagefile " + fileName);
+        return;
+    } else
+        MainWindow::instance->outputToConsole("loaded " + fileName);
+
+    addPixmap(QPixmap::fromImage(image));
+}
+
+void WorldMap::clearSpawnedObjects() {
     QMapIterator<QString, QVector<StaticSpawn*>* > mapIterator(staticSpawns);
 
     while (mapIterator.hasNext()) {
@@ -64,73 +103,23 @@ WorldMap::~WorldMap() {
 
         delete badge;
     }
-}
 
-void WorldMap::wheelEvent(QGraphicsSceneWheelEvent* event) {
-    int delta = event->delta();
+    QMapIterator<unsigned int, WorldSnapshotObject*> wsIterator(worldSnapshotObjects);
 
-    QList<QGraphicsView*> view = views();
+    while (wsIterator.hasNext()) {
+        wsIterator.next();
 
-    if (view.size() == 0) {
-        QGraphicsScene::wheelEvent(event);
+        WorldSnapshotObject* obj = wsIterator.value();
 
-        return;
+        if (obj->scene() != NULL)
+            removeItem(obj);
+
+        delete obj;
     }
-
-    float val = delta > 0 ? 1.1 : 0.9;
-
-    for (int i = 0; i < view.size(); ++i) {
-        view.at(i)->scale(val, val);
-    }
-
-    event->accept();
-}
-
-void WorldMap::loadPlanetImage() {
-    QString fileName = "ui_map_" + mapName + ".jpg";
-
-    QImage image;
-
-    if (!image.load(fileName)) {
-        MainWindow::instance->outputToConsole("could not load imagefile " + fileName);
-        return;
-    } else
-        MainWindow::instance->outputToConsole("loaded " + fileName);
-
-    addPixmap(QPixmap::fromImage(image));
 }
 
 void WorldMap::clearMap() {
-    QMapIterator<QString, PlanetSpawnRegion* > mapIteratorRegions(spawnRegions);
-
-    while (mapIteratorRegions.hasNext()) {
-        mapIteratorRegions.next();
-
-        QGraphicsItem* item = mapIteratorRegions.value();
-        removeItem(item);
-        delete item;
-    }
-
-    spawnRegions.clear();
-
-    QMapIterator<QString, QVector<StaticSpawn*>* > mapIterator(staticSpawns);
-
-    while (mapIterator.hasNext()) {
-        mapIterator.next();
-
-        QVector<StaticSpawn*>* spawns = mapIterator.value();
-
-        for (int i = 0; i < spawns->size(); ++i) {
-            StaticSpawn* spawn = spawns->at(i);
-
-            removeItem(spawn);
-            delete spawn;
-        }
-
-        delete spawns;
-    }
-
-    staticSpawns.clear();
+    clearSpawnedObjects();
 
     selectedRegion = NULL;
 
@@ -320,6 +309,20 @@ void WorldMap::addBadge(Badge* badge) {
     badge->setRect(-radius/2, -radius/2, radius, radius);
 
     addItem(badge);
+}
+
+void WorldMap::addWorldSnapshotObject(WorldSnapshotObject* object) {
+    //if ()
+    worldSnapshotObjects.insert(object->getSnapshotID(), object);
+
+    float sceneX, sceneY;
+
+    toScenePos(object->getWorldX(), object->getWorldY(), sceneX, sceneY);
+
+    //object->setPos(sceneX, sceneY);
+    object->setRect(sceneX, sceneY, 0.5, 0.5);
+
+    addItem(object);
 }
 
 void WorldMap::removeBadge(Badge* badge) {

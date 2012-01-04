@@ -29,6 +29,7 @@
 #include <string>
 #include <list>
 #include <treLib/treClass.hpp>
+#include <OpenThreads/Mutex>
 
 #ifndef TREARCHIVE_HPP
 #define TREARCHIVE_HPP
@@ -59,6 +60,7 @@ public:
 
 protected:
 	std::list< treClass* > treList;
+	OpenThreads::Mutex mutex;
 
 private:
 

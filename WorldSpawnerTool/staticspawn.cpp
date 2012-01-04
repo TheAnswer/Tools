@@ -47,6 +47,32 @@ void StaticSpawn::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
     menu.exec(event->screenPos());
 }
 
+QString StaticSpawn::getSharedTemplate() {
+    CreatureObject* creature = MainWindow::instance->getCreatureManager()->getMobile(mobile);
+
+    if (creature == NULL)
+        return sharedTemplate;
+
+    QVector<QString>* templates = creature->getTemplates();
+
+    if (templates->size() == 0) {
+        MainWindow::instance->warning("This mobile doesnt have any templates specified");
+
+        return sharedTemplate;
+    }
+
+    QString file = templates->at(0);
+
+    int idx = file.lastIndexOf("/");
+
+    if (idx < 0)
+        return sharedTemplate;
+
+    file = file.insert(idx + 1, "shared_");
+
+    return file;
+}
+
 void StaticSpawn::show3dModel() {
     //MainWindow::startSwgOSG(mobile);
     CreatureObject* creature = MainWindow::instance->getCreatureManager()->getMobile(mobile);
@@ -58,6 +84,8 @@ void StaticSpawn::show3dModel() {
 
     if (templates->size() == 0) {
         MainWindow::instance->warning("This mobile doesnt have any templates specified");
+
+        return;
     }
 
     QString file = templates->at(0);

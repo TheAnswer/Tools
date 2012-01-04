@@ -24,6 +24,8 @@
 */
 
 #include <treLib/treArchive.hpp>
+#include <OpenThreads/ScopedLock>
+#include <OpenThreads/Mutex>
 
 treArchive::treArchive()
 {
@@ -187,6 +189,8 @@ std::stringstream *treArchive::getFileStream( const std::string &filename )
       if( (*i)->getFileRecordIndex( correctedFilename, index ) == true )
 	{
 	  // First instance of file was found, return stream
+		OpenThreads::ScopedLock<OpenThreads::Mutex> lock(mutex);
+
 	  return ( (*i)->saveRecordAsStream( index ) );
 	}
     }

@@ -65,15 +65,9 @@ swgRepository::~swgRepository()
 }
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadFile( const std::string &filename )
-{
-  if( filename.empty() )
-    {
-      std::cout << "loadFile called with null filename!" << std::endl;
-      return NULL;
-    }
-  
-  // See if file is already loaded...
+swgRepository::findFile( const std::string &filename ) {
+	OpenThreads::ScopedLock<OpenThreads::ReentrantMutex> locker(mutex);
+
   std::map< std::string, osg::ref_ptr< osg::Node > >::iterator
     currentFile = nodeMap.find( filename );
   
@@ -84,12 +78,29 @@ swgRepository::loadFile( const std::string &filename )
       std::cout << "File already loaded: " << filename << std::endl;
       return currentFile->second;
     }
+
+  return NULL;
+}
+
+osg::ref_ptr< osg::Node >
+swgRepository::loadFile( const std::string &filename )
+{
+  if( filename.empty() )
+    {
+      std::cout << "loadFile called with null filename!" << std::endl;
+      return NULL;
+    }
+  
+  osg::ref_ptr< osg::Node > foundFile = findFile(filename);
+
+  if (foundFile != NULL)
+	  return foundFile;
   
   // Otherwise we need to read the file from the archive.
   std::cout << "Reading file from archive: " << filename << std::endl;
 
   // Read file data into a stream
-  std::auto_ptr< std::istream >
+  boost::shared_ptr< std::istream >
     iffFile( archive.getFileStream( filename ) );
   
   if( NULL == iffFile.get() )
@@ -181,6 +192,8 @@ swgRepository::loadFile( const std::string &filename )
   
   if( NULL != newNode )
     {
+		 OpenThreads::ScopedLock<OpenThreads::ReentrantMutex> locker(mutex);
+
       nodeMap[filename] = newNode;
     }
   
@@ -195,6 +208,8 @@ swgRepository::loadTextureFile( const std::string &filename )
       std::cout << "loadTextureFile called with null filename!" << std::endl;
       return NULL;
     }
+
+  OpenThreads::ScopedLock<OpenThreads::ReentrantMutex> locker(mutex);
   
   // See if file is already loaded...
   std::map< std::string, osg::ref_ptr< osg::Texture2D > >::iterator
@@ -212,7 +227,7 @@ swgRepository::loadTextureFile( const std::string &filename )
   std::cout << "Reading file from archive: " << filename << std::endl;
 
   // Setup an auto_ptr to handle the istream.
-  std::auto_ptr<std::istream>
+  boost::shared_ptr<std::istream>
     textureFile( archive.getFileStream( filename ) );
   
   // Call DDS plugin directly to read from istream.
@@ -252,6 +267,8 @@ swgRepository::loadShader( const std::string &shaderFilename )
       return NULL;
     }
 
+  OpenThreads::ScopedLock<OpenThreads::ReentrantMutex> locker(mutex);
+
   std::map< std::string, osg::ref_ptr< osg::StateSet > >::iterator
     currentState = stateMap.find( shaderFilename );
 
@@ -266,8 +283,11 @@ swgRepository::loadShader( const std::string &shaderFilename )
   std::cout << "Reading shader from archive: " << shaderFilename << std::endl;
 
   // Read file data into a stream
-  std::auto_ptr< std::istream >
+  boost::shared_ptr< std::istream >
     shaderFile( archive.getFileStream( shaderFilename ) );
+
+  if (shaderFile == NULL)
+	  return NULL;
   
   // Figure out what type this generic .iff actually is.
   std::string type =  ml::base::getType( *shaderFile );
@@ -445,7 +465,7 @@ swgRepository::loadShader( const std::string &shaderFilename )
 }
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadPRTO( std::auto_ptr<std::istream> prtoFile )
+swgRepository::loadPRTO( boost::shared_ptr<std::istream> prtoFile )
 {
   // Read from stream into prto record
   ml::prto swgPRTO;
@@ -471,7 +491,7 @@ swgRepository::loadPRTO( std::auto_ptr<std::istream> prtoFile )
 }
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadMSH( std::auto_ptr<std::istream> meshFile )
+swgRepository::loadMSH( boost::shared_ptr<std::istream> meshFile )
 {
   // Read from stream into msh record
   ml::msh swgMesh;
@@ -606,7 +626,7 @@ swgRepository::loadMSH( std::auto_ptr<std::istream> meshFile )
 }
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadSKMG( std::auto_ptr<std::istream> meshFile )
+swgRepository::loadSKMG( boost::shared_ptr<std::istream> meshFile )
 {
   // Read from stream into skmg record
   ml::skmg swgSKMG;
@@ -720,7 +740,7 @@ swgRepository::loadSKMG( std::auto_ptr<std::istream> meshFile )
 }
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadLOD( std::auto_ptr<std::istream> lodFile )
+swgRepository::loadLOD( boost::shared_ptr<std::istream> lodFile )
 {
   // Read from stream into lod record
   ml::lod swgLOD;
@@ -748,7 +768,7 @@ swgRepository::loadLOD( std::auto_ptr<std::istream> lodFile )
 }
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadCMP( std::auto_ptr<std::istream> cmpFile )
+swgRepository::loadCMP( boost::shared_ptr<std::istream> cmpFile )
 {
   // Read from stream into cmp record
   ml::cmp swgCMP;
@@ -798,7 +818,7 @@ swgRepository::loadCMP( std::auto_ptr<std::istream> cmpFile )
 }
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadAPT( std::auto_ptr<std::istream> aptFile )
+swgRepository::loadAPT( boost::shared_ptr<std::istream> aptFile )
 {
   // Read from stream into apt record
   ml::apt swgAPT;
@@ -820,7 +840,7 @@ swgRepository::loadAPT( std::auto_ptr<std::istream> aptFile )
 }
 
 osg::ref_ptr<osg::Node>
-swgRepository::loadSTAT( std::auto_ptr<std::istream> statFile )
+swgRepository::loadSTAT( boost::shared_ptr<std::istream> statFile )
 {
   // Read from stream into stat record
   ml::stat swgSTAT;
@@ -841,7 +861,7 @@ swgRepository::loadSTAT( std::auto_ptr<std::istream> statFile )
 }
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadSTOT( std::auto_ptr<std::istream> stotFile )
+swgRepository::loadSTOT( boost::shared_ptr<std::istream> stotFile )
 {
   // Read from stream into stot record
   ml::stot swgSTOT;
@@ -862,7 +882,7 @@ swgRepository::loadSTOT( std::auto_ptr<std::istream> stotFile )
 }
 
 osg::ref_ptr< osg::Node > 
-swgRepository::loadSCOT( std::auto_ptr<std::istream> iffFile ) {
+swgRepository::loadSCOT( boost::shared_ptr<std::istream> iffFile ) {
 // Read from stream into stot record
   ml::scot swgSCOT;
   swgSCOT.readSCOT( *iffFile );
@@ -894,7 +914,7 @@ swgRepository::loadSCOT( std::auto_ptr<std::istream> iffFile ) {
 }
 
 osg::ref_ptr< osg::Node > 
-swgRepository::loadCLDF( std::auto_ptr<std::istream> iffFile ) {
+swgRepository::loadCLDF( boost::shared_ptr<std::istream> iffFile ) {
 	ml::cldf swgCLDF;
 	swgCLDF.readCLDF(*iffFile);
 
@@ -919,7 +939,7 @@ swgRepository::loadCLDF( std::auto_ptr<std::istream> iffFile ) {
 }
 
 osg::ref_ptr< osg::Node > 
-swgRepository::loadSMAT( std::auto_ptr<std::istream> iffFile ) {
+swgRepository::loadSMAT( boost::shared_ptr<std::istream> iffFile ) {
 	ml::smat swgSMAT;
 	swgSMAT.readSMAT(*iffFile);
 
@@ -945,7 +965,7 @@ swgRepository::loadSMAT( std::auto_ptr<std::istream> iffFile ) {
 
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadSBOT( std::auto_ptr<std::istream> sbotFile )
+swgRepository::loadSBOT( boost::shared_ptr<std::istream> sbotFile )
 {
   // Read from stream into sbot record
   ml::sbot swgSBOT;
@@ -979,7 +999,7 @@ swgRepository::loadSBOT( std::auto_ptr<std::istream> sbotFile )
 }
 
 osg::ref_ptr<osg::Node> 
-swgRepository::loadINLY( std::auto_ptr<std::istream> inlyFile )
+swgRepository::loadINLY( boost::shared_ptr<std::istream> inlyFile )
 {
   // Read from stream into inly record
   ml::ilf swgINLY;
@@ -1042,7 +1062,7 @@ swgRepository::loadINLY( std::auto_ptr<std::istream> inlyFile )
 }
 
 osg::ref_ptr<osg::Node> 
-swgRepository::loadWSNP( std::auto_ptr<std::istream> wsnpFile )
+swgRepository::loadWSNP( boost::shared_ptr<std::istream> wsnpFile )
 {
   // Read from stream into wsnp record
   ml::ws swgWSNP;
@@ -1163,7 +1183,7 @@ osg::Geode* createLine( const osg::Vec3 &xyz )
 }
 
 osg::ref_ptr< osgAnimation::Skeleton >
-swgRepository::loadSKTM( std::auto_ptr<std::istream> sktmFile )
+swgRepository::loadSKTM( boost::shared_ptr<std::istream> sktmFile )
 {
   ml::sktm swgSKTM;
   swgSKTM.readSKTM( *sktmFile );
@@ -1245,7 +1265,7 @@ swgRepository::loadSKTM( std::auto_ptr<std::istream> sktmFile )
 }
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadMLOD( std::auto_ptr<std::istream> mlodFile )
+swgRepository::loadMLOD( boost::shared_ptr<std::istream> mlodFile )
 {
   // Read from stream into mlod record
   ml::mlod swgMLOD;
@@ -1386,7 +1406,7 @@ osg::Geode* createCircle( const ml::trn::bcir &cir, float alt )
 }
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadTRN( std::auto_ptr<std::istream> trnFile )
+swgRepository::loadTRN( boost::shared_ptr<std::istream> trnFile )
 {
   // Read from stream into trn record
   ml::trn swgTRN;
@@ -1453,7 +1473,7 @@ osg::Geode* createWater( const float &terrainHalfSize, const float &height )
 }
 
 osg::ref_ptr< osg::Node >
-swgRepository::loadTRN( std::auto_ptr<std::istream> trnFile )
+swgRepository::loadTRN( boost::shared_ptr<std::istream> trnFile )
 {
   // Read from stream into trn record
   ml::trn swgTRN;

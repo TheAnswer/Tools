@@ -33,6 +33,8 @@ public:
     void setHeading(float head);
     void setParentID(unsigned long long id);
 
+    QString getSharedTemplate();
+
     inline void setMobile(const QString& mob) {
         mobile = mob;
     }

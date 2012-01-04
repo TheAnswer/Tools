@@ -122,6 +122,7 @@ public slots:
     void showInsertStaticSpawnWindow();
     void showInsertBadgeWindow();
     void loadInSTFViewer(const QString& stringID);
+    void viewSelectionsIn3d();
 
 protected:
     void changeEvent(QEvent *e);

@@ -9,6 +9,7 @@ class PlanetSpawnRegion;
 class StaticSpawn;
 class Badge;
 class Region;
+class WorldSnapshotObject;
 
 class WorldMap : public QGraphicsScene {
     Q_OBJECT
@@ -18,6 +19,7 @@ class WorldMap : public QGraphicsScene {
     QMap<QString, QVector<StaticSpawn* >* > staticSpawns;
     QString mapName;
     QMap<QString, Badge*> badges;
+    QMap<unsigned int, WorldSnapshotObject*> worldSnapshotObjects;
 
 public:
     const static int MAXX = 8192;
@@ -29,6 +31,8 @@ protected:
    // void dragMoveEvent(QGraphicsSceneDragDropEvent* event);
     void loadPlanetImage();
     void wheelEvent(QGraphicsSceneWheelEvent* event);
+
+    void clearSpawnedObjects();
 
 public:
     WorldMap(const QString& name);
@@ -49,6 +53,7 @@ public:
     void removeBadge(Badge* badge);
     void updateStaticSpawnView(StaticSpawn* spawn);
     void updateSpawnRegionView(Region* region);
+    void addWorldSnapshotObject(WorldSnapshotObject* object);
 
     void clearMap();
 

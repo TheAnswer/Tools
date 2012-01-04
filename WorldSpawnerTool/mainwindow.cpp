@@ -34,6 +34,7 @@
 #include "insertbadgeform.h"
 #include "stfviewer.h"
 #include <meshLib/ws.hpp>
+#include "worldsnapshotobject.h"
 
 using namespace utils;
 
@@ -110,7 +111,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->actionSTF_Viewer, SIGNAL(triggered()), stfViewer, SLOT(showNormal()));
 
     ui->graphicsView->setMouseTracking(true);
-    ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+    ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
 
     if (settings->getServerDirectory().isEmpty())
         settings->showNormal();
@@ -200,6 +201,11 @@ void MainWindow::createActions() {
     actions["showCommandList"] = action;
     ui->menuEdit->addAction(action);
 
+    action = new QAction(tr("&View Selected Objects in 3D"), this);
+    actions["view3D"] = action;
+    connect(action, SIGNAL(triggered()), this, SLOT(viewSelectionsIn3d()));
+    ui->mainToolBar->addAction(action);
+
     action = undoStack->createUndoAction(this, tr("&Undo"));
     action->setShortcuts(QKeySequence::Undo);
     actions["undoAction"] = action;
@@ -211,6 +217,33 @@ void MainWindow::createActions() {
     actions["redoAction"] = action;
     ui->menuEdit->addAction(action);
     ui->mainToolBar->addAction(action);
+
+}
+
+void MainWindow::viewSelectionsIn3d() {
+    WorldMap* map = getCurrentWorldMap();
+
+    QList<QGraphicsItem*> items = map->selectedItems();
+
+    if (items.size() == 0) {
+        warning("No items selected");
+    }
+
+    QList<Spawn*> spawns;
+
+    for (int i = 0; i < items.size(); ++i) {
+        QGraphicsItem* item = items[i];
+        Spawn* spawn = dynamic_cast<Spawn*>(item);
+
+        if (spawn != NULL) {
+            spawns.append(spawn);
+        }
+    }
+
+    if (spawns.size() == 0)
+        return;
+
+    objectModel3dViewer->addSpawnsToScene(spawns);
 }
 
 void MainWindow::insertBadgeFromWindow() {
@@ -793,16 +826,16 @@ void MainWindow::loadWorldSnapshot() {
 
                 map->toScenePos(node.getX(), node.getZ(), sceneX, sceneY);
 
-                QGraphicsRectItem* rec = new QGraphicsRectItem(sceneX, sceneY, 0.5, 0.5);
-                QPen pen = rec->pen();
-                QColor color(0xE0, 0xFF, 0xFF, 50);
-                //color.setGreen();
-                pen.setColor(color);
-                pen.setWidthF(0.5);
-                rec->setPen(pen);
+                WorldSnapshotObject* obj = new WorldSnapshotObject(node.getID(), node.getObjectFilename().c_str());
+                obj->setWorldX(node.getX());
+                obj->setWorldY(node.getZ());
+                obj->setWorldZ(node.getY());
+                obj->setDirW(node.getQuatW());
+                obj->setDirX(node.getQuatX());
+                obj->setDirY(node.getQuatY());
+                obj->setDirZ(node.getQuatZ());
 
-                map->addItem(rec);
-
+                map->addWorldSnapshotObject(obj);
 
             }
 
