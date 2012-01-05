@@ -189,5 +189,41 @@ void LootLuaManager::writeLootGroups() {
 }
 
 void LootLuaManager::writeLootItemTemplates() {
+    QString outputDirectory = MainWindow::instance->getSettings()->getServerDirectory() + "/bin/scripts/loot/";
 
+    QString fileName = outputDirectory + "items.lua";
+
+    QFile itemsFile(fileName);
+
+    if (!itemsFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        MainWindow::instance->outputToConsole("WARNING: Could not open items.lua for writing. Exiting...");
+        return;
+    }
+
+    QTextStream outItems(&itemsFile);
+
+    QMapIterator<QString, QExplicitlySharedDataPointer<LootItemTemplate> > i(lootItems);
+
+    while (i.hasNext()) {
+        i.next();
+
+        QExplicitlySharedDataPointer<LootItemTemplate> item = i.value();
+        QString itemFileName = outputDirectory + "items/" + i.key() + ".lua";
+
+        QFile itemFile(itemFileName);
+
+        if (!itemFile.open(QIODevice::WriteOnly | QIODevice::Text))
+            continue;
+
+        QString data = item->serializeToLua();
+
+        QTextStream out(&itemFile);
+        out << data;
+
+        itemFile.close();
+
+        outItems << "includeFile(\"items/" + i.key() + ".lua\")" << endl;
+    }
+
+    itemsFile.close();
 }

@@ -98,6 +98,7 @@
     <addaction name="actionPreOR_Creatures"/>
     <addaction name="action_3dviewer"/>
     <addaction name="actionSTF_Viewer"/>
+    <addaction name="actionLootManager"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -613,6 +614,11 @@
   <action name="actionSTF_Viewer">
    <property name="text">
     <string>STF Viewer</string>
+   </property>
+  </action>
+  <action name="actionLootManager">
+   <property name="text">
+    <string>Loot Manager</string>
    </property>
   </action>
  </widget>

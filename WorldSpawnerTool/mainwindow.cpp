@@ -112,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->action_3dviewer, SIGNAL(triggered()), objectModel3dViewer, SLOT(showNormal()));
     connect(ui->listWidget_badges, SIGNAL(currentTextChanged(QString)), this, SLOT(updateCurrentBadgeSelection(QString)));
     connect(ui->actionSTF_Viewer, SIGNAL(triggered()), stfViewer, SLOT(showNormal()));
-    connect(ui->actionLoot_Manager, SIGNAL(triggered()), this, SLOT(displayLootManager()));
+    connect(ui->actionLootManager, SIGNAL(triggered()), this, SLOT(displayLootManager()));
 
     ui->graphicsView->setMouseTracking(true);
     ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);

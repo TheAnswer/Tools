@@ -1,6 +1,8 @@
 #include "lootitemtemplate.h"
 #include "LuaParser.h"
 #include "mainwindow.h"
+#include "QTextStream"
+
 LootItemTemplate::LootItemTemplate(const QString& itemName) {
     itemTemplate = itemName;
 
@@ -81,4 +83,39 @@ void LootItemTemplate::readObject(lua_State* L) {
 
 QString LootItemTemplate::toString() const {
     return QString("{}");
+}
+
+QString LootItemTemplate::serializeToLua() {
+    QString data;
+    QTextStream stream(&data);
+
+    stream << itemTemplate << " = {" << endl;
+    stream << "\tminimumLevel = " << minimumLevel << "," << endl;
+    stream << "\tmaximumLevel = " << maximumLevel << "," << endl;
+    stream << "\tcustomObjectName = \"" << customObjectName << "\"," << endl;
+    stream << "\tdirectObjectTemplate = \"" << directObjectTemplate << "\"," << endl;
+    stream << "\tdraftSchematic = \"" << directObjectTemplate << "\"" << endl; //TODO: Add back in the comma later.
+
+    /*
+    stream << "\tlootItems = {" << endl;
+    QMapIterator<QString, int> i(entries);
+
+    while (i.hasNext()) {
+        i.next();
+
+        stream << "\t\t{itemTemplate = \"" << i.key() << "\", weight = " << i.value() << "}";
+
+        if (i.hasNext())
+            stream << ",";
+
+        stream << endl;
+    }
+
+    stream << "\t}" << endl;*/
+
+    stream << "}" << endl << endl;
+
+    stream << "addLootItemTemplate(\"" << itemTemplate << "\", " << itemTemplate << ")";
+
+    return data;
 }

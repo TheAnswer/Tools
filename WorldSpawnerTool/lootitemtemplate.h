@@ -42,6 +42,8 @@ public:
 
     QString toString() const;
 
+    QString serializeToLua();
+
 public:
     //Getters
     inline int getMinLevel() {

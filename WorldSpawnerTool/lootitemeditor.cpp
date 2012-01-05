@@ -1,7 +1,6 @@
 #include "lootitemeditor.h"
 #include "ui_lootitemeditor.h"
 #include "lootitemtemplatemanager.h"
-#include "lootgroupeditor.h"
 #include "QMessageBox"
 #include "QAbstractButton"
 #include "mainwindow.h"
