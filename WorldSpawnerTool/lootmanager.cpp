@@ -163,7 +163,7 @@ void LootManager::insertEntryToGroupTable(const QString& templateName, int weigh
     weightWidget->setAlignment(Qt::AlignRight);
     weightWidget->setFrame(false);
     weightWidget->setValidator(validator);
-    weightWidget->setText(QString::number(weight / 10000, 'f', 5));
+    weightWidget->setText(QString::number(weight / 100000, 'f', 5));
     QPalette palette;
     palette.setColor(QPalette::Base, Qt::transparent);
     weightWidget->setPalette(palette);
@@ -330,7 +330,7 @@ void LootManager::updateChanceTotal() {
 
         totalChance += dblChance;
 
-        currentLootGroup->setChance(itemName, qRound(dblChance * 10000));
+        currentLootGroup->setChance(itemName, qRound(dblChance * 100000));
     }
 
     QColor color;
@@ -380,10 +380,10 @@ void LootManager::normalizeChance() {
     for (int i = 0; i < ui->tableWidget_LootGroups->rowCount(); ++i) {
         QString itemName = ui->tableWidget_LootGroups->item(i, 0)->text();
 
-        double chance = currentLootGroup->getChance(itemName) / 10000;
+        double chance = currentLootGroup->getChance(itemName) / 100000;
         double newChance = chance / totalChance * 100;
 
-        currentLootGroup->setChance(itemName, qRound(newChance * 10000));
+        currentLootGroup->setChance(itemName, qRound(newChance * 100000));
 
         QLineEdit* chanceWidget = dynamic_cast<QLineEdit*>(ui->tableWidget_LootGroups->cellWidget(i, 1));
         chanceWidget->setText(QString::number(newChance, 'f', 5));

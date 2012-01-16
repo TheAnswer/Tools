@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>979</width>
-    <height>585</height>
+    <width>1073</width>
+    <height>1264</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,1153 +16,1833 @@
   <property name="sizeGripEnabled">
    <bool>true</bool>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_3">
-   <item>
-    <widget class="QScrollArea" name="scrollArea">
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>942</width>
-        <height>839</height>
-       </rect>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>721</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_11">
+    <item row="0" column="1">
+     <widget class="QLabel" name="label_13">
+      <property name="text">
+       <string>Search</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_13">
-       <item row="0" column="0" colspan="4">
-        <layout class="QGridLayout" name="gridLayout_11">
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_13">
-           <property name="text">
-            <string>Search</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QComboBox" name="comboBox">
-           <property name="minimumSize">
-            <size>
-             <width>300</width>
-             <height>0</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit"/>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_12">
-           <property name="text">
-            <string>File</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="0" column="4" colspan="2">
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Load objects</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="7">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="reloadCreature">
-           <property name="maximumSize">
-            <size>
-             <width>120</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Reload Creature</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="saveCreature">
-           <property name="maximumSize">
-            <size>
-             <width>120</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Save Creature</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_addCreature">
-           <property name="text">
-            <string>Add Creature</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0" rowspan="5">
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Object Name</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="objectName"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Social Group</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Pvp Faction</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="socialGroup"/>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="pvpFaction"/>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>Level</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QSpinBox" name="level">
-           <property name="maximum">
-            <number>1000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Hit Chance</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QDoubleSpinBox" name="chanceHit"/>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>Min Damage</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QSpinBox" name="minDamage">
-           <property name="maximum">
-            <number>10000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string>Base XP</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="1">
-          <widget class="QSpinBox" name="baseXp">
-           <property name="maximum">
-            <number>10000000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="0">
-          <widget class="QLabel" name="label_8">
-           <property name="text">
-            <string>Base HAM</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="1">
-          <widget class="QSpinBox" name="baseHAM">
-           <property name="maximum">
-            <number>100000000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="0">
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>Base HAM Max</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="1">
-          <widget class="QSpinBox" name="baseHAMmax">
-           <property name="maximum">
-            <number>10000000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="0">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>Armor</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="1">
-          <widget class="QSpinBox" name="armor"/>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string>Max Damage</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QSpinBox" name="maxDamage">
-           <property name="maximum">
-            <number>1000000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="0">
-          <widget class="QLabel" name="label_27">
-           <property name="text">
-            <string>Meat type</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="1">
-          <widget class="QLineEdit" name="meatType"/>
-         </item>
-         <item row="12" column="0">
-          <widget class="QLabel" name="label_28">
-           <property name="text">
-            <string>Meat amount</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="12" column="1">
-          <widget class="QSpinBox" name="meatAmount">
-           <property name="maximum">
-            <number>1000000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="13" column="0">
-          <widget class="QLabel" name="label_29">
-           <property name="text">
-            <string>Hide type</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="13" column="1">
-          <widget class="QLineEdit" name="hideType"/>
-         </item>
-         <item row="14" column="0">
-          <widget class="QLabel" name="label_30">
-           <property name="text">
-            <string>Hide amount</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="14" column="1">
-          <widget class="QSpinBox" name="hideAmount">
-           <property name="maximum">
-            <number>10000000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="15" column="0">
-          <widget class="QLabel" name="label_31">
-           <property name="text">
-            <string>Bone type</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="15" column="1">
-          <widget class="QLineEdit" name="boneType">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="16" column="0">
-          <widget class="QLabel" name="label_32">
-           <property name="text">
-            <string>Bone amount</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="16" column="1">
-          <widget class="QSpinBox" name="boneAmount">
-           <property name="maximum">
-            <number>1000000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="17" column="0">
-          <widget class="QLabel" name="label_33">
-           <property name="text">
-            <string>Milk</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="17" column="1">
-          <widget class="QSpinBox" name="milk">
-           <property name="maximum">
-            <number>1000000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="18" column="0">
-          <widget class="QLabel" name="label_42">
-           <property name="text">
-            <string>Convo Template</string>
-           </property>
-          </widget>
-         </item>
-         <item row="19" column="0">
-          <widget class="QLabel" name="label_34">
-           <property name="text">
-            <string>Taming chance</string>
-           </property>
-          </widget>
-         </item>
-         <item row="19" column="1">
-          <widget class="QDoubleSpinBox" name="tamingChance">
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="20" column="0">
-          <widget class="QLabel" name="label_35">
-           <property name="text">
-            <string>Ferocity</string>
-           </property>
-          </widget>
-         </item>
-         <item row="20" column="1">
-          <widget class="QSpinBox" name="ferocity">
-           <property name="maximum">
-            <number>100000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="18" column="1">
-          <widget class="QLineEdit" name="lineEdit_ConversationTemplate"/>
-         </item>
-         <item row="0" column="2">
-          <widget class="QToolButton" name="toolButton_name">
-           <property name="text">
-            <string>...</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="1" rowspan="4" colspan="2">
-        <layout class="QGridLayout" name="gridLayout_10">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_14">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Pvp Bitmask</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="attackable">
-           <property name="text">
-            <string>Attackable</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QCheckBox" name="aggressive">
-           <property name="text">
-            <string>Aggressive</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QCheckBox" name="overt">
-           <property name="text">
-            <string>Overt</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QCheckBox" name="enemy">
-           <property name="text">
-            <string>Enemy</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_15">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Creature Bitmask</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QCheckBox" name="pack">
-           <property name="text">
-            <string>Pack</string>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <widget class="QCheckBox" name="herd">
-           <property name="text">
-            <string>Herd</string>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="0">
-          <widget class="QCheckBox" name="killer">
-           <property name="text">
-            <string>Killer</string>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="0">
-          <widget class="QCheckBox" name="stalker">
-           <property name="text">
-            <string>Stalker</string>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="0">
-          <widget class="QCheckBox" name="baby">
-           <property name="text">
-            <string>Baby</string>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="0">
-          <widget class="QCheckBox" name="lair">
-           <property name="text">
-            <string>Lair</string>
-           </property>
-          </widget>
-         </item>
-         <item row="13" column="0">
-          <widget class="QLabel" name="label_16">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Diet</string>
-           </property>
-          </widget>
-         </item>
-         <item row="14" column="0">
-          <widget class="QCheckBox" name="carnivore">
-           <property name="text">
-            <string>Carnivore</string>
-           </property>
-          </widget>
-         </item>
-         <item row="15" column="0">
-          <widget class="QCheckBox" name="herbivore">
-           <property name="text">
-            <string>Herbivore</string>
-           </property>
-          </widget>
-         </item>
-         <item row="12" column="0">
-          <widget class="QCheckBox" name="checkBox_healer">
-           <property name="text">
-            <string>Healer</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="5" colspan="2">
-        <layout class="QGridLayout" name="gridLayout_2">
-         <item row="2" column="0" colspan="2">
-          <widget class="QProgressBar" name="progressBar">
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="3" rowspan="2" colspan="3">
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_17">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Resists</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_18">
-           <property name="text">
-            <string>kinetic</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QDoubleSpinBox" name="kinetic">
-           <property name="minimum">
-            <double>-1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_19">
-           <property name="text">
-            <string>energy</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QDoubleSpinBox" name="energy">
-           <property name="minimum">
-            <double>-1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_20">
-           <property name="text">
-            <string>blast</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QDoubleSpinBox" name="blast">
-           <property name="minimum">
-            <double>-1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string>heat</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QDoubleSpinBox" name="heat">
-           <property name="minimum">
-            <double>-1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_22">
-           <property name="text">
-            <string>cold</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QDoubleSpinBox" name="cold">
-           <property name="minimum">
-            <double>-1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_23">
-           <property name="text">
-            <string>electricity</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QDoubleSpinBox" name="electricity">
-           <property name="minimum">
-            <double>-1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <widget class="QLabel" name="label_24">
-           <property name="text">
-            <string>acid</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="1">
-          <widget class="QDoubleSpinBox" name="acid">
-           <property name="minimum">
-            <double>-1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="0">
-          <widget class="QLabel" name="label_25">
-           <property name="text">
-            <string>stun</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="1">
-          <widget class="QDoubleSpinBox" name="stun">
-           <property name="minimum">
-            <double>-1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="0">
-          <widget class="QLabel" name="label_26">
-           <property name="text">
-            <string>lightsaber</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="1">
-          <widget class="QDoubleSpinBox" name="lightsaber">
-           <property name="minimum">
-            <double>-1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="6" colspan="2">
-        <layout class="QGridLayout" name="gridLayout_12">
-         <item row="0" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QComboBox" name="templates">
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>0</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="removeTemplate">
-             <property name="text">
-              <string>Remove Template</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="1" column="0">
-          <layout class="QGridLayout" name="gridLayout_9">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_36">
-             <property name="text">
-              <string>Template</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="newTemplate"/>
-           </item>
-           <item row="1" column="1">
-            <layout class="QGridLayout" name="gridLayout_5">
-             <item row="0" column="0">
-              <widget class="QPushButton" name="addTemplate">
-               <property name="maximumSize">
-                <size>
-                 <width>120</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Add Template</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="1" column="0">
-            <widget class="QPushButton" name="pushButton_view3d">
-             <property name="text">
-              <string>View 3d model</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item row="3" column="6" colspan="2">
-        <layout class="QGridLayout" name="gridLayout_8">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_40">
-           <property name="text">
-            <string>Loot Groups</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QComboBox" name="lootGroups"/>
-         </item>
-         <item row="0" column="3">
-          <widget class="QPushButton" name="removeLootGroup">
-           <property name="text">
-            <string>Remove</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="2">
-          <widget class="QLineEdit" name="newLootGroup"/>
-         </item>
-         <item row="1" column="2" colspan="2">
-          <widget class="QPushButton" name="addLoutGroup">
-           <property name="maximumSize">
-            <size>
-             <width>120</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Add Loot Group</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="5" column="1" colspan="4">
-        <layout class="QGridLayout" name="gridLayout_6">
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_37">
-           <property name="text">
-            <string>Weapons</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1" colspan="2">
-          <widget class="QComboBox" name="weapons"/>
-         </item>
-         <item row="3" column="0" colspan="2">
-          <widget class="QLineEdit" name="newWeapon">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="removeWeapon">
-           <property name="text">
-            <string>Remove Weapon</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QPushButton" name="addWeapon">
-           <property name="text">
-            <string>Add Weapon</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="5" column="5" colspan="3">
-        <layout class="QGridLayout" name="gridLayout_7">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_38">
-           <property name="text">
-            <string>Attack Data</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="2">
-          <widget class="QListWidget" name="attackList"/>
-         </item>
-         <item row="2" column="0">
-          <widget class="QPushButton" name="pushButton_addAttack">
-           <property name="text">
-            <string>Add</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QPushButton" name="pushButton_removeAttack">
-           <property name="text">
-            <string>Remove</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="6" column="7">
-        <widget class="QDialogButtonBox" name="buttonBox">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="standardButtons">
-          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="7">
-        <layout class="QGridLayout" name="gridLayout_4">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_41">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Options Bitmask</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QComboBox" name="comboBox_OptionsBitmask">
-           <property name="minimumSize">
-            <size>
-             <width>121</width>
-             <height>22</height>
-            </size>
-           </property>
-           <item>
-            <property name="text">
-             <string>bit1</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit2(vendor flag)</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit3</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit4(converse flag)</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit5</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit6</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit7</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit8</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit9(no health flag)</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit10</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit11</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit12(info icon)</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit13</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit14</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit15</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit16(info icon2)</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit17</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit18</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit19</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit20</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit21</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit22</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit23</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit24</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit25</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit26</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit27</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit28</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit29</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit30</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit31</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>bit32</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QCheckBox" name="checkBox_optionsBitmask">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
      </widget>
-    </widget>
-   </item>
-  </layout>
+    </item>
+    <item row="1" column="0">
+     <widget class="QComboBox" name="comboBox">
+      <property name="minimumSize">
+       <size>
+        <width>300</width>
+        <height>0</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="lineEdit"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_12">
+      <property name="text">
+       <string>Creature Script</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>940</y>
+     <width>149</width>
+     <height>123</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_6">
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_37">
+      <property name="text">
+       <string>Weapons</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" colspan="2">
+     <widget class="QComboBox" name="weapons"/>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QLineEdit" name="newWeapon">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>10</y>
+     <width>321</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="reloadCreature">
+      <property name="maximumSize">
+       <size>
+        <width>120</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Reload Creature</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="saveCreature">
+      <property name="maximumSize">
+       <size>
+        <width>120</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Save Creature</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_addCreature">
+      <property name="text">
+       <string>New Creature</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>960</y>
+     <width>295</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_4">
+    <item row="1" column="0">
+     <widget class="QComboBox" name="comboBox_OptionsBitmask">
+      <property name="minimumSize">
+       <size>
+        <width>121</width>
+        <height>22</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>bit1</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit2(vendor flag)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit3</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit4(converse flag)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit5</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit6</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit7</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit8</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit9(no health flag)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit10</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit11</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit12(info icon)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit13</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit14</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit15</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit16(info icon2)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit17</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit18</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit19</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit20</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit21</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit22</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit23</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit24</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit25</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit26</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit27</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit28</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit29</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit30</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit31</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bit32</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QCheckBox" name="checkBox_optionsBitmask">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_41">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Options Bitmask</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>950</y>
+     <width>470</width>
+     <height>115</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_12">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QComboBox" name="templates">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="removeTemplate">
+        <property name="text">
+         <string>Remove Template</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <layout class="QGridLayout" name="gridLayout_9">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_36">
+        <property name="text">
+         <string>Template</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="newTemplate"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="pushButton_view3d">
+        <property name="text">
+         <string>View 3d model</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="addTemplate">
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Add Template</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>1050</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Load objects</string>
+   </property>
+  </widget>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>750</x>
+     <y>640</y>
+     <width>311</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="progressBar">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>1020</y>
+     <width>87</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="value">
+    <number>24</number>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>410</y>
+     <width>151</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Resists</string>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_18">
+      <property name="text">
+       <string>Kinetic</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QDoubleSpinBox" name="kinetic">
+      <property name="minimum">
+       <double>-1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_19">
+      <property name="text">
+       <string>Energy</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QDoubleSpinBox" name="energy">
+      <property name="minimum">
+       <double>-1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_20">
+      <property name="text">
+       <string>Blast</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QDoubleSpinBox" name="blast">
+      <property name="minimum">
+       <double>-1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_21">
+      <property name="text">
+       <string>Heat</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QDoubleSpinBox" name="heat">
+      <property name="minimum">
+       <double>-1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_22">
+      <property name="text">
+       <string>Cold</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QDoubleSpinBox" name="cold">
+      <property name="minimum">
+       <double>-1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_23">
+      <property name="text">
+       <string>Electricity</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QDoubleSpinBox" name="electricity">
+      <property name="minimum">
+       <double>-1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="label_24">
+      <property name="text">
+       <string>Acid</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QDoubleSpinBox" name="acid">
+      <property name="minimum">
+       <double>-1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QLabel" name="label_25">
+      <property name="text">
+       <string>Stun</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QDoubleSpinBox" name="stun">
+      <property name="minimum">
+       <double>-1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0">
+     <widget class="QLabel" name="label_26">
+      <property name="text">
+       <string>Lightsaber</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QDoubleSpinBox" name="lightsaber">
+      <property name="minimum">
+       <double>-1.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>100.000000000000000</double>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="widget_container" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>221</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>410</y>
+     <width>171</width>
+     <height>73</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Aggression</string>
+   </property>
+   <layout class="QFormLayout" name="formLayout_2">
+    <item row="0" column="0">
+     <widget class="QCheckBox" name="attackable">
+      <property name="minimumSize">
+       <size>
+        <width>80</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Attackable</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QCheckBox" name="overt">
+      <property name="text">
+       <string>Overt</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="aggressive">
+      <property name="minimumSize">
+       <size>
+        <width>80</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Aggressive</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QCheckBox" name="enemy">
+      <property name="text">
+       <string>Enemy</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>490</y>
+     <width>171</width>
+     <height>119</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Behavior</string>
+   </property>
+   <layout class="QFormLayout" name="formLayout_3">
+    <item row="0" column="0">
+     <widget class="QCheckBox" name="pack">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>80</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Pack</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QCheckBox" name="baby">
+      <property name="text">
+       <string>Baby</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="herd">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>80</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Herd</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QCheckBox" name="lair">
+      <property name="text">
+       <string>Lair</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="killer">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>80</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Killer</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QCheckBox" name="checkBox_healer">
+      <property name="text">
+       <string>Healer</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QCheckBox" name="stalker">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>80</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Stalker</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_4">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>610</y>
+     <width>171</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Diet</string>
+   </property>
+   <layout class="QFormLayout" name="formLayout_4">
+    <item row="0" column="0">
+     <widget class="QCheckBox" name="carnivore">
+      <property name="minimumSize">
+       <size>
+        <width>80</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Carnivore</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QCheckBox" name="herbivore">
+      <property name="text">
+       <string>Herbivore</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_5">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>60</y>
+     <width>491</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Creature Attributes</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Object Name</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="objectName"/>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_name">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Level</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="level">
+        <property name="maximum">
+         <number>1000</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Social Group</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="socialGroup">
+        <property name="toolTip">
+         <string>The social group contributes to the pack and herd behaviors. Creatures of the same social group will assist each other in combat situations.</string>
+        </property>
+        <property name="whatsThis">
+         <string>The social group contributes to the pack and herd behaviors. Creatures of the same social group will assist each other in combat situations.</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Pvp Faction</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="pvpFaction">
+        <property name="toolTip">
+         <string>The creature's faction determines what other creatures and factions with which they are enemies or allies.</string>
+        </property>
+        <property name="whatsThis">
+         <string>The creature's faction determines what other creatures and factions with which they are enemies or allies.</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Base HAM</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="baseHAM">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximum">
+         <number>100000000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" colspan="2">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Base HAM Max</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QSpinBox" name="baseHAMmax">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximum">
+         <number>10000000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Min Damage</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="minDamage">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximum">
+         <number>10000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2" colspan="2">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Max Damage</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QSpinBox" name="maxDamage">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximum">
+         <number>1000000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Hit Chance</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QDoubleSpinBox" name="chanceHit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2" colspan="2">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Armor</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QSpinBox" name="armor">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Base XP</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="baseXp">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximum">
+         <number>10000000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2" colspan="2">
+       <widget class="QLabel" name="label_34">
+        <property name="text">
+         <string>Taming Chance</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QDoubleSpinBox" name="tamingChance">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_35">
+        <property name="text">
+         <string>Ferocity</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="ferocity">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximum">
+         <number>100000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2" colspan="2">
+       <widget class="QLabel" name="label_42">
+        <property name="text">
+         <string>Convo Template</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="4">
+       <widget class="QLineEdit" name="lineEdit_ConversationTemplate">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_6">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>410</y>
+     <width>241</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Resources</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>3</number>
+    </property>
+    <property name="margin">
+     <number>5</number>
+    </property>
+    <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_27">
+        <property name="text">
+         <string>Meat</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="meatType"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QSpinBox" name="meatAmount">
+        <property name="maximum">
+         <number>1000000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_29">
+        <property name="text">
+         <string>Hide</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="hideType"/>
+      </item>
+      <item row="1" column="2">
+       <widget class="QSpinBox" name="hideAmount">
+        <property name="maximum">
+         <number>10000000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_31">
+        <property name="text">
+         <string>Bone</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="boneType">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QSpinBox" name="boneAmount">
+        <property name="maximum">
+         <number>1000000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_33">
+        <property name="text">
+         <string>Milk</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" colspan="2">
+       <widget class="QSpinBox" name="milk">
+        <property name="maximum">
+         <number>1000000</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_7">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>530</y>
+     <width>241</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Weapons</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <property name="spacing">
+     <number>3</number>
+    </property>
+    <property name="margin">
+     <number>5</number>
+    </property>
+    <item>
+     <widget class="QTableWidget" name="tableWidget"/>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QPushButton" name="addWeapon">
+        <property name="text">
+         <string>Add Weapon</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="removeWeapon">
+        <property name="text">
+         <string>Remove Weapon</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_8">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>290</y>
+     <width>131</width>
+     <height>371</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Options</string>
+   </property>
+   <layout class="QFormLayout" name="formLayout_5">
+    <property name="horizontalSpacing">
+     <number>5</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>5</number>
+    </property>
+    <property name="margin">
+     <number>5</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QCheckBox" name="checkBox">
+      <property name="text">
+       <string>Option 1</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="checkBox_2">
+      <property name="text">
+       <string>Vendor</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="checkBox_3">
+      <property name="text">
+       <string>Option 3</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
+     <widget class="QCheckBox" name="checkBox_4">
+      <property name="text">
+       <string>Conversable</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QCheckBox" name="checkBox_5">
+      <property name="text">
+       <string>Option 5</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QCheckBox" name="checkBox_6">
+      <property name="text">
+       <string>Option 6</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QCheckBox" name="checkBox_7">
+      <property name="text">
+       <string>Option 7</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QCheckBox" name="checkBox_8">
+      <property name="text">
+       <string>Option 8</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0" colspan="2">
+     <widget class="QCheckBox" name="checkBox_9">
+      <property name="text">
+       <string>Hidden HAM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QCheckBox" name="checkBox_10">
+      <property name="text">
+       <string>Option 10</string>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="0">
+     <widget class="QCheckBox" name="checkBox_11">
+      <property name="text">
+       <string>Option 11</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
+     <widget class="QCheckBox" name="checkBox_12">
+      <property name="text">
+       <string>Quest Available</string>
+      </property>
+     </widget>
+    </item>
+    <item row="12" column="0">
+     <widget class="QCheckBox" name="checkBox_13">
+      <property name="text">
+       <string>Option 13</string>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="0">
+     <widget class="QCheckBox" name="checkBox_14">
+      <property name="text">
+       <string>Option 14</string>
+      </property>
+     </widget>
+    </item>
+    <item row="14" column="0">
+     <widget class="QCheckBox" name="checkBox_15">
+      <property name="text">
+       <string>Option 15</string>
+      </property>
+     </widget>
+    </item>
+    <item row="15" column="0">
+     <widget class="QCheckBox" name="checkBox_16">
+      <property name="text">
+       <string>Quest Available 2</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_9">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>290</y>
+     <width>581</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Creature Appearance</string>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_6">
+    <item>
+     <widget class="QTableWidget" name="tableWidget_2"/>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="text">
+         <string>Add Template</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="text">
+         <string>Remove Template</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_10">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>60</y>
+     <width>321</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Loot Groups</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_5">
+    <property name="spacing">
+     <number>5</number>
+    </property>
+    <property name="margin">
+     <number>5</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_LootChance">
+        <property name="text">
+         <string>Loot Chance</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="doubleSpinBox_LootChance">
+        <property name="decimals">
+         <number>5</number>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_AddLootGroup">
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_EditLootGroup">
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Edit</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_RemoveLootGroup">
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="tableWidget_LootGroups">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderDefaultSectionSize">
+       <number>20</number>
+      </attribute>
+      <attribute name="verticalHeaderMinimumSectionSize">
+       <number>20</number>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Group</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Chance</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_SimulateDrops">
+        <property name="text">
+         <string>Simulate Drops</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spinBox_SimulateDrops">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>75</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>10000</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_SimulateLootDrop">
+        <property name="text">
+         <string>Simulate</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_11">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>290</y>
+     <width>321</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Attack Data</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_6">
+    <property name="spacing">
+     <number>5</number>
+    </property>
+    <property name="margin">
+     <number>5</number>
+    </property>
+    <item>
+     <widget class="QListWidget" name="attackList"/>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_9">
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_addAttack">
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_removeAttack">
+        <property name="text">
+         <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <zorder></zorder>
+  <zorder></zorder>
+  <zorder></zorder>
+  <zorder></zorder>
+  <zorder></zorder>
+  <zorder>pushButton</zorder>
+  <zorder>buttonBox</zorder>
+  <zorder>progressBar</zorder>
+  <zorder>groupBox</zorder>
+  <zorder></zorder>
+  <zorder>widget_container</zorder>
+  <zorder>groupBox_2</zorder>
+  <zorder>groupBox_3</zorder>
+  <zorder>groupBox_4</zorder>
+  <zorder>groupBox_5</zorder>
+  <zorder></zorder>
+  <zorder></zorder>
+  <zorder>groupBox_6</zorder>
+  <zorder>groupBox_7</zorder>
+  <zorder>groupBox_8</zorder>
+  <zorder>groupBox_9</zorder>
+  <zorder>groupBox_10</zorder>
+  <zorder>pushButton_SimulateLootDrop</zorder>
+  <zorder>label_SimulateDrops</zorder>
+  <zorder>spinBox_SimulateDrops</zorder>
+  <zorder>groupBox_11</zorder>
  </widget>
  <resources/>
  <connections>

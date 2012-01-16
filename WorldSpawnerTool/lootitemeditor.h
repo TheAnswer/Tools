@@ -16,6 +16,8 @@ public:
     explicit LootItemEditor(QExplicitlySharedDataPointer<LootItemTemplate> item, QWidget *parent = 0);
     ~LootItemEditor();
 
+    void showEvent(QShowEvent* e);
+
 public slots:
     void acceptedDialog();
     void validateMinLevel(int);

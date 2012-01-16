@@ -7,7 +7,7 @@ LootItemTemplate::LootItemTemplate(const QString& itemName) {
     itemTemplate = itemName;
 
     minimumLevel = 0;
-    maximumLevel = 0;
+    maximumLevel = -1;
 
     qualityRangeMin = CRITICALFAILURE;
     qualityRangeMax = AMAZINGSUCCESS;
@@ -94,7 +94,7 @@ QString LootItemTemplate::serializeToLua() {
     stream << "\tmaximumLevel = " << maximumLevel << "," << endl;
     stream << "\tcustomObjectName = \"" << customObjectName << "\"," << endl;
     stream << "\tdirectObjectTemplate = \"" << directObjectTemplate << "\"," << endl;
-    stream << "\tdraftSchematic = \"" << directObjectTemplate << "\"" << endl; //TODO: Add back in the comma later.
+    stream << "\tdraftSchematic = \"" << draftSchematic << "\"" << endl; //TODO: Add back in the comma later.
 
     /*
     stream << "\tlootItems = {" << endl;

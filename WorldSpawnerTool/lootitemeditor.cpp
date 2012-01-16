@@ -75,3 +75,9 @@ void LootItemEditor::validateMaxLevel(int val) {
         ui->spinBox_MinimumLevel->setValue(val);
     }
 }
+
+void LootItemEditor::showEvent(QShowEvent* e) {
+    QDialog::showEvent(e);
+
+    ui->lineEdit_ItemName->selectAll();
+}

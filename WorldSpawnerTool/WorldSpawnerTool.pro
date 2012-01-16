@@ -62,7 +62,8 @@ SOURCES += insertwindow.cpp \
     stfviewer.cpp \
     insertbadgeform.cpp \
     worldsnapshotobject.cpp \
-    creaturelootsimulator.cpp
+    creaturelootsimulator.cpp \
+    addlootgroupdialog.cpp
 HEADERS += insertwindow.h \
     dynamicspawnarea.h \
     nobuildzone.h \
@@ -113,7 +114,8 @@ HEADERS += insertwindow.h \
     stfviewer.h \
     insertbadgeform.h \
     worldsnapshotobject.h \
-    creaturelootsimulator.h
+    creaturelootsimulator.h \
+    addlootgroupdialog.h
 FORMS += insertwindow.ui \
     console.ui \
     connect.ui \
@@ -136,7 +138,8 @@ FORMS += insertwindow.ui \
     lootmanager.ui \
     stfviewer.ui \
     insertbadgeform.ui \
-    creaturelootsimulator.ui
+    creaturelootsimulator.ui \
+    addlootgroupdialog.ui
 RESOURCES += Resources.qrc
 
 win32:CONFIG(release, debug|release): LIBS += -LC:/Users/cRush/Desktop/OpenSceneGraph-3.0.1/lib/ -L$$PWD/external/meshLib/lib -L$$PWD/external/treLib/lib -L$$PWD/external/lua/include -L$$PWD/external/swgOSG/lib -lswgRepository -lmeshLib -ltreLib -losg -losgViewer -losgText -losgDB -losgGA -losgAnimation -losgQt -lOpenThreads

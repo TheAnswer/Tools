@@ -30,6 +30,8 @@ public:
         return creatureMap.value(name, NULL);
     }
 
+    double getTotalGroupLootChance();
+
 public slots:
     void loadCreatureObjects();
 
@@ -52,7 +54,8 @@ public slots:
     void removeWeapon();
 
     void addLootGroup();
-    void removeLootGroup();
+    void removeSelectedLootGroup();
+    void editSelectedLootGroup();
 
     void addTemplate();
     void removeTemplate();

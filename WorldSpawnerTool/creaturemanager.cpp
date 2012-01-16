@@ -9,6 +9,7 @@
 #include "creatureluamanager.h"
 #include <QInputDialog>
 #include <QDir>
+#include <addlootgroupdialog.h>
 
 CreatureManager::CreatureManager(MainWindow* mainWindow, QWidget *parent) :
     QDialog(parent), ui(new Ui::CreatureManager) {
@@ -29,8 +30,6 @@ CreatureManager::CreatureManager(MainWindow* mainWindow, QWidget *parent) :
     connect(ui->saveCreature, SIGNAL(clicked()), this, SLOT(promptToSave()));
     connect(ui->addWeapon, SIGNAL(clicked()), this, SLOT(addWeapon()));
     connect(ui->removeWeapon, SIGNAL(clicked()), this, SLOT(removeWeapon()));
-    connect(ui->addLoutGroup, SIGNAL(clicked()), this, SLOT(addLootGroup()));
-    connect(ui->removeLootGroup, SIGNAL(clicked()), this, SLOT(removeLootGroup()));
     connect(ui->addTemplate, SIGNAL(clicked()), this, SLOT(addTemplate()));
     connect(ui->removeTemplate, SIGNAL(clicked()), this, SLOT(removeTemplate()));
     connect(ui->comboBox_OptionsBitmask, SIGNAL(currentIndexChanged(int)), this, SLOT(optionBitSelectionChanged()));
@@ -40,6 +39,9 @@ CreatureManager::CreatureManager(MainWindow* mainWindow, QWidget *parent) :
     connect(ui->pushButton_removeAttack, SIGNAL(clicked()), this, SLOT(removeAttack()));
     connect(ui->pushButton_addCreature, SIGNAL(clicked()), this, SLOT(addNewCreature()));
     connect(ui->toolButton_name, SIGNAL(clicked()), this, SLOT(openSTFWithName()));
+    connect(ui->pushButton_AddLootGroup, SIGNAL(clicked()), this, SLOT(addLootGroup()));
+    connect(ui->pushButton_RemoveLootGroup, SIGNAL(clicked()), this, SLOT(removeSelectedLootGroup()));
+    connect(ui->pushButton_EditLootGroup, SIGNAL(clicked()), this, SLOT(editSelectedLootGroup()));
 
     this->setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 }
@@ -261,22 +263,6 @@ void CreatureManager::removeTemplate() {
     ui->templates->removeItem(ui->templates->currentIndex());
 }
 
-void CreatureManager::addLootGroup() {
-    QString lootGroup = ui->newLootGroup->text();
-
-    if (lootGroup.isEmpty())
-        return;
-
-    ui->lootGroups->addItem(lootGroup);
-}
-
-void CreatureManager::removeLootGroup() {
-    if (ui->lootGroups->count() == 0)
-        return;
-
-    ui->lootGroups->removeItem(ui->lootGroups->currentIndex());
-}
-
 void CreatureManager::saveCurrentCreature() {
     if (currentCreatureObject == NULL)
         return;
@@ -385,8 +371,7 @@ void CreatureManager::saveCurrentCreature() {
 
     QVector<QString> lootGroups;
 
-    for (int i = 0; i < ui->lootGroups->count(); ++i)
-        lootGroups.append(ui->lootGroups->itemText(i).trimmed());
+    //TODO: Get loot groups
 
     currentCreatureObject->setLootGroups(lootGroups);
 
@@ -560,10 +545,7 @@ void CreatureManager::reloadCreature() {
 
     QVector<QString>* lootGroups = currentCreatureObject->getLootGroups();
 
-    ui->lootGroups->clear();
-
-    for (int i = 0; i < lootGroups->size(); ++i)
-        ui->lootGroups->addItem(lootGroups->at(i));
+    //TODO: Reload loot groups
 
     optionBitSelectionChanged();
 }
@@ -765,3 +747,51 @@ QString CreatureManager::parseName(QByteArray& buffer, int& currentPosition) {
     return QString("");
 }
 */
+
+double CreatureManager::getTotalGroupLootChance() {
+    double totalChance = 0.f;
+
+    for (int i = 0; i < ui->tableWidget_LootGroups->rowCount(); ++i) {
+        totalChance += ui->tableWidget_LootGroups->item(i, 1)->text().toDouble();
+    }
+
+    return totalChance;
+}
+
+void CreatureManager::addLootGroup() {
+    double maxChance = 100.f - getTotalGroupLootChance();
+
+    if (maxChance <= 0.f)
+        return;
+
+    AddLootGroupDialog diag(maxChance, this);
+
+    if (diag.exec() == AddLootGroupDialog::Accepted) {
+        //Add the loot group selected to the loot group box with the chance.
+        QTableWidgetItem* col0 = new QTableWidgetItem(diag.getGroupName());
+        QTableWidgetItem* col1 = new QTableWidgetItem(QString::number(diag.getChance(), 'f', 5));
+        int rows = ui->tableWidget_LootGroups->rowCount();
+        ui->tableWidget_LootGroups->insertRow(rows);
+        ui->tableWidget_LootGroups->setItem(rows, 0, col0);
+        ui->tableWidget_LootGroups->setItem(rows, 1, col1);
+    }
+
+    maxChance -= diag.getChance();
+
+    //Don't allow them to add anymore loot groups if the total chance is at 100 already.
+    if (maxChance <= 0.f) {
+        ui->pushButton_AddLootGroup->setEnabled(false);
+    }
+}
+
+void CreatureManager::removeSelectedLootGroup() {
+    ui->tableWidget_LootGroups->removeRow(ui->tableWidget_LootGroups->currentRow());
+
+    if (getTotalGroupLootChance() < 100.f) {
+        ui->pushButton_AddLootGroup->setEnabled(true);
+    }
+}
+
+void CreatureManager::editSelectedLootGroup() {
+
+}
