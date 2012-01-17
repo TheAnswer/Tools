@@ -44,6 +44,12 @@ public:
 
     QString serializeToLua();
 
+    void clearAllExperimentalProperties();
+    void clearAllCustomizationVariables();
+
+    void addExperimentalProperty(const QString& property, float min, float max);
+    void addCustomizationVariable(const QString& variable, quint8 min, quint8 max);
+
 public:
     //Getters
     inline int getMinLevel() {
@@ -82,6 +88,38 @@ public:
         return lootGroups;
     }
 
+    inline QString getExperimentalPropertyAt(int idx) {
+        return experimentalSubGroupTitles.at(idx);
+    }
+
+    inline float getExperimentalMinAt(int idx) {
+        return experimentalMin.at(idx);
+    }
+
+    inline float getExperimentalMaxAt(int idx) {
+        return experimentalMax.at(idx);
+    }
+
+    inline int getTotalExperimentalProps() {
+        return experimentalSubGroupTitles.count();
+    }
+
+    inline QString getCustomizationVarAt(int idx) {
+        return customizationStringNames.at(idx);
+    }
+
+    inline quint8 getCustomizationMinAt(int idx) {
+        return customizationValueMin.at(idx);
+    }
+
+    inline quint8 getCustomizationMaxAt(int idx) {
+        return customizationValueMax.at(idx);
+    }
+
+    inline int getTotalCustomizationVars() {
+        return customizationStringNames.count();
+    }
+
     //Setters
     inline void setItemName(const QString& name) {
         itemTemplate = name;
@@ -118,8 +156,8 @@ private:
     QString draftSchematic;
 
     QVector<QString> experimentalSubGroupTitles;
-    QVector<int> experimentalMin;
-    QVector<int> experimentalMax;
+    QVector<float> experimentalMin;
+    QVector<float> experimentalMax;
 
     int qualityRangeMin;
     int qualityRangeMax;

@@ -22,6 +22,10 @@ public slots:
     void acceptedDialog();
     void validateMinLevel(int);
     void validateMaxLevel(int);
+    void addExperimentalRow();
+    void removeExperimentalRow();
+    void addCustomizationRow();
+    void removeCustomizationRow();
 
 signals:
     void broadcastItemModified(QExplicitlySharedDataPointer<LootItemTemplate>);

@@ -14,6 +14,8 @@ LootItemEditor::LootItemEditor(QExplicitlySharedDataPointer<LootItemTemplate> it
     connect(ui->spinBox_MinimumLevel, SIGNAL(valueChanged(int)), this, SLOT(validateMinLevel(int)));
     connect(ui->spinBox_MaximumLevel, SIGNAL(valueChanged(int)), this, SLOT(validateMaxLevel(int)));
     connect(this, SIGNAL(accepted()), this, SLOT(acceptedDialog()));
+    connect(ui->pushButton_AddExperimental, SIGNAL(clicked()), this, SLOT(addExperimentalRow()));
+    connect(ui->pushButton_RemoveExperimental, SIGNAL(clicked()), this, SLOT(removeExperimentalRow()));
 
     currentItem = item;
 
@@ -39,6 +41,20 @@ LootItemEditor::LootItemEditor(QExplicitlySharedDataPointer<LootItemTemplate> it
     ui->spinBox_MinimumLevel->setValue(currentItem->getMinLevel());
     ui->comboBox_MinimumQuality->setCurrentIndex(currentItem->getQualityRangeMin());
     ui->comboBox_MaximumQuality->setCurrentIndex(currentItem->getQualityRangeMax());
+
+    for (int i = 0; i < currentItem->getTotalCustomizationVars(); ++i) {
+        ui->tableWidget_CustomizationVariables->insertRow(i);
+        ui->tableWidget_CustomizationVariables->setItem(i, 0, new QTableWidgetItem(currentItem->getCustomizationVarAt(i)));
+        ui->tableWidget_CustomizationVariables->setItem(i, 1, new QTableWidgetItem(QString::number(currentItem->getCustomizationMinAt(i))));
+        ui->tableWidget_CustomizationVariables->setItem(i, 2, new QTableWidgetItem(QString::number(currentItem->getCustomizationMaxAt(i))));
+    }
+
+    for (int i = 0; i < currentItem->getTotalExperimentalProps(); ++i) {
+        ui->tableWidget_ExperimentalProperties->insertRow(i);
+        ui->tableWidget_ExperimentalProperties->setItem(i, 0, new QTableWidgetItem(currentItem->getExperimentalPropertyAt(i)));
+        ui->tableWidget_ExperimentalProperties->setItem(i, 1, new QTableWidgetItem(QString::number(currentItem->getExperimentalMinAt(i))));
+        ui->tableWidget_ExperimentalProperties->setItem(i, 2, new QTableWidgetItem(QString::number(currentItem->getExperimentalMaxAt(i))));
+    }
 }
 
 LootItemEditor::~LootItemEditor()
@@ -50,13 +66,32 @@ void LootItemEditor::acceptedDialog() {
     //Validate all of the information in the form.
 
     //Save all the form data to the LootItemTemplate.
-    LootItemTemplate* item = currentItem.data();
-    item->setItemName(ui->lineEdit_ItemName->text());
-    item->setCustomObjectName(ui->lineEdit_CustomName->text());
-    item->setDirectObjectPath(ui->lineEdit_DirectObjectPath->text());
-    item->setDraftSchematic(ui->lineEdit_DraftSchematic->text());
-    item->setMaxLevel(ui->spinBox_MaximumLevel->value());
-    item->setMinLevel(ui->spinBox_MinimumLevel->value());
+    currentItem->setItemName(ui->lineEdit_ItemName->text());
+    currentItem->setCustomObjectName(ui->lineEdit_CustomName->text());
+    currentItem->setDirectObjectPath(ui->lineEdit_DirectObjectPath->text());
+    currentItem->setDraftSchematic(ui->lineEdit_DraftSchematic->text());
+    currentItem->setMaxLevel(ui->spinBox_MaximumLevel->value());
+    currentItem->setMinLevel(ui->spinBox_MinimumLevel->value());
+
+    //Clear them all and reenter them with whats in the editor.
+    currentItem->clearAllCustomizationVariables();
+    currentItem->clearAllExperimentalProperties();
+
+    for (int i = 0; i < ui->tableWidget_ExperimentalProperties->rowCount(); ++i) {
+        QString property = ui->tableWidget_ExperimentalProperties->item(0, 0)->text();
+        float min = ui->tableWidget_ExperimentalProperties->item(0, 1)->text().toFloat();
+        float max = ui->tableWidget_ExperimentalProperties->item(0, 2)->text().toFloat();
+
+        currentItem->addExperimentalProperty(property, min, max);
+    }
+
+    for (int i = 0; i < ui->tableWidget_CustomizationVariables->rowCount(); ++i) {
+        QString variable = ui->tableWidget_CustomizationVariables->item(0, 0)->text();
+        quint8 min = ui->tableWidget_CustomizationVariables->item(0, 1)->text().toInt();
+        quint8 max = ui->tableWidget_CustomizationVariables->item(0, 2)->text().toInt();
+
+        currentItem->addCustomizationVariable(variable, min, max);
+    }
 }
 
 void LootItemEditor::validateMinLevel(int val) {
@@ -80,4 +115,30 @@ void LootItemEditor::showEvent(QShowEvent* e) {
     QDialog::showEvent(e);
 
     ui->lineEdit_ItemName->selectAll();
+}
+
+void LootItemEditor::addExperimentalRow() {
+    int rows = ui->tableWidget_ExperimentalProperties->rowCount();
+    ui->tableWidget_ExperimentalProperties->insertRow(rows);
+
+    ui->tableWidget_ExperimentalProperties->setItem(rows, 0, new QTableWidgetItem(""));
+    ui->tableWidget_ExperimentalProperties->setItem(rows, 1, new QTableWidgetItem(""));
+    ui->tableWidget_ExperimentalProperties->setItem(rows, 2, new QTableWidgetItem(""));
+}
+
+void LootItemEditor::removeExperimentalRow() {
+    ui->tableWidget_ExperimentalProperties->removeRow(ui->tableWidget_ExperimentalProperties->currentRow());
+}
+
+void LootItemEditor::addCustomizationRow() {
+    int rows = ui->tableWidget_CustomizationVariables->rowCount();
+    ui->tableWidget_CustomizationVariables->insertRow(rows);
+
+    ui->tableWidget_CustomizationVariables->setItem(rows, 0, new QTableWidgetItem(""));
+    ui->tableWidget_CustomizationVariables->setItem(rows, 1, new QTableWidgetItem(""));
+    ui->tableWidget_CustomizationVariables->setItem(rows, 2, new QTableWidgetItem(""));
+}
+
+void LootItemEditor::removeCustomizationRow() {
+    ui->tableWidget_CustomizationVariables->removeRow(ui->tableWidget_CustomizationVariables->currentRow());
 }
