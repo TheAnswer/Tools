@@ -78,17 +78,17 @@ void LootItemEditor::acceptedDialog() {
     currentItem->clearAllExperimentalProperties();
 
     for (int i = 0; i < ui->tableWidget_ExperimentalProperties->rowCount(); ++i) {
-        QString property = ui->tableWidget_ExperimentalProperties->item(0, 0)->text();
-        float min = ui->tableWidget_ExperimentalProperties->item(0, 1)->text().toFloat();
-        float max = ui->tableWidget_ExperimentalProperties->item(0, 2)->text().toFloat();
+        QString property = ui->tableWidget_ExperimentalProperties->item(i, 0)->text();
+        float min = ui->tableWidget_ExperimentalProperties->item(i, 1)->text().toFloat();
+        float max = ui->tableWidget_ExperimentalProperties->item(i, 2)->text().toFloat();
 
         currentItem->addExperimentalProperty(property, min, max);
     }
 
     for (int i = 0; i < ui->tableWidget_CustomizationVariables->rowCount(); ++i) {
-        QString variable = ui->tableWidget_CustomizationVariables->item(0, 0)->text();
-        quint8 min = ui->tableWidget_CustomizationVariables->item(0, 1)->text().toInt();
-        quint8 max = ui->tableWidget_CustomizationVariables->item(0, 2)->text().toInt();
+        QString variable = ui->tableWidget_CustomizationVariables->item(i, 0)->text();
+        quint8 min = ui->tableWidget_CustomizationVariables->item(i, 1)->text().toInt();
+        quint8 max = ui->tableWidget_CustomizationVariables->item(i, 2)->text().toInt();
 
         currentItem->addCustomizationVariable(variable, min, max);
     }
