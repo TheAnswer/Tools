@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>603</width>
-    <height>534</height>
+    <height>498</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -98,7 +98,7 @@
      <item row="0" column="4">
       <widget class="QLabel" name="label_DirectObjectPath">
        <property name="text">
-        <string>Direct Object Path</string>
+        <string>Template Object Path</string>
        </property>
       </widget>
      </item>
@@ -115,207 +115,72 @@
      <property name="title">
       <string>Experimental Properties</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_DraftSchematic">
+       <widget class="QTableWidget" name="tableWidget_ExperimentalProperties">
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectItems</enum>
+        </property>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>20</number>
+        </attribute>
+        <attribute name="verticalHeaderMinimumSectionSize">
+         <number>20</number>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Property</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Minimum</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Maximum</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_AddExperimental">
           <property name="text">
-           <string>Draft Schematic</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
+           <string>Add</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1" colspan="3">
-         <widget class="QLineEdit" name="lineEdit_DraftSchematic"/>
-        </item>
-        <item row="2" column="0" colspan="4">
-         <widget class="QTableWidget" name="tableWidget_ExperimentalProperties">
-          <property name="alternatingRowColors">
-           <bool>true</bool>
-          </property>
-          <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
-          </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectItems</enum>
-          </property>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
-          </attribute>
-          <attribute name="verticalHeaderMinimumSectionSize">
-           <number>20</number>
-          </attribute>
-          <column>
-           <property name="text">
-            <string>Property</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Minimum</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Maximum</string>
-           </property>
-          </column>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_MinimumQuality">
+        <item>
+         <widget class="QPushButton" name="pushButton_RemoveExperimental">
           <property name="text">
-           <string>Minimum Quality</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
+           <string>Remove</string>
           </property>
          </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QComboBox" name="comboBox_MinimumQuality">
-          <item>
-           <property name="text">
-            <string>Amazing Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Great Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Good Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Moderate Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Marginal Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Ok</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Barely Successful</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Critical Failure</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLabel" name="label_MaximumQuality">
-          <property name="text">
-           <string>Maximum Quality</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QComboBox" name="comboBox_MaximumQuality">
-          <item>
-           <property name="text">
-            <string>Amazing Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Great Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Good Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Moderate Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Marginal Success</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Ok</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Barely Successful</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Critical Failure</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="4">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_AddExperimental">
-            <property name="text">
-             <string>Add</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_RemoveExperimental">
-            <property name="text">
-             <string>Remove</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </item>
        </layout>
       </item>

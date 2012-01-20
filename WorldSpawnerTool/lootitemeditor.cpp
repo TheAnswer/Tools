@@ -36,11 +36,8 @@ LootItemEditor::LootItemEditor(QExplicitlySharedDataPointer<LootItemTemplate> it
     ui->lineEdit_ItemName->setText(currentItem->getItemName());
     ui->lineEdit_CustomName->setText(currentItem->getCustomObjectName());
     ui->lineEdit_DirectObjectPath->setText(currentItem->getDirectObjectPath());
-    ui->lineEdit_DraftSchematic->setText(currentItem->getDraftSchematic());
     ui->spinBox_MaximumLevel->setValue(currentItem->getMaxLevel());
     ui->spinBox_MinimumLevel->setValue(currentItem->getMinLevel());
-    ui->comboBox_MinimumQuality->setCurrentIndex(currentItem->getQualityRangeMin());
-    ui->comboBox_MaximumQuality->setCurrentIndex(currentItem->getQualityRangeMax());
 
     for (int i = 0; i < currentItem->getTotalCustomizationVars(); ++i) {
         ui->tableWidget_CustomizationVariables->insertRow(i);
@@ -69,7 +66,6 @@ void LootItemEditor::acceptedDialog() {
     currentItem->setItemName(ui->lineEdit_ItemName->text());
     currentItem->setCustomObjectName(ui->lineEdit_CustomName->text());
     currentItem->setDirectObjectPath(ui->lineEdit_DirectObjectPath->text());
-    currentItem->setDraftSchematic(ui->lineEdit_DraftSchematic->text());
     currentItem->setMaxLevel(ui->spinBox_MaximumLevel->value());
     currentItem->setMinLevel(ui->spinBox_MinimumLevel->value());
 

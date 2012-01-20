@@ -8,9 +8,6 @@ LootItemTemplate::LootItemTemplate(const QString& itemName) {
 
     minimumLevel = 0;
     maximumLevel = -1;
-
-    qualityRangeMin = CRITICALFAILURE;
-    qualityRangeMax = AMAZINGSUCCESS;
 }
 
 LootItemTemplate::~LootItemTemplate() {
@@ -21,12 +18,8 @@ void LootItemTemplate::readObject(lua_State* L) {
     maximumLevel = LuaParser::getIntField(L, "maximumLevel");
     customObjectName = LuaParser::getStringField(L, "customObjectName");
     directObjectTemplate = LuaParser::getStringField(L, "directObjectTemplate");
-    draftSchematic = LuaParser::getStringField(L, "draftSchematic");
 
-    qualityRangeMin = LuaParser::getIntField(L, "qualityRangeMin");
-    qualityRangeMax = LuaParser::getIntField(L, "qualityRangeMax");
-
-    lua_pushstring(L, "experimentalSubGroupTitles");
+    lua_pushstring(L, "craftingValues");
     lua_gettable(L, -2);
 
     if (lua_istable(L, -1) == 1) {
@@ -35,44 +28,28 @@ void LootItemTemplate::readObject(lua_State* L) {
         for (int i = 1; i <= n; ++i) {
             lua_rawgeti(L, -1, i);
 
-            QString subGroupTitle(lua_tostring(L, -1));
-            experimentalSubGroupTitles.append(subGroupTitle);
+            if (lua_istable(L, -1) == 1) {
+                lua_rawgeti(L, -1, 1);
 
-            lua_pop(L, 1);
-        }
-    }
+                QString subGroupTitle(lua_tostring(L, -1));
+                experimentalSubGroupTitles.append(subGroupTitle);
 
-    lua_pop(L, 1);
+                lua_pop(L, 1);
 
-    lua_pushstring(L, "experimentalMin");
-    lua_gettable(L, -2);
+                lua_rawgeti(L, -1, 2);
 
-    if (lua_istable(L, -1) == 1) {
-        int n = luaL_getn(L, -1);
+                float min = lua_tonumber(L, -1);
+                experimentalMin.append(min);
 
-        for (int i = 1; i <= n; ++i) {
-            lua_rawgeti(L, -1, i);
+                lua_pop(L, 1);
 
-            float min = lua_tonumber(L, -1);
-            experimentalMin.append(min);
+                lua_rawgeti(L, -1, 3);
 
-            lua_pop(L, 1);
-        }
-    }
+                float max = lua_tonumber(L, -1);
+                experimentalMax.append(max);
 
-    lua_pop(L, 1);
-
-    lua_pushstring(L, "experimentalMax");
-    lua_gettable(L, -2);
-
-    if (lua_istable(L, -1) == 1) {
-        int n = luaL_getn(L, -1);
-
-        for (int i = 1; i <= n; ++i) {
-            lua_rawgeti(L, -1, i);
-
-            float max = lua_tonumber(L, -1);
-            experimentalMax.append(max);
+                lua_pop(L, 1);
+            }
 
             lua_pop(L, 1);
         }
@@ -143,29 +120,14 @@ QString LootItemTemplate::serializeToLua() {
     stream << "\tmaximumLevel = " << maximumLevel << "," << endl;
     stream << "\tcustomObjectName = \"" << customObjectName << "\"," << endl;
     stream << "\tdirectObjectTemplate = \"" << directObjectTemplate << "\"," << endl;
-    stream << "\tdraftSchematic = \"" << draftSchematic << "\"," << endl;
 
-    QString expTitles;
-    QString expMins;
-    QString expMaxs;
+    stream << "\tcraftingValues = {" << endl;
 
     for (int i = 0; i < experimentalSubGroupTitles.count(); ++i) {
-        expTitles.append("\"" + experimentalSubGroupTitles.at(i) + "\",");
-        expMins.append(QString::number(experimentalMin.at(i)) + ",");
-        expMaxs.append(QString::number(experimentalMax.at(i)) + ",");
+        stream << "\t\t{\"" << experimentalSubGroupTitles.at(i) << "\"," << experimentalMin.at(i) << "," << experimentalMax.at(i) << "}," << endl;
     }
 
-    expTitles.chop(1);
-    expMins.chop(1);
-    expMaxs.chop(1);
-
-    stream << "\texperimentalSubGroupTitles = {" << expTitles << "}," << endl;
-    stream << "\texperimentalMin = {" << expMins << "}," << endl;
-    stream << "\texperimentalMax = {" << expMaxs << "}," << endl;
-
-    //TODO: Insert assembly success.
-    stream << "\tqualityRangeMin = " << qualityRangeMin << "," << endl;
-    stream << "\tqualityRangeMax = " << qualityRangeMax << "," << endl;
+    stream << "\t}," << endl;
 
     QString customizationStrings;
     QString customizationValues;

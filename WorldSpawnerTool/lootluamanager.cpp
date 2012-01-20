@@ -44,17 +44,6 @@ void LootLuaManager::registerGlobals() {
     lua_register(L, "includeFile", includeFile);
     lua_register(L, "addLootGroupTemplate", addLootGroupTemplate);
     lua_register(L, "addLootItemTemplate", addLootItemTemplate);
-
-    //Set Globals
-    setGlobalInt("AMAZINGSUCCESS", LootItemTemplate::AMAZINGSUCCESS);
-    setGlobalInt("GREATSUCCESS", LootItemTemplate::GREATSUCCESS);
-    setGlobalInt("GOODSUCCESS", LootItemTemplate::GOODSUCCESS);
-    setGlobalInt("MODERATESUCCESS", LootItemTemplate::MODERATESUCCESS);
-    setGlobalInt("SUCCESS", LootItemTemplate::SUCCESS);
-    setGlobalInt("MARGINALSUCCESS", LootItemTemplate::MARGINALSUCCESS);
-    setGlobalInt("OK", LootItemTemplate::OK);
-    setGlobalInt("BARELYSUCCESSFUL", LootItemTemplate::BARELYSUCCESSFUL);
-    setGlobalInt("CRITICALFAILURE", LootItemTemplate::CRITICALFAILURE);
 }
 
 void LootLuaManager::loadLootData() {

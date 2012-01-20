@@ -13,17 +13,6 @@ extern "C" {
 
 class LootItemTemplate : public QSharedData{
 public:
-    static const int AMAZINGSUCCESS = 0;
-    static const int GREATSUCCESS = 1;
-    static const int GOODSUCCESS = 2;
-    static const int MODERATESUCCESS = 3;
-    static const int SUCCESS = 4;
-    static const int MARGINALSUCCESS = 5;
-    static const int OK = 6;
-    static const int BARELYSUCCESSFUL = 7;
-    static const int CRITICALFAILURE = 8;
-
-public:
     LootItemTemplate(const QString& itemName);
     ~LootItemTemplate();
 
@@ -60,24 +49,12 @@ public:
         return maximumLevel;
     }
 
-    inline int getQualityRangeMin() {
-        return qualityRangeMin;
-    }
-
-    inline int getQualityRangeMax() {
-        return qualityRangeMax;
-    }
-
     inline QString& getCustomObjectName() {
         return customObjectName;
     }
 
     inline QString& getDirectObjectPath() {
         return directObjectTemplate;
-    }
-
-    inline QString& getDraftSchematic() {
-        return draftSchematic;
     }
 
     inline QString& getItemName() {
@@ -129,10 +106,6 @@ public:
         customObjectName = name;
     }
 
-    inline void setDraftSchematic(const QString& name) {
-        draftSchematic = name;
-    }
-
     inline void setDirectObjectPath(const QString& name) {
         directObjectTemplate = name;
     }
@@ -153,14 +126,10 @@ private:
 
     QString customObjectName;
     QString directObjectTemplate;
-    QString draftSchematic;
 
     QVector<QString> experimentalSubGroupTitles;
     QVector<float> experimentalMin;
     QVector<float> experimentalMax;
-
-    int qualityRangeMin;
-    int qualityRangeMax;
 
     QVector<QString> customizationStringNames;
     QVector<quint8> customizationValueMin;
