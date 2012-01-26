@@ -2,11 +2,12 @@
 #include "mainwindow.h"
 //#include "osgtv"
 
+
 int main(int argc, char *argv[]) {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
+
     MainWindow w;
+    w.show();
 
-    //w.show();
-
-    return a.exec();
+    return app.exec();
 }

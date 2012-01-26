@@ -9,7 +9,10 @@
 #include <QCompleter>
 #include <QInputDialog>
 #include "spawn.h"
+#include "QToolBar"
 #include "mainwindow.h"
+#include "datamanager.h"
+#include "QToolButton"
 
 ViewerWidget::ViewerWidget(QMutex* updateMutex, osgViewer::ViewerBase::ThreadingModel threadingModel) : QWidget()
 {
@@ -102,6 +105,12 @@ ObjectModel3dViewer::ObjectModel3dViewer(QWidget *parent) :
     ui(new Ui::ObjectModel3dViewer) {
     ui->setupUi(this);
 
+    toolbar = new QToolBar(this);
+    QToolButton* button = new QToolButton();
+    button->setText("Default Camera"); //TODO: Does this button need to be deleted explicitly, or does it get deleted with the toolbar?
+    toolbar->addWidget(button);
+    ui->verticalLayout->insertWidget(ui->verticalLayout->indexOf(ui->widget_container), toolbar); //Insert the toolbar just before the drawing area.
+
     osgViewerWidget = new ViewerWidget(&mutex);
     osgViewerWidget->setGeometry( 100, 100, 800, 600 );
 
@@ -129,6 +138,19 @@ ObjectModel3dViewer::ObjectModel3dViewer(QWidget *parent) :
     connect(ui->lineEdit_template, SIGNAL(textChanged(QString)), this, SLOT(modelTextChanged()));
     connect(this, SIGNAL(increaseUiProgress(int)), this, SLOT(increaseProgress(int)));
     //connect(ui->toolButton_list, SIGNAL(clicked()), this, SLOT(listFiles()));
+    connect(ui->comboBox_Directories, SIGNAL(currentIndexChanged(int)), this, SLOT(updateClientFilesList(int)));
+    connect(ui->comboBox_ClientFile, SIGNAL(currentIndexChanged(int)), this, SLOT(loadSelectedFile(int)));
+
+    QMapIterator<QString, QVector<QString> > i(MainWindow::instance->getDataManager()->getDirectories());
+
+    while (i.hasNext()) {
+        i.next();
+
+        QString key = i.key();
+
+        if (key.startsWith("object"))
+            ui->comboBox_Directories->addItem(key);
+    }
 
     this->setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 }
@@ -137,6 +159,7 @@ ObjectModel3dViewer::~ObjectModel3dViewer() {
     delete ui;
     delete osgViewerWidget;
     delete repo;
+    delete toolbar;
 }
 
 void ObjectModel3dViewer::modelTextChanged() {
@@ -151,6 +174,25 @@ void ObjectModel3dViewer::listFiles() {
   if (ok) {
       ui->lineEdit_template->setText(text);
     }*/
+}
+
+void ObjectModel3dViewer::updateClientFilesList(int idx) {
+    QString selectedDirectory = ui->comboBox_Directories->currentText();
+
+    QVector<QString> files = MainWindow::instance->getDataManager()->getFiles(selectedDirectory);
+
+    ui->comboBox_ClientFile->clear();
+
+    for (int i = 0; i < files.count(); ++i) {
+        ui->comboBox_ClientFile->addItem(files.value(i, "null"));
+    }
+}
+
+void ObjectModel3dViewer::loadSelectedFile(int idx) {
+    QString selectedDirectory = ui->comboBox_Directories->currentText();
+    QString selectedFile = ui->comboBox_ClientFile->currentText();
+
+    loadFile(selectedDirectory + selectedFile);
 }
 
 void ObjectModel3dViewer::setTreDirectory(const QString& dir) {
@@ -371,7 +413,7 @@ void ObjectModel3dViewer::loadFile() {
     QString file = ui->lineEdit_template->text();
 
     if (repo == NULL) {
-        QMessageBox::warning(NULL, "Warning", "You must set a tre directory");
+        //QMessageBox::warning(NULL, "Warning", "You must set a tre directory");
 
         loadingModel = false;
         return;

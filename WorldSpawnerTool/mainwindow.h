@@ -35,6 +35,7 @@ class ObjectModel3dViewer;
 class Badge;
 class InsertBadgeForm;
 class STFViewer;
+class DataManager;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -64,6 +65,8 @@ private:
     QUndoStack* undoStack;
     QUndoView* undoView;
 
+    DataManager* dataManager;
+
 
     QString currentMap;
 
@@ -85,6 +88,7 @@ public:
     StaticSpawnTableItem* getStaticSpawnTableData(int row, int column);
     void updateStaticSpawnTableItem(StaticSpawn* spawn);
     QString getApplicationFullName();
+    void initialize();
 
     void startSwgOSG(const QString& file);
 
@@ -198,6 +202,10 @@ public:
 
     inline ObjectModel3dViewer* getModel3DViewer() {
       return objectModel3dViewer;
+    }
+
+    inline DataManager* getDataManager() {
+        return dataManager;
     }
 
     treArchive* getTreArchive();

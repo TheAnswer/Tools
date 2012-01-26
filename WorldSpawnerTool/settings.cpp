@@ -9,6 +9,7 @@ Settings::Settings(MainWindow* mainWindow, QWidget *parent) :
     ui(new Ui::Settings) {
 
     ui->setupUi(this);
+
     settings = new ApplicationSettings();
     settings->loadSettings(mainWindow);
 

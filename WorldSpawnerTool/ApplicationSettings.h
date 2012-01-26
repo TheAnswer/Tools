@@ -47,7 +47,7 @@ public:
             QTextStream stream(&token);
             char c;
 
-            while ((c = data[i++]) && c != ' ' && c != '\n' && c != '\0') {
+            while ((c = data[i++]) && c != '\n' && c != '\0') {
                 stream << c;
             }
 

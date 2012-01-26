@@ -23,6 +23,8 @@
 #include <QList>
 #include <QMutex>
 
+class QToolBar;
+
 class Spawn;
 
 class Model3dViewer : public osgGA::TrackballManipulator {
@@ -72,6 +74,8 @@ public slots:
   void increaseProgress(int vals);
   void addSpawnsToScene(QList<Spawn *> &spawns);
   //void addFileToScene(c)
+  void updateClientFilesList(int);
+  void loadSelectedFile(int);
 
   void addNodeToCurrentScene(osg::Node* node);
 
@@ -100,6 +104,7 @@ private:
   ViewerWidget* osgViewerWidget;
   bool loadingModel;
   QStringList repoContents;
+  QToolBar* toolbar;
 
   QMutex mutex;
 

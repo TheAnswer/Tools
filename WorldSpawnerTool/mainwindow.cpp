@@ -36,28 +36,41 @@
 #include "insertbadgeform.h"
 #include "stfviewer.h"
 #include <meshLib/ws.hpp>
+#include "datamanager.h"
 #include "worldsnapshotobject.h"
+#include "splashscreen.h"
 
 using namespace utils;
 
 MainWindow* MainWindow::instance = NULL;
-float MainWindow::VERSION = 0.04;
+float MainWindow::VERSION = 0.12;
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
-    ui->setupUi(this);
+void MainWindow::initialize() {
+    SplashScreen splash(":/splash.png");
+    splash.show();
 
-    instance = this;
+    splash.showMessage("Loading application settings.");
+    settings = new Settings(this);
 
+    if (settings->getServerDirectory().isEmpty() || settings->getTreDirectory().isEmpty())
+        settings->exec();
+
+    dataManager = new DataManager();
+    connect(dataManager, SIGNAL(loadingResource(const QString&)), &splash, SLOT(showMessage(const QString&)));
+
+    dataManager->loadTreData(settings->getTreDirectory());
+
+    splash.showMessage("Initializing undo commands.");
     undoStack = new QUndoStack(this);
     undoView = new QUndoView(undoStack);
     undoStack->setUndoLimit(50);
     undoView->setWindowTitle(tr("Command List"));
     undoView->setAttribute(Qt::WA_QuitOnClose, false);
 
+    splash.showMessage("Creating child forms.");
     database = new DatabaseConnection();
     console = new Console();
     insertWindow = new InsertWindow(this);
-    settings = new Settings(this);
     creatureManager = new CreatureManager(this);
     luaManager = new CreatureLuaManager();
 
@@ -69,18 +82,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     insertBadgeForm = new InsertBadgeForm(this);
     stfViewer = new STFViewer();
 
-    setWindowTitle(getApplicationFullName());
-
     currentAction = 0;
 
+    splash.showMessage("Initializing world maps.");
     currentMap = "naboo";
-
     initializeWorldMaps();
-
     planetSelection = new PlanetSelection(this);
 
+    splash.showMessage("Creating actions.");
     createActions();
 
+    splash.showMessage("Connecting signals to slots.");
     connect(ui->actionConnect_to_database, SIGNAL(triggered()), database, SLOT(show()));
     connect(ui->actionConsole, SIGNAL(triggered()), console, SLOT(showNormal()));
     connect(this, SIGNAL(printToConsole(QString)), console, SLOT(printLine(QString)));
@@ -114,20 +126,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->actionSTF_Viewer, SIGNAL(triggered()), stfViewer, SLOT(showNormal()));
     connect(ui->actionLootManager, SIGNAL(triggered()), this, SLOT(displayLootManager()));
 
-    ui->graphicsView->setMouseTracking(true);
-    ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
-
-    if (settings->getServerDirectory().isEmpty())
-        settings->showNormal();
-    else
-        planetSelection->showNormal();
-
-    emit printToConsole("WorldSpawnerTool started");
-
+    splash.showMessage("Loading loot items and groups.");
     lootLuaManager = new LootLuaManager();
     lootLuaManager->loadLootData();
 
     lootManager = new LootManager();
+
+    splash.showMessage("Initializing graphics view.");
+    ui->graphicsView->setMouseTracking(true);
+    ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+
+    reloadPlanet();
+
+}
+
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
+    ui->setupUi(this);
+    setWindowTitle(getApplicationFullName());
+    instance = this;
+
+    initialize();
+
+    //emit printToConsole("WorldSpawnerTool started");
 }
 
 QString MainWindow::getApplicationFullName() {
@@ -162,6 +182,7 @@ MainWindow::~MainWindow() {
     delete lairLuaManager;
     delete objectModel3dViewer;
     delete insertBadgeForm;
+    delete dataManager;
 }
 
 void MainWindow::open3dViewer() {

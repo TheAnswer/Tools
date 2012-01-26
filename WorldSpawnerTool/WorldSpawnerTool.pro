@@ -63,7 +63,9 @@ SOURCES += insertwindow.cpp \
     insertbadgeform.cpp \
     worldsnapshotobject.cpp \
     creaturelootsimulator.cpp \
-    addlootgroupdialog.cpp
+    addlootgroupdialog.cpp \
+    datamanager.cpp \
+    splashscreen.cpp
 HEADERS += insertwindow.h \
     dynamicspawnarea.h \
     nobuildzone.h \
@@ -115,7 +117,9 @@ HEADERS += insertwindow.h \
     insertbadgeform.h \
     worldsnapshotobject.h \
     creaturelootsimulator.h \
-    addlootgroupdialog.h
+    addlootgroupdialog.h \
+    datamanager.h \
+    splashscreen.h
 FORMS += insertwindow.ui \
     console.ui \
     connect.ui \
