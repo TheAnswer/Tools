@@ -4,10 +4,17 @@
 #include "QComboBox"
 #include "QLinkedList"
 #include "treLib/treArchive.hpp"
+#include "lootluamanager.h"
+
+DataManager* DataManager::instance = NULL;
 
 DataManager::DataManager() {
     repo = NULL;
     mutex = new QMutex();
+
+    lootManager = new LootLuaManager();
+
+    instance = this;
 }
 
 DataManager::~DataManager() {
@@ -19,14 +26,17 @@ DataManager::~DataManager() {
     delete mutex;
 }
 
+void DataManager::registerGlobals() {
+}
+
 
 void DataManager::loadTreData(QString treDirectory) {
     if (!QFile::exists(treDirectory)) {
-        emit loadingResource("Could not load TRE files from directory.");
+        emit loadingMessage("Could not load TRE files from directory.");
         return;
     }
 
-    emit loadingResource("Loading SWG repository.");
+    emit loadingMessage("Loading SWG repository.");
 
     treDirectory.replace(QChar('\\'), QChar('/'));
 
@@ -37,9 +47,10 @@ void DataManager::loadTreData(QString treDirectory) {
 
     treArchive* archive = repo->getTreArchive();
 
-    emit loadingResource("Mapping TRE files directory structure.");
+    emit loadingMessage("Mapping TRE files directory structure.");
 
     std::list<std::string>* items = archive->getArchiveContents();
+    items->sort();
 
     for (std::list<std::string>::iterator i = items->begin(); i != items->end(); ++i) {
         QString filepath =  QString::fromStdString(*i);
@@ -62,9 +73,6 @@ void DataManager::loadTreData(QString treDirectory) {
 }
 
 void DataManager::loadLuaData() {
-    loadLootData();
-}
-
-void DataManager::loadLootData() {
-
+    emit loadingMessage("Loading loot data.");
+    lootManager->loadLootData();
 }

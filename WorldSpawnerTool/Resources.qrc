@@ -13,4 +13,27 @@
         <file>icon.png</file>
         <file>splash.png</file>
     </qresource>
+    <qresource prefix="/icons">
+        <file>icons/Alert.png</file>
+        <file>icons/Briefcase.png</file>
+        <file>icons/Cancel.png</file>
+        <file>icons/Create.png</file>
+        <file>icons/Danger.png</file>
+        <file>icons/Database.png</file>
+        <file>icons/Delete.png</file>
+        <file>icons/Error.png</file>
+        <file>icons/Globe.png</file>
+        <file>icons/Help book.png</file>
+        <file>icons/Help symbol.png</file>
+        <file>icons/Help.png</file>
+        <file>icons/Hint.png</file>
+        <file>icons/Modify.png</file>
+        <file>icons/No.png</file>
+        <file>icons/No-entry.png</file>
+        <file>icons/OK.png</file>
+        <file>icons/Redo.png</file>
+        <file>icons/Refresh.png</file>
+        <file>icons/Undo.png</file>
+        <file>icons/Yes.png</file>
+    </qresource>
 </RCC>

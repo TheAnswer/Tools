@@ -8,6 +8,9 @@
 
 class swgRepository;
 class QComboBox;
+class LootItemTemplate;
+class LootGroupTemplate;
+class LootLuaManager;
 
 class DataManager : public QObject, public LuaParser
 {
@@ -28,16 +31,24 @@ public:
         return treDirectories.value(directory);
     }
 
+    static void loadLootGroupTemplate(lua_State* L);
+    static void loadLootItemTemplate(lua_State* L);
+
 private:
-    void loadLootData();
+    void registerGlobals();
 
 signals:
-    void loadingResource(const QString&);
+    void loadingMessage(const QString&);
 
 private:
     swgRepository* repo;
     QMap<QString, QVector<QString> > treDirectories;
     QMutex* mutex;
+
+    LootLuaManager* lootManager;
+
+public:
+    static DataManager* instance;
 };
 
 #endif // DATAMANAGER_H

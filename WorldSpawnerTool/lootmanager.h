@@ -20,7 +20,7 @@ public:
     ~LootManager();
 
     void insertTemplateToTable(QExplicitlySharedDataPointer<LootItemTemplate>);
-    void insertEntryToGroupTable(const QString&, int);
+    void insertEntryToGroupTable(const QString&, double);
     int insertGroupToComboBox(QExplicitlySharedDataPointer<LootGroup>);
 
 public slots:

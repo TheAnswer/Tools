@@ -53,9 +53,7 @@ public slots:
     void addWeapon();
     void removeWeapon();
 
-    void addLootGroup();
-    void removeSelectedLootGroup();
-    void editSelectedLootGroup();
+    void promptAddLootGroupCollection();
 
     void addTemplate();
     void removeTemplate();

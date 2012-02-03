@@ -56,7 +56,7 @@ void MainWindow::initialize() {
         settings->exec();
 
     dataManager = new DataManager();
-    connect(dataManager, SIGNAL(loadingResource(const QString&)), &splash, SLOT(showMessage(const QString&)));
+    connect(dataManager, SIGNAL(loadingMessage(const QString&)), &splash, SLOT(showMessage(const QString&)));
 
     dataManager->loadTreData(settings->getTreDirectory());
 

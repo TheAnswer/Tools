@@ -148,22 +148,21 @@ void LootManager::changeGroup(int index) {
     while (i.hasNext()) {
         i.next();
 
-        insertEntryToGroupTable(i.key(), i.value());
+        insertEntryToGroupTable(i.key(), ((double) i.value()) / 100000.0);
     }
 }
 
-void LootManager::insertEntryToGroupTable(const QString& templateName, int weight) {
+void LootManager::insertEntryToGroupTable(const QString& templateName, double weight) {
     QTableWidgetItem* templateWidget = new QTableWidgetItem(templateName);
     templateWidget->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-    QRegExp rx("(^100([.]0{1,5})?)$|(^[0-9]{1,2}([.][0-9]{1,5})?)$");
-    QRegExpValidator* validator = new QRegExpValidator(rx);
-
-    QLineEdit* weightWidget = new QLineEdit();
+    QDoubleSpinBox* weightWidget = new QDoubleSpinBox();
     weightWidget->setAlignment(Qt::AlignRight);
     weightWidget->setFrame(false);
-    weightWidget->setValidator(validator);
-    weightWidget->setText(QString::number(weight / 100000, 'f', 5));
+    weightWidget->setDecimals(5);
+    weightWidget->setRange(0, 100.0);
+    weightWidget->setValue(weight);
+
     QPalette palette;
     palette.setColor(QPalette::Base, Qt::transparent);
     weightWidget->setPalette(palette);
@@ -319,14 +318,14 @@ void LootManager::updateChanceTotal() {
     double totalChance = 0.f;
 
     for (int i = 0; i < ui->tableWidget_LootGroups->rowCount(); ++i) {
-        QLineEdit* chance = dynamic_cast<QLineEdit*>(ui->tableWidget_LootGroups->cellWidget(i, 1));
+        QDoubleSpinBox* chance = dynamic_cast<QDoubleSpinBox*>(ui->tableWidget_LootGroups->cellWidget(i, 1));
         QString itemName = ui->tableWidget_LootGroups->item(i, 0)->text();
 
         if (chance == NULL)
             continue;
 
-        double dblChance = chance->text().toDouble();
-        chance->setText(QString::number(dblChance, 'f', 5));
+        double dblChance = chance->value();
+        chance->setValue(dblChance);
 
         totalChance += dblChance;
 
@@ -385,8 +384,8 @@ void LootManager::normalizeChance() {
 
         currentLootGroup->setChance(itemName, qRound(newChance * 100000));
 
-        QLineEdit* chanceWidget = dynamic_cast<QLineEdit*>(ui->tableWidget_LootGroups->cellWidget(i, 1));
-        chanceWidget->setText(QString::number(newChance, 'f', 5));
+        QDoubleSpinBox* chanceWidget = dynamic_cast<QDoubleSpinBox*>(ui->tableWidget_LootGroups->cellWidget(i, 1));
+        chanceWidget->setValue(newChance);
     }
 
     updateChanceTotal();

@@ -6,11 +6,8 @@
 
 QString LootLuaManager::currentFile;
 
-LootLuaManager::LootLuaManager()
-{
+LootLuaManager::LootLuaManager() {
     registerGlobals();
-
-    totalCreatedItemTemplates = 0;
 }
 
 
