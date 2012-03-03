@@ -8,6 +8,7 @@ import java.io.StringWriter;
 import java.util.Scanner;
 
 import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -23,14 +24,27 @@ public class IdlGeneratedFilesFilter extends ViewerFilter {
 			TranslationUnit unit = (TranslationUnit) arg2;
 
 			if (unit.isCLanguage() || unit.isCXXLanguage()) {
-				char test[] = unit.getContents();
 				
-				if (test != null) {
-					String contents = String.copyValueOf(test, 0, Math.min(test.length, 0x100));
-
-					if (contents.contains(magic)) {
+				IFile file = unit.getFile();
+				
+				if (file == null)
+					return true;
+				
+				try {
+					InputStream stream = file.getContents();
+					
+					if (stream == null)
+						return true;
+					
+					Scanner scanner = new Scanner(stream);
+					
+					String str = scanner.findWithinHorizon(magic, 0x100);
+					
+					if (str != null)
 						return false;
-					}
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					return true;
 				}
 			}
 		}
