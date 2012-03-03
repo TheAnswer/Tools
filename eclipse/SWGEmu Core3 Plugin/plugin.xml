@@ -88,10 +88,29 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            default="true"
+            default="false"
             id="SWGEmu Core3 Plugin.editor1"
             name="name">
       </editor>
    </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+		<commonFilter
+        description="Hides idlc auto generated resources"
+        id="swgemu.core3.plugin.filters.IdlGeneratedFilesFilter"
+        name="engine3 idlc resources"
+        class="org.swgemu.core3.plugin.filters.IdlGeneratedFilesFilter"
+        activeByDefault="true">
+    </commonFilter>
+   </extension>
+   <extension 
+   	point="org.eclipse.ui.navigator.viewer">
+    <viewerContentBinding
+          viewerId="org.eclipse.ui.navigator.ProjectExplorer">
+          <includes>
+            <contentExtension pattern="swgemu.core3.plugin.filters.IdlGeneratedFilesFilter"/> 
+          </includes>
+    </viewerContentBinding>
+</extension>
 
 </plugin>

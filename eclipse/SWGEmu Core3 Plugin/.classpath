@@ -5,5 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="/Users/victor/Documents/workspaceJava/IDLCompiler/lib/idlc.jar" sourcepath="/Users/victor/Documents/workspaceJava/IDLCompiler/src"/>
+	<classpathentry kind="var" path="IDLC_HOME"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
