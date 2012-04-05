@@ -93,7 +93,7 @@ void LairTypes::editLair() {
 }
 
 void LairTypes::saveLairs(bool forceUpdate) {
-    if (!forceUpdate && !QMessageBox::question (this, "Save lair templates", "Are you sure?", QMessageBox::Ok, QMessageBox::Abort) == QMessageBox::Ok)
+    if (!forceUpdate && QMessageBox::question (this, "Save lair templates", "Are you sure?", QMessageBox::Ok, QMessageBox::Abort) != QMessageBox::Ok)
         return;
 
     Settings* settings = MainWindow::instance->getSettings();
@@ -180,7 +180,7 @@ void LairTypes::saveLairs(bool forceUpdate) {
 }
 
 void LairTypes::removeLair() {
-    if (!QMessageBox::question (this, "Delete lair", "Are you sure?", QMessageBox::Ok, QMessageBox::Abort) == QMessageBox::Ok)
+    if (QMessageBox::question (this, "Delete lair", "Are you sure?", QMessageBox::Ok, QMessageBox::Abort) != QMessageBox::Ok)
         return;
 
     int idx = ui->listWidget_lairs->currentRow();
