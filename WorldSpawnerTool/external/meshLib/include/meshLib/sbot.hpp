@@ -51,6 +51,10 @@ namespace ml
 
     void print() const;
 
+	std::string getSbotBaseObjectFilename() {
+		return sbotBaseObjectFilename;
+	}
+
   protected:
     unsigned int readSBOTXXXX( std::istream &file );
 

@@ -51,6 +51,7 @@ LootItemEditor::LootItemEditor(QExplicitlySharedDataPointer<LootItemTemplate> it
         ui->tableWidget_ExperimentalProperties->setItem(i, 0, new QTableWidgetItem(currentItem->getExperimentalPropertyAt(i)));
         ui->tableWidget_ExperimentalProperties->setItem(i, 1, new QTableWidgetItem(QString::number(currentItem->getExperimentalMinAt(i))));
         ui->tableWidget_ExperimentalProperties->setItem(i, 2, new QTableWidgetItem(QString::number(currentItem->getExperimentalMaxAt(i))));
+        ui->tableWidget_ExperimentalProperties->setItem(i, 3, new QTableWidgetItem(QString::number(currentItem->getExperimentalPrecision(i))));
     }
 }
 
@@ -77,8 +78,9 @@ void LootItemEditor::acceptedDialog() {
         QString property = ui->tableWidget_ExperimentalProperties->item(i, 0)->text();
         float min = ui->tableWidget_ExperimentalProperties->item(i, 1)->text().toFloat();
         float max = ui->tableWidget_ExperimentalProperties->item(i, 2)->text().toFloat();
+        float precision = ui->tableWidget_ExperimentalProperties->item(i, 3)->text().toFloat();
 
-        currentItem->addExperimentalProperty(property, min, max);
+        currentItem->addExperimentalProperty(property, min, max, precision);
     }
 
     for (int i = 0; i < ui->tableWidget_CustomizationVariables->rowCount(); ++i) {
@@ -120,6 +122,7 @@ void LootItemEditor::addExperimentalRow() {
     ui->tableWidget_ExperimentalProperties->setItem(rows, 0, new QTableWidgetItem(""));
     ui->tableWidget_ExperimentalProperties->setItem(rows, 1, new QTableWidgetItem(""));
     ui->tableWidget_ExperimentalProperties->setItem(rows, 2, new QTableWidgetItem(""));
+    ui->tableWidget_ExperimentalProperties->setItem(rows, 3, new QTableWidgetItem(""));
 }
 
 void LootItemEditor::removeExperimentalRow() {

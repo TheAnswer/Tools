@@ -49,6 +49,10 @@ namespace ml
       return interiorLayoutFilename;
     }*/
 
+	std::string getScotBaseObjectFilename() {
+		return scotBaseObjectFilename;
+	}
+
     void print() const;
 
   protected:

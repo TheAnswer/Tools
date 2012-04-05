@@ -39,7 +39,7 @@ class DataManager;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
-
+    
 private:
     Ui::MainWindow *ui;
 
@@ -188,14 +188,18 @@ public:
         return lairTypes;
     }
 
-    inline LootLuaManager* getLootLuaManager() {
+    inline QString getCurrentMapName() {
+        return currentMap;
+    }
+    
+     inline LootLuaManager* getLootLuaManager() {
         return lootLuaManager;
     }
 
     inline QAction* getAction(const QString& name) {
       return actions.value(name, NULL);
     }
-
+    
     inline LootManager* getLootManager() {
         return lootManager;
     }
@@ -212,6 +216,7 @@ public:
 
 signals:
     void printToConsole(const QString& str);
+
 
 };
 

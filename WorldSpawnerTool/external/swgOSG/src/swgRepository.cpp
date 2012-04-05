@@ -515,114 +515,105 @@ swgRepository::loadMSH( boost::shared_ptr<std::istream> meshFile )
   float texCoord[12];
 
   // Loop through all the sets of vertex indices.
-  for(unsigned int indexTable = 0; indexTable < swgMesh.getNumIndexTables();
-      ++indexTable )
-    {
-      osg::Vec3Array* vertices = new osg::Vec3Array;
-      osg::Vec3Array* normals = new osg::Vec3Array;
-      osg::Vec4Array* colors = new osg::Vec4Array;
+	for(unsigned int indexTable = 0; indexTable < swgMesh.getNumIndexTables(); ++indexTable ) {
+		osg::Vec3Array* vertices = new osg::Vec3Array;
+		osg::Vec3Array* normals = new osg::Vec3Array;
+		osg::Vec4Array* colors = new osg::Vec4Array;
 
-      std::vector< osg::ref_ptr< osg::Vec2Array > > texCoordVec;
-      for( unsigned int i = 0; i < ml::MAX_TEXTURES; ++i )
-	{
-	  texCoordVec.push_back( new osg::Vec2Array );
-	}
+		std::vector< osg::ref_ptr< osg::Vec2Array > > texCoordVec;
+		for( unsigned int i = 0; i < ml::MAX_TEXTURES; ++i ) {
+			texCoordVec.push_back( new osg::Vec2Array );
+		}
       
-      swgMesh.getIndex( indexTable, &vData, &iData, shaderFilename );
-      unsigned int numVertices = vData->getNumVertices();
-      std::cout << "Adding " << numVertices << " vertices" << std::endl;
+		swgMesh.getIndex( indexTable, &vData, &iData, shaderFilename );
+		unsigned int numVertices = vData->getNumVertices();
+		std::cout << "Adding " << numVertices << " vertices" << std::endl;
 
-      // Build list of vertices used with current indices.
-      for( unsigned int i = 0; i < numVertices; ++i )
-	{
-	  (vData->getVertex( i ))->getPosition( x, y, z );
-	  vertices->push_back( osg::Vec3( z, y, x ) );
+		// Build list of vertices used with current indices.
+		for( unsigned int i = 0; i < numVertices; ++i ) {
+			(vData->getVertex( i ))->getPosition( x, y, z );
+			vertices->push_back( osg::Vec3( x, y, z ) );
 	  
-	  //std::cout << x << ", " << y << ", " << z << std::endl;
+			//std::cout << x << ", " << y << ", " << z << std::endl;
 	  
-	  (vData->getVertex( i ))->getNormal( x, y, z );
-	  normals->push_back( osg::Vec3( z, y, x ) );
+			(vData->getVertex( i ))->getNormal( x, y, z );
+			normals->push_back( osg::Vec3( x, y, z ) );
 	  
-	  // Hard code color for now
-	  (vData->getVertex( i ))->getColor( argb );
-	  //colors->push_back( osg::Vec4( 1.0, 1.0, 1.0, 1.0 ) );
-	  colors->push_back( osg::Vec4( argb[1]/255.0,
-					argb[2]/255.0,
-					argb[3]/255.0,
-					argb[0]/255.0 )
-			     );
+			// Hard code color for now
+			(vData->getVertex( i ))->getColor( argb );
+			//colors->push_back( osg::Vec4( 1.0, 1.0, 1.0, 1.0 ) );
+			colors->push_back( osg::Vec4( argb[1]/255.0,
+						argb[2]/255.0,
+						argb[3]/255.0,
+						argb[0]/255.0 )
+					);
 	  
 	  
-	  (vData->getVertex( i ))->getTexCoords( numTexCoordPairs,
+			(vData->getVertex( i ))->getTexCoords( numTexCoordPairs,
 						 texCoord );
 	  
-	  for( unsigned int j = 0; j < numTexCoordPairs; ++j )
-	    {
-	      texCoordVec[j]->push_back(
+			for( unsigned int j = 0; j < numTexCoordPairs; ++j ) {
+				texCoordVec[j]->push_back(
 					osg::Vec2( texCoord[j*2],
 						   texCoord[(j*2)+1] )
 					);
-	    }
+			}
+		}
+      
+		// Create new geometry node list of vertex attributes.
+		osg::ref_ptr<osg::Geometry> geometry = new osg::Geometry;
+      
+		geometry->setVertexArray( vertices );
+      
+		geometry->setColorArray( colors );
+		geometry->setColorBinding( osg::Geometry::BIND_PER_VERTEX );
+      
+		geometry->setNormalArray( normals );
+		geometry->setNormalBinding( osg::Geometry::BIND_PER_VERTEX );      
+
+		for( unsigned int j = 0; j < ml::MAX_TEXTURES; ++ j ) {
+			if( !(texCoordVec[j]->empty()) ) {
+				geometry->setTexCoordArray( j, texCoordVec[j].get() );
+			}
+		}
+
+		unsigned int numIndices = iData->getNumIndices();
+		std::cout << "Num indices: " << numIndices << std::endl;
+      
+		// Create new primitive set to hold this list.
+		osg::DrawElementsUShort* drawElements = new osg::DrawElementsUShort( osg::PrimitiveSet::TRIANGLES );
+		drawElements->reserve( numIndices );
+      
+		// Populate primitive set with indices.
+		for( unsigned int i = 0; i < numIndices; ++i ) {
+			if( iData->getIndex( i ) >= numVertices ) {
+				std::cout << "Indexing outside vertex list: "
+				<< iData->getIndex( i )
+				<< std::endl;
+			}
+
+			drawElements->push_back( iData->getIndex( i ) );
+		}
+
+		// Add primitive set to this geometry node.
+		geometry->addPrimitiveSet( drawElements );
+      
+		// Load shader and attach to this geometry node.
+		std::string shaderFilename = swgMesh.getShader( iData->getShaderIndex() );
+		geometry->setStateSet( loadShader( shaderFilename ) );
+
+		osg::VertexBufferObject *vbo = new osg::VertexBufferObject;
+		vertices->setVertexBufferObject( vbo );
+
+		osg::ElementBufferObject* ebo = new osg::ElementBufferObject;
+		drawElements->setElementBufferObject( ebo );
+
+		geometry->setUseVertexBufferObjects( ( NULL != vbo ) );
+
+		geode->addDrawable( geometry.get() );
 	}
-      
-      // Create new geometry node list of vertex attributes.
-      osg::ref_ptr<osg::Geometry> geometry = new osg::Geometry;
-      
-      geometry->setVertexArray( vertices );
-      
-      geometry->setColorArray( colors );
-      geometry->setColorBinding( osg::Geometry::BIND_PER_VERTEX );
-      
-      geometry->setNormalArray( normals );
-      geometry->setNormalBinding( osg::Geometry::BIND_PER_VERTEX );      
 
-      for( unsigned int j = 0; j < ml::MAX_TEXTURES; ++ j )
-	{
-	  if( !(texCoordVec[j]->empty()) )
-	    {
-	      geometry->setTexCoordArray( j, texCoordVec[j].get() );
-	    }
-	}
-
-      unsigned int numIndices = iData->getNumIndices();
-      std::cout << "Num indices: " << numIndices << std::endl;
-      
-      // Create new primitive set to hold this list.
-      osg::DrawElementsUShort* drawElements =
-	new osg::DrawElementsUShort( osg::PrimitiveSet::TRIANGLES );
-      drawElements->reserve( numIndices );
-      
-      // Populate primitive set with indices.
-      for( unsigned int i = 0; i < numIndices; ++i )
-	{
-	  if( iData->getIndex( i ) >= numVertices )
-	    {
-	      std::cout << "Indexing outside vertex list: "
-			<< iData->getIndex( i )
-			<< std::endl;
-	    }
-	  drawElements->push_back( iData->getIndex( i ) );
-	}
-
-      // Add primitive set to this geometry node.
-      geometry->addPrimitiveSet( drawElements );
-      
-      // Load shader and attach to this geometry node.
-      std::string shaderFilename = swgMesh.getShader( iData->getShaderIndex() );
-      geometry->setStateSet( loadShader( shaderFilename ) );
-
-      osg::VertexBufferObject *vbo = new osg::VertexBufferObject;
-      vertices->setVertexBufferObject( vbo );
-
-      osg::ElementBufferObject* ebo = new osg::ElementBufferObject;
-      drawElements->setElementBufferObject( ebo );
-
-      geometry->setUseVertexBufferObjects( ( NULL != vbo ) );
-
-      geode->addDrawable( geometry.get() );
-    }
-
-  return geode;
+	return geode;
 }
 
 osg::ref_ptr< osg::Node >
@@ -658,12 +649,12 @@ swgRepository::loadSKMG( boost::shared_ptr<std::istream> meshFile )
       for( unsigned int i = 0; i < newPsdt.getNumVertex(); ++i )
 	{
 	  newPsdt.getVertex( i, x, y, z );
-	  vertices->push_back( osg::Vec3( z, y, x ) );
+	  vertices->push_back( osg::Vec3( x, y, z ) );
 	  
 	  std::cout << "xyz: " << x << ", " << y << ", " << z << std::endl;
 	  
 	  newPsdt.getNormal( i, x, y, z );
-	  normals->push_back( osg::Vec3( z, y, x ) );
+	  normals->push_back( osg::Vec3( x, y, z ) );
 	  
 	  // Hard code color for now
 	  colors->push_back( osg::Vec4( 1.0, 1.0, 1.0, 1.0 ) );
@@ -850,6 +841,14 @@ swgRepository::loadSTAT( boost::shared_ptr<std::istream> statFile )
 
   std::string appearanceFilename( swgSTAT.getAppearanceFilename() );
 
+  if (appearanceFilename.empty()) {
+	  std::string derv = swgSTAT.getStatBaseObjectFilename();
+
+	  if (!derv.empty()) {
+		return loadFile(derv);
+	  }
+  }
+
   osg::ref_ptr<osg::Node> appearanceMesh( loadFile( appearanceFilename ) );
   
   if( NULL != appearanceMesh )
@@ -857,7 +856,11 @@ swgRepository::loadSTAT( boost::shared_ptr<std::istream> statFile )
       statMesh->addChild( appearanceMesh.get() );
     }
 
-  return statMesh;
+  osg::MatrixTransform* transform = new osg::MatrixTransform;
+  transform->setMatrix(osg::Matrix::scale(swgSTAT.getScale(), swgSTAT.getScale(), swgSTAT.getScale()));
+  transform->addChild(statMesh);
+
+  return transform;
 }
 
 osg::ref_ptr< osg::Node >
@@ -866,10 +869,20 @@ swgRepository::loadSTOT( boost::shared_ptr<std::istream> stotFile )
   // Read from stream into stot record
   ml::stot swgSTOT;
   swgSTOT.readSTOT( *stotFile );
-  
-  osg::ref_ptr<osg::Group> stotMesh( new osg::Group );
+
+  //swgSTOT.getDE
 
   std::string appearanceFilename( swgSTOT.getAppearanceFilename() );
+
+  if (appearanceFilename.empty()) {
+	  std::string derv = swgSTOT.getStotBaseObjectFilename();
+
+	  if (!derv.empty()) {
+		return loadFile(derv);
+	  }
+  }
+  
+  osg::ref_ptr<osg::Group> stotMesh( new osg::Group );
 
   osg::ref_ptr<osg::Node> appearanceMesh( loadFile( appearanceFilename ) );
 
@@ -878,7 +891,11 @@ swgRepository::loadSTOT( boost::shared_ptr<std::istream> stotFile )
       stotMesh->addChild( appearanceMesh.get() );
     }
 
-  return stotMesh;
+   osg::MatrixTransform* transform = new osg::MatrixTransform;
+  transform->setMatrix(osg::Matrix::scale(swgSTOT.getScale(), swgSTOT.getScale(), swgSTOT.getScale()));
+  transform->addChild(stotMesh);
+
+  return transform;
 }
 
 osg::ref_ptr< osg::Node > 
@@ -890,6 +907,14 @@ swgRepository::loadSCOT( boost::shared_ptr<std::istream> iffFile ) {
   osg::ref_ptr<osg::Group> stotMesh( new osg::Group );
 
   std::string appearanceFilename( swgSCOT.getAppearanceFilename() );
+
+   if (appearanceFilename.empty()) {
+	  std::string derv = swgSCOT.getScotBaseObjectFilename();
+
+	  if (!derv.empty()) {
+		loadFile(derv);
+	  }
+  }
 
   osg::ref_ptr<osg::Node> appearanceMesh( loadFile( appearanceFilename ) );
 
@@ -974,7 +999,17 @@ swgRepository::loadSBOT( boost::shared_ptr<std::istream> sbotFile )
   osg::ref_ptr<osg::Group> sbotMesh( new osg::Group );
 
   std::string filename( swgSBOT.getAppearanceFilename() );
-  osg::ref_ptr<osg::Node> appearanceMesh( loadFile( filename ) );
+
+  if (filename.empty()) {
+	  std::string derv = swgSBOT.getSbotBaseObjectFilename();
+
+	  if (!derv.empty()) {
+		loadFile(derv);
+	  }
+  }
+
+   osg::ref_ptr<osg::Node> appearanceMesh( loadFile( filename ) );
+
   if( NULL != appearanceMesh )
     {
       sbotMesh->addChild( appearanceMesh );
@@ -995,7 +1030,11 @@ swgRepository::loadSBOT( boost::shared_ptr<std::istream> sbotFile )
       sbotMesh->addChild( interiorLayoutMesh );
     }
 
-  return sbotMesh;
+  osg::MatrixTransform* transform = new osg::MatrixTransform;
+  transform->setMatrix(osg::Matrix::scale(swgSBOT.getScale(), swgSBOT.getScale(), swgSBOT.getScale()));
+  transform->addChild(sbotMesh);
+
+  return transform;
 }
 
 osg::ref_ptr<osg::Node> 
@@ -1041,15 +1080,23 @@ swgRepository::loadINLY( boost::shared_ptr<std::istream> inlyFile )
 			      0.0, 0.0, 0.0, 1.0
 			      );
 #else
-	  osg::Matrix rotMat( nodeRot.get(0),nodeRot.get(3),-nodeRot.get(6), 0.0,
+	  /*osg::Matrix rotMat( nodeRot.get(0),nodeRot.get(3),-nodeRot.get(6), 0.0,
 			      nodeRot.get(1),nodeRot.get(4),-nodeRot.get(7), 0.0,
 			      -nodeRot.get(2),-nodeRot.get(5),nodeRot.get(8), 0.0,
 			      0.0, 0.0, 0.0, 1.0
+			      );*/
+
+	  osg::Matrix rotMat( nodeRot.get(0),nodeRot.get(3), nodeRot.get(6), 0.0,
+
+			      nodeRot.get(1),nodeRot.get(4), nodeRot.get(7), 0.0,
+
+			      nodeRot.get(2), -nodeRot.get(5),nodeRot.get(8), 0.0,
+			      0.0, 0.0, 0.0, 1.0
 			      );
 #endif
-	  osg::Matrix transMat( osg::Matrix::translate( nodeTrans.getZ(),
+	  osg::Matrix transMat( osg::Matrix::translate( nodeTrans.getX(),
 							nodeTrans.getY(),
-							nodeTrans.getX())
+							nodeTrans.getZ())
 				);
 	  transform->setMatrix( rotMat * transMat );
 	  transform->addChild( loadFile( nodeFilename ) );

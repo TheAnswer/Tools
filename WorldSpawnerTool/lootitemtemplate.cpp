@@ -49,6 +49,16 @@ void LootItemTemplate::readObject(lua_State* L) {
                 experimentalMax.append(max);
 
                 lua_pop(L, 1);
+
+                if (luaL_getn(L, -1) > 3) {
+                    lua_rawgeti(L, -1, 4);
+
+                    float max = lua_tonumber(L, -1);
+                    experimentalPrecision.append(max);
+
+                    lua_pop(L, 1);
+                } else
+                    experimentalPrecision.append(0);
             }
 
             lua_pop(L, 1);
@@ -124,7 +134,7 @@ QString LootItemTemplate::serializeToLua() {
     stream << "\tcraftingValues = {" << endl;
 
     for (int i = 0; i < experimentalSubGroupTitles.count(); ++i) {
-        stream << "\t\t{\"" << experimentalSubGroupTitles.at(i) << "\"," << experimentalMin.at(i) << "," << experimentalMax.at(i) << "}," << endl;
+        stream << "\t\t{\"" << experimentalSubGroupTitles.at(i) << "\"," << experimentalMin.at(i) << "," << experimentalMax.at(i) << "," << experimentalPrecision.at(i) << "}," << endl;
     }
 
     stream << "\t}," << endl;
@@ -154,6 +164,7 @@ void LootItemTemplate::clearAllExperimentalProperties() {
     experimentalSubGroupTitles.clear();
     experimentalMin.clear();
     experimentalMax.clear();
+    experimentalPrecision.clear();
 }
 
 void LootItemTemplate::clearAllCustomizationVariables() {
@@ -162,10 +173,11 @@ void LootItemTemplate::clearAllCustomizationVariables() {
     customizationValueMax.clear();
 }
 
-void LootItemTemplate::addExperimentalProperty(const QString& property, float min, float max) {
+void LootItemTemplate::addExperimentalProperty(const QString& property, float min, float max, float precision) {
     experimentalSubGroupTitles.append(property);
     experimentalMin.append(min);
     experimentalMax.append(max);
+    experimentalPrecision.append(precision);
 }
 
 void LootItemTemplate::addCustomizationVariable(const QString& property, quint8 min, quint8 max) {

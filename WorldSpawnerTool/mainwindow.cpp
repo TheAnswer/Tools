@@ -60,6 +60,8 @@ void MainWindow::initialize() {
 
     dataManager->loadTreData(settings->getTreDirectory());
 
+    objectModel3dViewer = new ObjectModel3dViewer();
+
     splash.showMessage("Initializing undo commands.");
     undoStack = new QUndoStack(this);
     undoView = new QUndoView(undoStack);
@@ -78,7 +80,6 @@ void MainWindow::initialize() {
     spawnLuaManager = new SpawnLuaManager();
     lairLuaManager = new LairLuaManager();
     lairTypes = new LairTypes(lairLuaManager);
-    objectModel3dViewer = new ObjectModel3dViewer();
     insertBadgeForm = new InsertBadgeForm(this);
     stfViewer = new STFViewer();
 
@@ -110,19 +111,12 @@ void MainWindow::initialize() {
     connect(ui->regionRadius, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionRadiusChanged()));
     connect(ui->regionX, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionXChanged()));
     connect(ui->regionY, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionYChanged()));
-    connect(ui->doubleSpinBox_badgeX, SIGNAL(valueChanged(double)), this, SLOT(badgeXChanged()));
-    connect(ui->doubleSpinBox_badge_Y, SIGNAL(valueChanged(double)), this, SLOT(badgeYChanged()));
-    connect(ui->doubleSpinBox_badgeRadius, SIGNAL(valueChanged(double)), this, SLOT(badgeRadiusChanged()));
-    connect(ui->pushButton_removeBadge, SIGNAL(clicked()), this, SLOT(removeCurrentBadge()));
-    connect(ui->pushButton_addBadge, SIGNAL(clicked()), insertBadgeForm, SLOT(showNormal()));
     connect(ui->tier, SIGNAL(valueChanged(int)), this, SLOT(spawnRegionTierChanged()));
     connect(ui->constant, SIGNAL(valueChanged(int)), this, SLOT(spawnRegionTierChanged()));
     connect(ui->actionLair_Tool, SIGNAL(triggered()), lairTypes, SLOT(showNormal()));
     connect(ui->pushButton_editSpawn, SIGNAL(clicked()), this, SLOT(editSpawn()));
     connect(ui->pushButton_addSpawn, SIGNAL(clicked()), this, SLOT(addSpawn()));
     connect(ui->pushButton_removeSpawn, SIGNAL(clicked()), this, SLOT(removeSpawn()));
-    connect(ui->action_3dviewer, SIGNAL(triggered()), objectModel3dViewer, SLOT(showNormal()));
-    connect(ui->listWidget_badges, SIGNAL(currentTextChanged(QString)), this, SLOT(updateCurrentBadgeSelection(QString)));
     connect(ui->actionSTF_Viewer, SIGNAL(triggered()), stfViewer, SLOT(showNormal()));
     connect(ui->actionLootManager, SIGNAL(triggered()), this, SLOT(displayLootManager()));
 
@@ -145,9 +139,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     setWindowTitle(getApplicationFullName());
     instance = this;
 
+
+
     initialize();
 
     //emit printToConsole("WorldSpawnerTool started");
+
+    connect(ui->action_3dviewer, SIGNAL(triggered()), objectModel3dViewer, SLOT(showNormal()));
 }
 
 QString MainWindow::getApplicationFullName() {

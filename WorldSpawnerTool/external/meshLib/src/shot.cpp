@@ -37,6 +37,7 @@ using namespace ml;
 
 shot::shot()
 {
+	scale = 1.f;
 }
 
 shot::~shot()
@@ -343,8 +344,21 @@ unsigned int shot::readXXXX( std::istream &file )
       }
     else if( property == "scale" )
       {
-	file.seekg( xxxxSize - (property.size() + 1 ), std::ios_base::cur );
-	total += xxxxSize - ( property.size() + 1 );
+	/*file.seekg( xxxxSize - (property.size() + 1 ), std::ios_base::cur );
+	total += xxxxSize - ( property.size() + 1 );*/
+
+		  total += base::read(file, enabled);
+
+		  unsigned char unk;
+
+		  total += base::read(file, unk);
+
+		  if (enabled == 1 && unk == 0x20) {
+			  total += base::read(file, scale);
+		  } else if (enabled == 3 && unk == 0x20) {
+			  total += base::read(file, scale);
+			  total += base::read(file, scale);
+		  }
       }
     else if( property == "gameObjectType" )
       {

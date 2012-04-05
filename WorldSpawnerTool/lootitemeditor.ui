@@ -151,6 +151,11 @@
           <string>Maximum</string>
          </property>
         </column>
+        <column>
+         <property name="text">
+          <string>Precision</string>
+         </property>
+        </column>
        </widget>
       </item>
       <item>

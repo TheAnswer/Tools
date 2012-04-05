@@ -505,10 +505,15 @@ unsigned int wsNode::read( std::istream &file )
     total += base::read( file, parentNodeID );
     total += base::read( file, objectIndex );
     total += base::read( file, positionInParent );
+
+	
+	total += base::read( file, qw );
     total += base::read( file, qx );
     total += base::read( file, qy );
     total += base::read( file, qz );
-    total += base::read( file, qw );
+	
+	
+
     total += base::read( file, x );
     total += base::read( file, y );
     total += base::read( file, z );

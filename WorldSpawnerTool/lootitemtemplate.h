@@ -36,7 +36,7 @@ public:
     void clearAllExperimentalProperties();
     void clearAllCustomizationVariables();
 
-    void addExperimentalProperty(const QString& property, float min, float max);
+    void addExperimentalProperty(const QString& property, float min, float max, float precision);
     void addCustomizationVariable(const QString& variable, quint8 min, quint8 max);
 
 public:
@@ -75,6 +75,10 @@ public:
 
     inline float getExperimentalMaxAt(int idx) {
         return experimentalMax.at(idx);
+    }
+
+    inline float getExperimentalPrecision(int idx) {
+        return experimentalPrecision.at(idx);
     }
 
     inline int getTotalExperimentalProps() {
@@ -130,6 +134,7 @@ private:
     QVector<QString> experimentalSubGroupTitles;
     QVector<float> experimentalMin;
     QVector<float> experimentalMax;
+    QVector<float> experimentalPrecision;
 
     QVector<QString> customizationStringNames;
     QVector<quint8> customizationValueMin;
