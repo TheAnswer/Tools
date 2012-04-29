@@ -39,6 +39,7 @@
 #include "datamanager.h"
 #include "worldsnapshotobject.h"
 #include "splashscreen.h"
+#include "CRCCalculatorDialog.h"
 
 using namespace utils;
 
@@ -1227,4 +1228,10 @@ void MainWindow::displayLootManager()
 
 treArchive* MainWindow::getTreArchive() {
     return objectModel3dViewer->getTreArchive();
+}
+
+void MainWindow::on_actionCRC_Calculator_triggered()
+{
+    CRCCalculatorDialog calc;
+    calc.exec();
 }

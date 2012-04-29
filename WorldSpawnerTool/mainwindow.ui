@@ -98,6 +98,7 @@
     </property>
     <addaction name="actionLoad"/>
     <addaction name="actionLair_Tool"/>
+    <addaction name="actionCRC_Calculator"/>
     <addaction name="separator"/>
     <addaction name="actionPreOR_Creatures"/>
     <addaction name="action_3dviewer"/>
@@ -623,6 +624,11 @@
   <action name="actionLootManager">
    <property name="text">
     <string>Loot Manager</string>
+   </property>
+  </action>
+  <action name="actionCRC_Calculator">
+   <property name="text">
+    <string>CRC Calculator</string>
    </property>
   </action>
  </widget>

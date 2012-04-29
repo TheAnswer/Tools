@@ -217,6 +217,8 @@ public:
 signals:
     void printToConsole(const QString& str);
 
+private slots:
+    void on_actionCRC_Calculator_triggered();
 
 };
 
