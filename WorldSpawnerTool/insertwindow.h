@@ -42,7 +42,7 @@ public:
     }
 
     int getParentID() {
-        return ui.spinBox_ParentID->value();
+        return ui.lineEdit_ParentID->text().toInt();
     }
 
     int getRespawn() {
