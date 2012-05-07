@@ -63,10 +63,14 @@ void DataManager::loadTreData(QString treDirectory) {
 
         if (treDirectories.contains(directory)) {
             QVector<QString>* dirContents = &treDirectories[directory];
-            dirContents->append(filename);
+
+            if(!dirContents->contains(filename))
+                dirContents->append(filename);
         } else {
             QVector<QString> dirContents;
-            dirContents.append(filename);
+            if (!dirContents.contains(filename))
+                dirContents.append(filename);
+
             treDirectories.insert(directory, dirContents);
         }
     }

@@ -33,7 +33,7 @@ public:
     }
 
     void setDirX(float v) {
-        oX = v;;
+        oX = v;
     }
 
     void setDirY(float v) {
