@@ -13,6 +13,8 @@ protected:
     unsigned int respawnTimer;
     float heading;
     unsigned long long parentID;
+    QString moodString;
+    QString customName;
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant& value);
@@ -32,6 +34,8 @@ public:
     void setRespawnTimer(unsigned int timer);
     void setHeading(float head);
     void setParentID(unsigned long long id);
+    void setMoodString(const QString& name);
+    void setCustomName(const QString& name);
 
     QString getSharedTemplate();
 

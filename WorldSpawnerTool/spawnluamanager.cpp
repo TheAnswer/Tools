@@ -234,6 +234,16 @@ QVector<StaticSpawn* > SpawnLuaManager::loadStaticSpawns(const QString& planetNa
             lua_rawgeti(L, -1, 7);
             uint64 parentID = (uint64)lua_tonumber(L, -1);
             lua_pop(L, 1);
+            QString moodString;
+            QString customName;
+
+            if (luaL_getn(L, -1) > 7) {
+                moodString = getStringAt(7);
+            }
+
+            if (luaL_getn(L, -1) > 8) {
+                customName = getStringAt(8);
+            }
 
             StaticSpawn* spawn(new StaticSpawn());
             spawn->setMobile(name);
@@ -244,6 +254,8 @@ QVector<StaticSpawn* > SpawnLuaManager::loadStaticSpawns(const QString& planetNa
             spawn->setParentID(parentID);
             spawn->setRespawnTimer(respawn);
             spawn->setToolTip(name);
+            spawn->setCustomName(customName);
+            spawn->setMoodString(moodString);
 
             spawns.append(spawn);
         }

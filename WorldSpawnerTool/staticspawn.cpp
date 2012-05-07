@@ -130,6 +130,26 @@ void StaticSpawn::setWorldY(float v) {
     MainWindow::instance->updateStaticSpawnTableItem(this);
 }
 
+void StaticSpawn::setCustomName(const QString& name) {
+    if (customName == name)
+        return;
+
+    customName = name;
+
+    MainWindow::instance->updateStaticSpawnTableItem(this);
+}
+
+void StaticSpawn::setMoodString(const QString& name) {
+    if (moodString == name)
+        return;
+
+    moodString = name;
+
+    MainWindow::instance->updateStaticSpawnTableItem(this);
+}
+
+void setCustomName(const QString& name);
+
 void StaticSpawn::setRespawnTimer(unsigned int timer) {
     if (respawnTimer == timer)
         return;
@@ -210,7 +230,7 @@ QString StaticSpawn::toLua() {
     unsigned long long parentID;
     */
 
-    stream << "{\"" << mobile << "\"," << respawnTimer << "," << getWorldX() << "," << getWorldZ() << "," << getWorldY() << "," << heading << "," << parentID << "}";
+    stream << "{\"" << mobile << "\"," << respawnTimer << "," << getWorldX() << "," << getWorldZ() << "," << getWorldY() << "," << heading << "," << parentID << ", \"" << moodString << "\", \"" << customName << "\"}";
 
     return data;
 }
