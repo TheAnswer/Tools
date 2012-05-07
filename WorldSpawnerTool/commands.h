@@ -68,9 +68,11 @@ class StaticSpawnChangeCommand : public QUndoCommand {
     uint32 oldRespawnTimer, newRespawnTimer;
     float oldHeading, newHeading;
     uint64 oldParentID, newParentID;
+    QString oldMood, newMood;
+    QString oldName, newName;
 
 public:
-    StaticSpawnChangeCommand(StaticSpawn* spawn, uint32 newRespawnTimer, float newHeading, uint64 newParentID);
+    StaticSpawnChangeCommand(StaticSpawn* spawn, uint32 newRespawnTimer, float newHeading, uint64 newParentID, const QString& newMood, const QString& newName);
 
     void undo();
     void redo();

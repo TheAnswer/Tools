@@ -238,11 +238,11 @@ QVector<StaticSpawn* > SpawnLuaManager::loadStaticSpawns(const QString& planetNa
             QString customName;
 
             if (luaL_getn(L, -1) > 7) {
-                moodString = getStringAt(7);
+                moodString = getStringAt(8);
             }
 
             if (luaL_getn(L, -1) > 8) {
-                customName = getStringAt(8);
+                customName = getStringAt(9);
             }
 
             StaticSpawn* spawn(new StaticSpawn());

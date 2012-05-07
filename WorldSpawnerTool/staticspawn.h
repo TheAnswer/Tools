@@ -51,6 +51,14 @@ public:
         return respawnTimer;
     }
 
+    inline QString getCustomName() const {
+        return customName;
+    }
+
+    inline QString getMoodString() const {
+        return moodString;
+    }
+
     inline float getHeading() {
         return heading;
     }

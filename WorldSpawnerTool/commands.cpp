@@ -186,7 +186,7 @@ void PlanetSpawnRegionChangeCommand::redo() {
         region->setRadius(newRadius);
 }
 
-StaticSpawnChangeCommand::StaticSpawnChangeCommand(StaticSpawn* spawn, uint32 newRespawnTimer, float newHeading, uint64 newParentID) {
+StaticSpawnChangeCommand::StaticSpawnChangeCommand(StaticSpawn* spawn, uint32 newRespawnTimer, float newHeading, uint64 newParentID, const QString& newMood, const QString& newName) {
     setText("StaticSpawn change");
 
     this->spawn = spawn;
@@ -194,10 +194,14 @@ StaticSpawnChangeCommand::StaticSpawnChangeCommand(StaticSpawn* spawn, uint32 ne
     oldRespawnTimer = spawn->getRespawnTimer();
     oldHeading = spawn->getHeading();
     oldParentID = spawn->getParentID();
+    oldName = spawn->getCustomName();
+    oldMood = spawn->getMoodString();
 
     this->newHeading = newHeading;
     this->newParentID = newParentID;
     this->newRespawnTimer = newRespawnTimer;
+    this->newMood = newMood;
+    this->newName = newName;
 }
 
 void StaticSpawnChangeCommand::undo() {
@@ -209,6 +213,12 @@ void StaticSpawnChangeCommand::undo() {
 
     if (oldParentID != spawn->getParentID())
         spawn->setParentID(oldParentID);
+
+    if (oldMood != spawn->getMoodString())
+        spawn->setMoodString(oldMood);
+
+    if (oldName != spawn->getCustomName())
+        spawn->setCustomName(oldName);
 }
 
 void StaticSpawnChangeCommand::redo() {
@@ -220,6 +230,12 @@ void StaticSpawnChangeCommand::redo() {
 
     if (newParentID != spawn->getParentID())
         spawn->setParentID(newParentID);
+
+    if (newName != spawn->getCustomName())
+        spawn->setCustomName(newName);
+
+    if (newMood != spawn->getMoodString())
+        spawn->setMoodString(newMood);
 }
 
 BadgeChangedCommand::BadgeChangedCommand(Badge* badge, int newID, float newRadius){

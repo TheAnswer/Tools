@@ -696,7 +696,7 @@ void MainWindow::reloadPlanet() {
     currentMap = planetSelection->getCurrentPlanetSelection();
 
     ui->tableWidget_StaticSpawns->clearContents();
-    ui->tableWidget_StaticSpawns->setColumnCount(6);
+    ui->tableWidget_StaticSpawns->setColumnCount(8);
     ui->tableWidget_StaticSpawns->setRowCount(0);
     ui->listWidget_badges->clear();
     ui->doubleSpinBox_badgeRadius->setValue(0);
@@ -932,11 +932,25 @@ void MainWindow::updateStaticSpawnTableItem(StaticSpawn* spawn) {
     if (parentID != spawn->getParentID()) {
         tableItem->setText(tr("%1").arg(spawn->getParentID()));
     }
+
+    tableItem = getStaticSpawnTableData(row, StaticSpawnTableItem::MOOD);
+    QString mood = tableItem->text();
+
+    if (mood != spawn->getMoodString()) {
+        tableItem->setText(spawn->getMoodString());
+    }
+
+    tableItem = getStaticSpawnTableData(row, StaticSpawnTableItem::CUSTOMNAME);
+    QString customName = tableItem->text();
+
+    if (customName != spawn->getCustomName()) {
+        tableItem->setText(spawn->getCustomName());
+    }
 }
 
 void MainWindow::updateStaticSpawnsTable() {
     ui->tableWidget_StaticSpawns->clearContents();
-    ui->tableWidget_StaticSpawns->setColumnCount(6);
+    ui->tableWidget_StaticSpawns->setColumnCount(8);
     ui->tableWidget_StaticSpawns->setRowCount(0);
 
     QString currentMobile = ui->comboBox_StaticSpawns->currentText();
@@ -983,17 +997,29 @@ void MainWindow::staticSpawnChanged(QTableWidgetItem* item) {
             break;
         case StaticSpawnTableItem::PARENTID:
             if (spawn->getParentID() != tableItem->text().toULongLong())
-                pushUndoCommand(new StaticSpawnChangeCommand(spawn, spawn->getRespawnTimer(), spawn->getHeading(), tableItem->text().toULongLong()));
+                pushUndoCommand(new StaticSpawnChangeCommand(spawn, spawn->getRespawnTimer(), spawn->getHeading(), tableItem->text().toULongLong(), spawn->getMoodString(), spawn->getCustomName()));
 
             break;
         case StaticSpawnTableItem::HEADING:
             if (spawn->getHeading() != tableItem->text().toFloat())
-                pushUndoCommand(new StaticSpawnChangeCommand(spawn, spawn->getRespawnTimer(), tableItem->text().toFloat(), spawn->getParentID()));
+                pushUndoCommand(new StaticSpawnChangeCommand(spawn, spawn->getRespawnTimer(), tableItem->text().toFloat(), spawn->getParentID(), spawn->getMoodString(), spawn->getCustomName()));
 
             break;
         case StaticSpawnTableItem::RESPAWN:
             if (spawn->getRespawnTimer() != tableItem->text().toUInt())
-                pushUndoCommand(new StaticSpawnChangeCommand(spawn, tableItem->text().toUInt(), spawn->getHeading(), spawn->getParentID()));
+                pushUndoCommand(new StaticSpawnChangeCommand(spawn, tableItem->text().toUInt(), spawn->getHeading(), spawn->getParentID(), spawn->getMoodString(), spawn->getCustomName()));
+
+            break;
+
+        case StaticSpawnTableItem::CUSTOMNAME:
+            if (spawn->getCustomName() != tableItem->text())
+                pushUndoCommand(new StaticSpawnChangeCommand(spawn, spawn->getRespawnTimer(), spawn->getHeading(), spawn->getParentID(), spawn->getMoodString(), tableItem->text()));
+
+            break;
+
+        case StaticSpawnTableItem::MOOD:
+            if (spawn->getMoodString() != tableItem->text())
+                pushUndoCommand(new StaticSpawnChangeCommand(spawn, spawn->getRespawnTimer(), spawn->getHeading(), spawn->getParentID(), tableItem->text(), spawn->getCustomName()));
 
             break;
         default:
@@ -1062,6 +1088,12 @@ void MainWindow::insertStaticSpawnToTable(StaticSpawn* spawn) {
 
     newItem = new StaticSpawnTableItem(spawn, tr("%1").arg(spawn->getParentID()));
     ui->tableWidget_StaticSpawns->setItem(row, StaticSpawnTableItem::PARENTID, newItem);
+
+    newItem = new StaticSpawnTableItem(spawn, spawn->getMoodString());
+    ui->tableWidget_StaticSpawns->setItem(row, StaticSpawnTableItem::MOOD, newItem);
+
+    newItem = new StaticSpawnTableItem(spawn, spawn->getCustomName());
+    ui->tableWidget_StaticSpawns->setItem(row, StaticSpawnTableItem::CUSTOMNAME, newItem);
 }
 
 void MainWindow::insertStaticSpawn(StaticSpawn* spawn) {
