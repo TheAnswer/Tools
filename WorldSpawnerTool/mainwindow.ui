@@ -150,7 +150,7 @@
         </size>
        </property>
        <property name="currentIndex">
-        <number>3</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -361,6 +361,16 @@
              <column>
               <property name="text">
                <string>ParentID</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Mood Animation</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Custom Name</string>
               </property>
              </column>
             </widget>
