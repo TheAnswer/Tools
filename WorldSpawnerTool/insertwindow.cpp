@@ -7,6 +7,8 @@ InsertWindow::InsertWindow(MainWindow* main)
     : QDialog(main) {
     ui.setupUi(this);
 
+    mainWindow = main;
+
     ui.lineEdit_ParentID->setValidator(new QRegExpValidator(QRegExp("([0-9]+)"), this));
 
     connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(insertObject()));
