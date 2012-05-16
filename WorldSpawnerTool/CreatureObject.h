@@ -6,11 +6,128 @@
 #include <QMap>
 #include <QTextStream>
 
+#include "LuaParser.h"
+
 extern "C" {
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
 }
+
+class LootGroupEntry {
+    QString templateName;
+    int lootChance;
+public:
+    LootGroupEntry() {
+        lootChance = 0;
+    }
+
+    void readObject(lua_State* l) {
+        templateName = LuaParser::getStringField(l, "group");
+        lootChance = LuaParser::getIntField(l, "chance");
+    }
+
+    void writeObject(QTextStream& str) {
+        str << "\t\t\t\t{ group = \"" << templateName << "\", chance = " << lootChance << "},";
+    }
+
+};
+
+class LootGroups {
+    QVector<LootGroupEntry*> entries;
+public:
+    LootGroups() {
+
+    }
+
+    void readObject(lua_State* l) {
+        int size = luaL_getn(l, -1);
+
+        for (int i = 1; i <= size; ++i) {
+            lua_rawgeti(l, -1, i);
+
+            LootGroupEntry* entry = new LootGroupEntry();
+            entry->readObject(l);
+
+            entries.append(entry);
+
+            lua_pop(l, 1);
+        }
+    }
+
+    void writeObject(QTextStream& str) {
+        //str << "{";
+        for (int i = 0; i < entries.size(); ++i) {
+            str << endl;
+            entries.at(i)->writeObject(str);
+
+        }
+        //str << "},";
+    }
+};
+
+class LootGroupCollectionEntry {
+    LootGroups lootGroups;
+
+    int lootChance;
+public:
+    LootGroupCollectionEntry() {
+        lootChance = 0;
+    }
+
+    void readObject(lua_State* l) {
+        lootChance = LuaParser::getIntField(l, "lootChance");
+
+        lua_pushstring(l, "groups");
+        lua_gettable(l, -2);
+
+        lootGroups.readObject(l);
+
+        lua_pop(l, 1);
+    }
+
+    void writeObject(QTextStream& str) {
+        str << "\t\t\tgroups = {";
+        lootGroups.writeObject(str);
+        str << "\t\t\t}," << endl << " \t\t\tlootChance = " << lootChance << endl;
+    }
+};
+
+class LootGroupCollection {
+    QVector<LootGroupCollectionEntry*> entries;
+public:
+    LootGroupCollection() {
+
+    }
+
+    void readObject(lua_State* l) {
+        int size = luaL_getn(l, -1);
+
+        for (int i = 1; i <= size; ++i) {
+            lua_rawgeti(l, -1, i);
+
+            LootGroupCollectionEntry* entry = new LootGroupCollectionEntry();
+            entry->readObject(l);
+
+            entries.append(entry);
+
+            lua_pop(l, 1);
+        }
+    }
+
+    void writeObject(QTextStream& str) {
+   //     str << "{";
+
+        for (int i = 0; i < entries.size(); ++i) {
+            str << "\t\t{" << endl;
+            entries.at(i)->writeObject(str);
+            str << "\t\t}," << endl;
+        }
+
+ //       str << "}";
+
+    }
+};
 
 class CreatureObject {
     QString fileName;
@@ -19,6 +136,7 @@ class CreatureObject {
     QString pvpFaction;
     QString faction;
     QString socialGroup;
+    QString customName;
     int level;
     float chanceHit;
     int damageMin;
@@ -47,10 +165,13 @@ class CreatureObject {
     int diet;
     int optionsBitmask;
 
-    QVector<QString> lootGroups;
+   // QVector<QString> lootGroups;
     QVector<QString> weapons;
     QMap<QString, QString> attacks;
     QString conversationTemplate;
+    QString outfit;
+
+    LootGroupCollection lootGroupCollection;
 
 public:
     CreatureObject(const QString& objectName);
@@ -196,9 +317,9 @@ public:
         templates = s;
     }
 
-    inline void setLootGroups(const QVector<QString>& s) {
+   /* inline void setLootGroups(const QVector<QString>& s) {
         lootGroups = s;
-    }
+    }*/
 
     inline void setWeapons(const QVector<QString>& s) {
         weapons = s;
@@ -320,9 +441,9 @@ public:
         return &weapons;
     }
 
-    inline QVector<QString>* getLootGroups() {
+    /*inline QVector<QString>* getLootGroups() {
         return &lootGroups;
-    }
+    }*/
 
     inline QMap<QString, QString>* getAttacks() {
         return &attacks;

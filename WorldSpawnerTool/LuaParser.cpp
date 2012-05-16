@@ -41,6 +41,9 @@ QString LuaParser::getStringField(lua_State* L, const QString& key) {
     result = lua_tostring(L, -1);
     lua_pop(L, 1);
 
+    if (result == NULL)
+        result = "";
+
     return QString(result);
 }
 

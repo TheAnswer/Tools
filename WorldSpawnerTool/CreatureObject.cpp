@@ -65,6 +65,15 @@ void CreatureObject::readObject(lua_State* l) {
   conversationTemplate = CreatureLuaManager::getStringField(l, "conversationTemplate");
   optionsBitmask = CreatureLuaManager::getIntField(l, "optionsBitmask");
   pvpFaction = CreatureLuaManager::getStringField(l, "pvpFaction");
+  outfit = CreatureLuaManager::getStringField(l, "outfit");
+  customName = CreatureLuaManager::getStringField(l, "customName");
+
+  lua_pushstring(l, "lootGroups");
+  lua_gettable(l, -2);
+
+  lootGroupCollection.readObject(l);
+
+  lua_pop(l, 1);
 
   //LuaObject res = templateData->getObjectField("resists");
   lua_pushstring(l, "resists");
@@ -112,7 +121,7 @@ void CreatureObject::readObject(lua_State* l) {
 
 
   //LuaObject loots = templateData->getObjectField("lootgroups");
-  lua_pushstring(l, "lootgroups");
+ /* lua_pushstring(l, "lootgroups");
   lua_gettable(l, -2);
 
   int lootgroupsTableSize = luaL_getn(l, -1);
@@ -127,6 +136,7 @@ void CreatureObject::readObject(lua_State* l) {
   }
 
   lua_pop(l, 1);
+  */
 
   lua_pushstring(l, "weapons");
   lua_gettable(l, -2);
@@ -208,6 +218,9 @@ QString CreatureObject::serializeToLua() {
   LuaSerializerHelper::addStringVariableToText(stream, "objectName", objectName);
   stream << "," << endl;
 
+  LuaSerializerHelper::addStringVariableToText(stream, "customName", customName);
+  stream << "," << endl;
+
   LuaSerializerHelper::addStringVariableToText(stream, "socialGroup", socialGroup);
   stream << "," << endl;
 
@@ -286,13 +299,20 @@ QString CreatureObject::serializeToLua() {
   LuaSerializerHelper::addStringVectorToText(stream, "templates", templates);
   stream << "," << endl;
 
-  LuaSerializerHelper::addStringVectorToText(stream, "lootgroups", lootGroups);
-  stream << "," << endl;
+  /*LuaSerializerHelper::addStringVectorToText(stream, "lootgroups", lootGroups);
+  stream << "," << endl;*/
 
   LuaSerializerHelper::addStringVectorToText(stream, "weapons", weapons);
   stream << "," << endl;
 
   LuaSerializerHelper::addStringVariableToText(stream, "conversationTemplate", conversationTemplate);
+  stream << "," << endl;
+
+  stream << "\tlootGroups = {" << endl;
+  lootGroupCollection.writeObject(stream);
+  stream << "\t}," << endl;
+
+  LuaSerializerHelper::addStringVariableToText(stream, "outfit", outfit);
   stream << "," << endl;
 
   attacksVariableToText(stream, "attacks");
@@ -513,7 +533,7 @@ void CreatureObject::setVariable(const QString& name, const QString& data) {
   } else if (name == "templates") {
     parseStringVector(templates, data);
   } else if (name == "lootgroups") {
-    parseStringVector(lootGroups, data);
+    //parseStringVector(lootGroups, data);
   } else if (name == "weapons") {
     parseStringVector(weapons, data);
   } else if (name == "attacks") {

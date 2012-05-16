@@ -380,7 +380,7 @@ void CreatureManager::saveCurrentCreature() {
 
     //TODO: Get loot groups
 
-    currentCreatureObject->setLootGroups(lootGroups);
+    //currentCreatureObject->setLootGroups(lootGroups);
 
     QMap<QString, QString>* attacks = currentCreatureObject->getAttacks();
 
@@ -396,6 +396,8 @@ void CreatureManager::saveCurrentCreature() {
 
         attacks->insert(command.trimmed(), args.trimmed());
     }
+
+
 
     //mainWindow->outputToConsole(currentCreatureObject->serializeToLua());
 
@@ -428,8 +430,12 @@ void CreatureManager::saveCurrentCreature() {
 
     QFile file(fullDir);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+      //  QString str;
+        //QTextStream out(&str);
         QTextStream out(&file);
         out << currentCreatureObject->serializeToLua();
+
+        //emit MainWindow::instance->outputToConsole(str);
 
         file.close();
     } else {
@@ -550,7 +556,7 @@ void CreatureManager::reloadCreature() {
         ui->attackList->addItem(i.key() + ":" + i.value());
     }
 
-    QVector<QString>* lootGroups = currentCreatureObject->getLootGroups();
+    //QVector<QString>* lootGroups = currentCreatureObject->getLootGroups();
 
     //TODO: Reload loot groups
 
