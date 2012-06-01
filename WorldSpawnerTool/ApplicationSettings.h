@@ -51,7 +51,7 @@ public:
                 stream << c;
             }
 
-            //mainWindow->outputToConsole(token);
+            mainWindow->outputToConsole(token);
 
             int dataIdx = token.indexOf("=");
 

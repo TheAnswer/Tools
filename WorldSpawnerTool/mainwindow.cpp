@@ -53,9 +53,6 @@ void MainWindow::initialize() {
     splash.showMessage("Loading application settings.");
     settings = new Settings(this);
 
-    if (settings->getServerDirectory().isEmpty() || settings->getTreDirectory().isEmpty())
-        settings->exec();
-
     dataManager = new DataManager();
     connect(dataManager, SIGNAL(loadingMessage(const QString&)), &splash, SLOT(showMessage(const QString&)));
 
@@ -89,6 +86,7 @@ void MainWindow::initialize() {
     splash.showMessage("Initializing world maps.");
     currentMap = "naboo";
     initializeWorldMaps();
+
     planetSelection = new PlanetSelection(this);
 
     splash.showMessage("Creating actions.");
@@ -128,8 +126,13 @@ void MainWindow::initialize() {
     lootManager = new LootManager();
 
     splash.showMessage("Initializing graphics view.");
+    ui->graphicsView->setViewport(new QGLWidget);
+    ui->graphicsView->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     ui->graphicsView->setMouseTracking(true);
     ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+
+    if (settings->getServerDirectory().isEmpty() || settings->getTreDirectory().isEmpty())
+        settings->exec();
 
     reloadPlanet();
 
@@ -139,8 +142,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     setWindowTitle(getApplicationFullName());
     instance = this;
-
-
 
     initialize();
 
