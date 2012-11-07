@@ -95,19 +95,20 @@ void LootItemTemplate::readObject(lua_State* L) {
             lua_rawgeti(L, -1, i);
 
             if (lua_istable(L, -1) == 1) {
-                lua_rawgeti(L, -1, i);
+                int c = luaL_getn(L, -1);
+                for (int j = 1; j <= c; ++j) {
+                    lua_rawgeti(L, -1, j);
 
-                quint8 min = lua_tonumber(L, -1);
-                customizationValueMin.append(min);
+                    if (j == 1) {
+                        quint8 min = lua_tonumber(L, -1);
+                        customizationValueMin.append(min);
+                    } else if (j == c) {
+                        quint8 max = lua_tonumber(L, -1);
+                        customizationValueMax.append(max);
+                    }
 
-                lua_pop(L, 1);
-
-                lua_rawgeti(L, -1, i);
-
-                quint8 max = lua_tonumber(L, -1);
-                customizationValueMax.append(max);
-
-                lua_pop(L, 1);
+                    lua_pop(L, 1);
+                }
             }
 
             lua_pop(L, 1);
@@ -144,7 +145,14 @@ QString LootItemTemplate::serializeToLua() {
 
     for (int i = 0; i < customizationStringNames.count(); ++i) {
         customizationStrings.append("\"" + customizationStringNames.at(i) + "\",");
-        customizationValues.append("{" + QString::number(customizationValueMin.at(i)) + "," + QString::number(customizationValueMax.at(i)) + "},");
+        customizationValues.append("{");
+        if (customizationValueMin.at(i) < customizationValueMax.at(i)) {
+            for (int j = customizationValueMin.at(i); j <= customizationValueMax.at(i); j++) {
+                customizationValues.append(QString::number(j) + ",");
+            }
+            customizationValues.chop(1); //Remove trailing comma
+        }
+        customizationValues.append("},");
     }
 
     customizationStrings.chop(1); //Remove trailing comma

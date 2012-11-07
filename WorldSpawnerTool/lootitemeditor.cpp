@@ -15,6 +15,8 @@ LootItemEditor::LootItemEditor(QExplicitlySharedDataPointer<LootItemTemplate> it
     connect(ui->spinBox_MaximumLevel, SIGNAL(valueChanged(int)), this, SLOT(validateMaxLevel(int)));
     connect(ui->pushButton_AddExperimental, SIGNAL(clicked()), this, SLOT(addExperimentalRow()));
     connect(ui->pushButton_RemoveExperimental, SIGNAL(clicked()), this, SLOT(removeExperimentalRow()));
+    connect(ui->pushButton_AddCustomization, SIGNAL(clicked()), this, SLOT(addCustomizationRow()));
+    connect(ui->pushButton_RemoveCustomization, SIGNAL(clicked()), this, SLOT(removeCustomizationRow()));
     connect(this, SIGNAL(accepted()), this, SLOT(acceptedDialog()));
 
     currentItem = item;
