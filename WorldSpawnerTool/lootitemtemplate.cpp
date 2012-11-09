@@ -116,6 +116,38 @@ void LootItemTemplate::readObject(lua_State* L) {
     }
 
     lua_pop(L, 1);
+
+    lua_pushstring(L, "skillMods");
+    lua_gettable(L, -2);
+
+    if (lua_istable(L, -1) == 1) {
+        int n = luaL_getn(L, -1);
+
+        for (int i = 1; i <= n; ++i) {
+            lua_rawgeti(L, -1, i);
+
+            if (lua_istable(L, -1) == 1) {
+                int c = luaL_getn(L, -1);
+                for (int j = 1; j <= c; ++j) {
+                    lua_rawgeti(L, -1, j);
+
+                    if (j == 1) {
+                        QString skillName = lua_tostring(L, -1);
+                        skillModsNames.append(skillName);
+                    } else if (j == 2) {
+                        quint8 value = lua_tonumber(L, -1);
+                        skillModsValues.append(value);
+                    }
+
+                    lua_pop(L, 1);
+                }
+            }
+
+            lua_pop(L, 1);
+        }
+    }
+
+    lua_pop(L, 1);
 }
 
 QString LootItemTemplate::toString() const {
@@ -159,7 +191,17 @@ QString LootItemTemplate::serializeToLua() {
     customizationValues.chop(1); //Remove trailing comma
 
     stream << "\tcustomizationStringNames = {" << customizationStrings << "}," << endl;
-    stream << "\tcustomizationValues = {" << customizationValues << "}" << endl;
+    stream << "\tcustomizationValues = {" << customizationValues << "}," << endl;
+
+    stream << "\tskillMods = {" << endl;
+
+    QString skillModsString;
+    for (int i = 0; i < skillModsNames.count(); ++i) {
+        skillModsString.append("\t\t{\"" + skillModsNames.at(i) + "\"," + QString::number(skillModsValues.at(i)) + "},\n");
+    }
+    skillModsString.chop(2); // Remove trailing new line and comma
+
+    stream << skillModsString << endl << "\t}" << endl;
 
     stream << "}" << endl << endl;
 
@@ -181,6 +223,11 @@ void LootItemTemplate::clearAllCustomizationVariables() {
     customizationValueMax.clear();
 }
 
+void LootItemTemplate::clearAllSkillMods() {
+    skillModsNames.clear();
+    skillModsValues.clear();
+}
+
 void LootItemTemplate::addExperimentalProperty(const QString& property, float min, float max, float precision) {
     experimentalSubGroupTitles.append(property);
     experimentalMin.append(min);
@@ -192,5 +239,10 @@ void LootItemTemplate::addCustomizationVariable(const QString& property, quint8 
     customizationStringNames.append(property);
     customizationValueMin.append(min);
     customizationValueMax.append(max);
+}
+
+void LootItemTemplate::addSkillMod(const QString& skillName, quint8 value) {
+    skillModsNames.append(skillName);
+    skillModsValues.append(value);
 }
 

@@ -17,6 +17,8 @@ LootItemEditor::LootItemEditor(QExplicitlySharedDataPointer<LootItemTemplate> it
     connect(ui->pushButton_RemoveExperimental, SIGNAL(clicked()), this, SLOT(removeExperimentalRow()));
     connect(ui->pushButton_AddCustomization, SIGNAL(clicked()), this, SLOT(addCustomizationRow()));
     connect(ui->pushButton_RemoveCustomization, SIGNAL(clicked()), this, SLOT(removeCustomizationRow()));
+    connect(ui->pushButton_AddSkillMod, SIGNAL(clicked()), this, SLOT(addSkillModRow()));
+    connect(ui->pushButton_RemoveSkillMod, SIGNAL(clicked()), this, SLOT(removeSkillModRow()));
     connect(this, SIGNAL(accepted()), this, SLOT(acceptedDialog()));
 
     currentItem = item;
@@ -55,6 +57,12 @@ LootItemEditor::LootItemEditor(QExplicitlySharedDataPointer<LootItemTemplate> it
         ui->tableWidget_ExperimentalProperties->setItem(i, 2, new QTableWidgetItem(QString::number(currentItem->getExperimentalMaxAt(i))));
         ui->tableWidget_ExperimentalProperties->setItem(i, 3, new QTableWidgetItem(QString::number(currentItem->getExperimentalPrecision(i))));
     }
+
+    for (int i = 0; i < currentItem->getTotalSkillMods(); ++i) {
+        ui->tableWidget_SkillMods->insertRow(i);
+        ui->tableWidget_SkillMods->setItem(i, 0, new QTableWidgetItem(currentItem->getSkillModNameAt(i)));
+        ui->tableWidget_SkillMods->setItem(i, 1, new QTableWidgetItem(QString::number(currentItem->getSkillModValueAt(i))));
+    }
 }
 
 LootItemEditor::~LootItemEditor()
@@ -75,6 +83,7 @@ void LootItemEditor::acceptedDialog() {
     //Clear them all and reenter them with whats in the editor.
     currentItem->clearAllCustomizationVariables();
     currentItem->clearAllExperimentalProperties();
+    currentItem->clearAllSkillMods();
 
     for (int i = 0; i < ui->tableWidget_ExperimentalProperties->rowCount(); ++i) {
         QString property = ui->tableWidget_ExperimentalProperties->item(i, 0)->text();
@@ -91,6 +100,13 @@ void LootItemEditor::acceptedDialog() {
         quint8 max = ui->tableWidget_CustomizationVariables->item(i, 2)->text().toInt();
 
         currentItem->addCustomizationVariable(variable, min, max);
+    }
+
+    for (int i = 0; i < ui->tableWidget_SkillMods->rowCount(); ++i) {
+        QString skillMod = ui->tableWidget_SkillMods->item(i, 0)->text();
+        quint8 value = ui->tableWidget_SkillMods->item(i, 1)->text().toInt();
+
+        currentItem->addSkillMod(skillMod, value);
     }
 }
 
@@ -142,4 +158,16 @@ void LootItemEditor::addCustomizationRow() {
 
 void LootItemEditor::removeCustomizationRow() {
     ui->tableWidget_CustomizationVariables->removeRow(ui->tableWidget_CustomizationVariables->currentRow());
+}
+
+void LootItemEditor::addSkillModRow() {
+    int rows = ui->tableWidget_SkillMods->rowCount();
+    ui->tableWidget_SkillMods->insertRow(rows);
+
+    ui->tableWidget_SkillMods->setItem(rows, 0, new QTableWidgetItem(""));
+    ui->tableWidget_SkillMods->setItem(rows, 1, new QTableWidgetItem(""));
+}
+
+void LootItemEditor::removeSkillModRow() {
+    ui->tableWidget_SkillMods->removeRow(ui->tableWidget_SkillMods->currentRow());
 }

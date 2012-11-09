@@ -26,6 +26,8 @@ public slots:
     void removeExperimentalRow();
     void addCustomizationRow();
     void removeCustomizationRow();
+    void addSkillModRow();
+    void removeSkillModRow();
 
 signals:
     void broadcastItemModified(QExplicitlySharedDataPointer<LootItemTemplate>);

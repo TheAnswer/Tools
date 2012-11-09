@@ -35,9 +35,11 @@ public:
 
     void clearAllExperimentalProperties();
     void clearAllCustomizationVariables();
+    void clearAllSkillMods();
 
     void addExperimentalProperty(const QString& property, float min, float max, float precision);
     void addCustomizationVariable(const QString& variable, quint8 min, quint8 max);
+    void addSkillMod(const QString& skillName, quint8 value);
 
 public:
     //Getters
@@ -101,6 +103,18 @@ public:
         return customizationStringNames.count();
     }
 
+    inline int getTotalSkillMods() {
+        return skillModsNames.count();
+    }
+
+    inline QString getSkillModNameAt(int idx) {
+        return skillModsNames.at(idx);
+    }
+
+    inline quint8 getSkillModValueAt(int idx) {
+        return skillModsValues.at(idx);
+    }
+
     //Setters
     inline void setItemName(const QString& name) {
         itemTemplate = name;
@@ -139,6 +153,9 @@ private:
     QVector<QString> customizationStringNames;
     QVector<quint8> customizationValueMin;
     QVector<quint8> customizationValueMax;
+
+    QVector<QString> skillModsNames;
+    QVector<quint8> skillModsValues;
 
     //This is a vector of all the loot groups this template is a part of. This makes lookup faster for removal.
     QVector<QString> lootGroups;
