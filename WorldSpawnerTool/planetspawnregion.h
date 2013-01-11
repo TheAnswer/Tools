@@ -16,7 +16,8 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
     //void wheelEvent(QGraphicsSceneWheelEvent* event);
 public:
-    PlanetSpawnRegion();
+    PlanetSpawnRegion(qreal radius);
+    PlanetSpawnRegion(qreal width, qreal height);
 
     QString toLua();
 
@@ -24,6 +25,7 @@ public:
     void setWorldY(float v);
 
     void setRadius(float v);
+    void setDimensions(float width, float height);
 
     void setTier(int v);
     void setConstant(int v);

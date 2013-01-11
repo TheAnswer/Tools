@@ -31,15 +31,44 @@ void Badge::setRadius(float val) {
   if (radius == val)
       return;
 
-  radius = val;
-
   WorldMap* map = dynamic_cast<WorldMap*>(scene());
 
   if (map == NULL)
       return;
 
+  map->removeBadge(this);
+
+  regionShape = Circle;
+  radius = val;
+  width = 0;
+  height = 0;
+
+  map->addBadge(this);
+
   map->updateSpawnRegionView(this);
   MainWindow::instance->updateCurrentBadgeSelection(name);
+}
+
+void Badge::setDimensions(float width, float height) {
+    if (this->width == width && this->height == height)
+        return;
+
+    WorldMap* map = dynamic_cast<WorldMap*>(scene());
+
+    if (map == NULL)
+        return;
+
+    map->removeBadge(this);
+
+    regionShape = Rectangle;
+    this->width = width;
+    this->height = height;
+    radius = 0;
+
+    map->addBadge(this);
+
+    map->updateSpawnRegionView(this);
+    MainWindow::instance->updateCurrentBadgeSelection(name);
 }
 
 void Badge::setWorldX(float v) {

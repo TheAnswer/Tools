@@ -21,6 +21,7 @@ public:
   }
 
   void setRadius(float val);
+  void setDimensions(float width, float height);
   void setBadgeID(int id);
   void setWorldX(float v);
   void setWorldY(float v);

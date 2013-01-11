@@ -124,7 +124,7 @@
    <property name="minimumSize">
     <size>
      <width>338</width>
-     <height>366</height>
+     <height>419</height>
     </size>
    </property>
    <property name="maximumSize">
@@ -150,7 +150,7 @@
         </size>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -161,21 +161,8 @@
           <layout class="QGridLayout" name="gridLayout_3">
            <item row="0" column="1" colspan="2">
             <layout class="QGridLayout" name="gridLayout">
-             <item row="1" column="1" colspan="2">
-              <widget class="QComboBox" name="regions"/>
-             </item>
-             <item row="2" column="0" colspan="2">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>x</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <widget class="QDoubleSpinBox" name="regionX">
+             <item row="3" column="2">
+              <widget class="QDoubleSpinBox" name="regionY">
                <property name="minimum">
                 <double>-7680.000000000000000</double>
                </property>
@@ -194,8 +181,8 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="2">
-              <widget class="QDoubleSpinBox" name="regionY">
+             <item row="2" column="2">
+              <widget class="QDoubleSpinBox" name="regionX">
                <property name="minimum">
                 <double>-7680.000000000000000</double>
                </property>
@@ -204,17 +191,20 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="1">
-              <widget class="QLabel" name="label_3">
+             <item row="2" column="0" colspan="2">
+              <widget class="QLabel" name="label">
                <property name="text">
-                <string>Radius</string>
+                <string>x</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
-             <item row="4" column="2">
+             <item row="1" column="1" colspan="2">
+              <widget class="QComboBox" name="regions"/>
+             </item>
+             <item row="5" column="2">
               <widget class="QDoubleSpinBox" name="regionRadius">
                <property name="minimum">
                 <double>-1.000000000000000</double>
@@ -224,7 +214,7 @@
                </property>
               </widget>
              </item>
-             <item row="5" column="1">
+             <item row="8" column="1">
               <widget class="QLabel" name="label_4">
                <property name="text">
                 <string>Tier</string>
@@ -234,10 +224,10 @@
                </property>
               </widget>
              </item>
-             <item row="5" column="2">
+             <item row="8" column="2">
               <widget class="QSpinBox" name="tier"/>
              </item>
-             <item row="6" column="1">
+             <item row="9" column="1">
               <widget class="QLabel" name="label_5">
                <property name="text">
                 <string>Constant</string>
@@ -247,13 +237,60 @@
                </property>
               </widget>
              </item>
-             <item row="6" column="2">
+             <item row="9" column="2">
               <widget class="QSpinBox" name="constant"/>
              </item>
              <item row="0" column="2">
               <widget class="QLabel" name="label_8">
                <property name="text">
                 <string>Spawn Regions</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>Height</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="2">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Radius</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="2">
+              <widget class="QDoubleSpinBox" name="regionHeight">
+               <property name="minimum">
+                <double>-1.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>999999999.990000009536743</double>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="2">
+              <widget class="QDoubleSpinBox" name="regionWidth">
+               <property name="maximum">
+                <double>999999999.990000009536743</double>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Width</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -282,6 +319,9 @@
               <string>Edit</string>
              </property>
             </widget>
+           </item>
+           <item row="0" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_3"/>
            </item>
           </layout>
          </item>

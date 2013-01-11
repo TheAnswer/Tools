@@ -119,6 +119,8 @@ public slots:
     void spawnRegionYChanged();
     void spawnRegionTierChanged();
     void spawnRegionRadiusChanged();
+    void spawnRegionHeightChanged();
+    void spawnRegionWidthChanged();
     void spawnRegionConstantChanged();
     void editSpawn();
     void addSpawn();

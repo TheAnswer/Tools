@@ -108,6 +108,8 @@ void MainWindow::initialize() {
     connect(ui->actionChange_Planet, SIGNAL(triggered()), planetSelection, SLOT(showNormal()));
     connect(ui->tableWidget_StaticSpawns, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(staticSpawnChanged(QTableWidgetItem*)));
     connect(ui->regionRadius, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionRadiusChanged()));
+    connect(ui->regionHeight, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionHeightChanged()));
+    connect(ui->regionWidth, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionWidthChanged()));
     connect(ui->regionX, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionXChanged()));
     connect(ui->regionY, SIGNAL(valueChanged(double)), this, SLOT(spawnRegionYChanged()));
     connect(ui->tier, SIGNAL(valueChanged(int)), this, SLOT(spawnRegionTierChanged()));
@@ -497,8 +499,9 @@ void MainWindow::spawnRegionTierChanged() {
 
     int tier = ui->tier->value();
 
-    if (tier != region->getTier())
-        pushUndoCommand(new PlanetSpawnRegionChangeCommand(region, tier, region->getConstant(), region->getRadius()));
+    if (tier != region->getTier()) {
+        pushUndoCommand(new PlanetSpawnRegionChangeCommand(region, tier, region->getConstant(), region->getRadius(), region->getWidth(), region->getHeight()));
+    }
 }
 
 void MainWindow::spawnRegionRadiusChanged() {
@@ -510,8 +513,37 @@ void MainWindow::spawnRegionRadiusChanged() {
 
     float rad = ui->regionRadius->value();
 
-    if (rad != region->getRadius())
-        pushUndoCommand(new PlanetSpawnRegionChangeCommand(region, region->getTier(), region->getConstant(), rad));
+    if (rad != region->getRadius()) {
+        pushUndoCommand(new PlanetSpawnRegionChangeCommand(region, region->getTier(), region->getConstant(), rad, 0, 0));
+    }
+}
+
+void MainWindow::spawnRegionHeightChanged() {
+    WorldMap* world = mapVector[currentMap];
+    PlanetSpawnRegion* region = world->getSpawnRegion(ui->regions->currentText());
+
+    if (region == NULL)
+        return;
+
+    float height = ui->regionHeight->value();
+
+    if (height != region->getHeight()) {
+        pushUndoCommand(new PlanetSpawnRegionChangeCommand(region, region->getTier(), region->getConstant(), 0, region->getWidth(), height));
+    }
+}
+
+void MainWindow::spawnRegionWidthChanged() {
+    WorldMap* world = mapVector[currentMap];
+    PlanetSpawnRegion* region = world->getSpawnRegion(ui->regions->currentText());
+
+    if (region == NULL)
+        return;
+
+    float width = ui->regionWidth->value();
+
+    if (width != region->getWidth()) {
+        pushUndoCommand(new PlanetSpawnRegionChangeCommand(region, region->getTier(), region->getConstant(), 0, width, region->getHeight()));
+    }
 }
 
 void MainWindow::spawnRegionConstantChanged() {
@@ -523,8 +555,9 @@ void MainWindow::spawnRegionConstantChanged() {
 
     int constant = ui->constant->value();
 
-    if (constant != region->getConstant())
-        pushUndoCommand(new PlanetSpawnRegionChangeCommand(region, region->getTier(), constant, region->getRadius()));
+    if (constant != region->getConstant()) {
+        pushUndoCommand(new PlanetSpawnRegionChangeCommand(region, region->getTier(), constant, region->getRadius(), region->getWidth(), region->getHeight()));
+    }
 }
 
 void MainWindow::outputToConsole(const QString& str) {
@@ -1210,6 +1243,12 @@ void MainWindow::updateCurrentSpawnRegionSelection(const QString& name) {
     if (region != NULL) {
         if (ui->regionRadius->value() != region->getRadius())
             ui->regionRadius->setValue(region->getRadius());
+
+        if (ui->regionWidth->value() != region->getWidth())
+            ui->regionWidth->setValue(region->getWidth());
+
+        if (ui->regionHeight->value() != region->getHeight())
+            ui->regionHeight->setValue(region->getHeight());
 
         if (ui->regionX->value() != region->getWorldX())
             ui->regionX->setValue(region->getWorldX());

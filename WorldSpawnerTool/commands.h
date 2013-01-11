@@ -53,10 +53,12 @@ class PlanetSpawnRegionChangeCommand : public QUndoCommand {
     int oldConstant;
     int newConstant;
     float oldRadius, newRadius;
+    float oldWidth, newWidth;
+    float oldHeight, newHeight;
     PlanetSpawnRegion* region;
 
 public:
-    PlanetSpawnRegionChangeCommand(PlanetSpawnRegion* region, int newTier, int newConstant, float newRadius);
+    PlanetSpawnRegionChangeCommand(PlanetSpawnRegion* region, int newTier, int newConstant, float newRadius, float newWidth, float newHeight);
 
     void undo();
     void redo();

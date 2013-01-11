@@ -8,13 +8,32 @@
 #include <QGraphicsSceneMouseEvent>
 #include "commands.h"
 
-PlanetSpawnRegion::PlanetSpawnRegion() : Region(10) {
+PlanetSpawnRegion::PlanetSpawnRegion(qreal radius) : Region(radius) {
     QBrush brush(Qt::FDiagPattern);
     brush.setColor(Qt::green);
 
     QPen pen;
+    pen.setStyle(Qt::SolidLine);
     pen.setColor(Qt::green);
-    pen.setWidthF(0.5);
+    pen.setWidthF(1);
+
+    setBrush(brush);
+    setPen(pen);
+
+    //setAcceptDrops(true);
+    setFlag(QGraphicsItem::ItemIsSelectable, true);
+    setFlag(QGraphicsItem::ItemIsMovable, true);
+    setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+}
+
+PlanetSpawnRegion::PlanetSpawnRegion(qreal width, qreal height) : Region(height, width) {
+    QBrush brush(Qt::FDiagPattern);
+    brush.setColor(Qt::green);
+
+    QPen pen;
+    pen.setStyle(Qt::SolidLine);
+    pen.setColor(Qt::green);
+    pen.setWidthF(1);
 
     setBrush(brush);
     setPen(pen);
@@ -61,15 +80,44 @@ void PlanetSpawnRegion::setWorldY(float v) {
 }
 
 void PlanetSpawnRegion::setRadius(float v) {
-    if (radius == v)
+    if (v == radius || v > 20000)
         return;
-
-    radius = v;
 
     WorldMap* map = dynamic_cast<WorldMap*>(scene());
 
     if (map == NULL)
         return;
+
+    map->removeItem(getQGraphicsItem());
+
+    regionShape = Circle;
+    radius = v;
+    width = 0;
+    height = 0;
+
+    map->addItem(getQGraphicsItem());
+
+    map->updateSpawnRegionView(this);
+    MainWindow::instance->updateCurrentSpawnRegionSelection(regionName);
+}
+
+void PlanetSpawnRegion::setDimensions(float width, float height) {
+    if (this->width == width && this->height == height || width > 20000 || height > 20000)
+        return;
+
+    WorldMap* map = dynamic_cast<WorldMap*>(scene());
+
+    if (map == NULL)
+        return;
+
+    map->removeItem(getQGraphicsItem());
+
+    regionShape = Rectangle;
+    this->width = width;
+    this->height = height;
+    radius = 0;
+
+    map->addItem(getQGraphicsItem());
 
     map->updateSpawnRegionView(this);
     MainWindow::instance->updateCurrentSpawnRegionSelection(regionName);
@@ -157,7 +205,13 @@ QString PlanetSpawnRegion::toLua() {
     QVector<QString> spawns;
     */
 
-    stream << "{\"" << regionName << "\"," << getWorldX() << "," << getWorldY() << "," << getRadius() << "," << getTier() << "," << getConstant();
+    stream << "{\"" << regionName << "\"," << getWorldX() << "," << getWorldY() << ",{";
+    if (regionShape == Circle) {
+        stream << "1," << getRadius();
+    } else {
+        stream << "2," << getWidth() << "," << getHeight();
+    }
+    stream << "}," << getTier() << "," << getConstant();
 
     for (int i = 0; i < spawns.size(); ++i) {
         stream << ",\"" << spawns.at(i) << "\"";

@@ -99,7 +99,7 @@ void WorldMap::clearSpawnedObjects() {
         Badge* badge = mapIteratorBadges.value();
 
         if (badge->scene() != NULL)
-            removeItem(badge);
+            removeItem(badge->getQGraphicsItem());
 
         delete badge;
     }
@@ -303,12 +303,12 @@ void WorldMap::addBadge(Badge* badge) {
 
     float x = badge->getWorldX();
     float y = badge->getWorldY();
-    float radius = badge->getRadius() / 16.f;
+    float radius = badge->getRadius() / 16.f + 2;
 
     badge->setPos((MAXX + x) / 16, (MAXY - y) / 16);
     badge->setRect(-radius/2, -radius/2, radius, radius);
 
-    addItem(badge);
+    addItem(badge->getQGraphicsItem());
 }
 
 void WorldMap::addWorldSnapshotObject(WorldSnapshotObject* object) {
@@ -329,7 +329,7 @@ void WorldMap::removeBadge(Badge* badge) {
     if (!badges.contains(badge->getName()))
         return;
 
-    removeItem(badge);
+    removeItem(badge->getQGraphicsItem());
 
     badges.remove(badge->getName());
 
@@ -379,10 +379,17 @@ void WorldMap::updateStaticSpawnView(StaticSpawn* spawn) {
 void WorldMap::updateSpawnRegionView(Region* region) {
     float x = region->getWorldX();
     float y = region->getWorldY();
-    float radius = region->getRadius() / 16.f;
-
     region->setPos((MAXX + x) / 16, (MAXY - y) / 16);
-    region->setRect(-radius/2, -radius/2, radius, radius);
+
+    float radius = region->getRadius() / 16.f;
+    float width = region->getWidth() / 16.f;
+    float height = region->getHeight() / 16.f;
+
+    if (region->getHeight() > 0) {
+        region->setRect(-width/2, -height/2, width, height);
+    } else {
+        region->setRect(-radius/2, -radius/2, radius, radius);
+    }
 }
 
 void WorldMap::toScenePos(qreal x, qreal y, float& sceneX, float& sceneY) {
@@ -439,7 +446,7 @@ void WorldMap::loadCityRegions() {
         CityRegion* region = new CityRegion(radius / 16);
         region->setPos((MAXX + posX) / 16, (MAXY - posY) / 16);
 
-        addItem(region);
+        addItem(region->getQGraphicsItem());
     }
 }
 
@@ -472,17 +479,24 @@ void WorldMap::addSpawnRegion(const QString& regionName, PlanetSpawnRegion* newR
 
     float x = newRegion->getWorldX();
     float y = newRegion->getWorldY();
+    newRegion->setPos((MAXX + x) / 16, (MAXY - y) / 16);
+
     float radius = newRegion->getRadius() / 16.f;
+    float width = newRegion->getWidth() / 16.f;
+    float height = newRegion->getHeight() / 16.f;
+
+    if (newRegion->getHeight() > 0) {
+        newRegion->setRect(-width/2, -height/2, width, height);
+    } else {
+        newRegion->setRect(-radius/2, -radius/2, radius, radius);
+    }
 
     //Region* graphicRegion = new Region(radius / 16);
 
     /*MainWindow::instance->outputToConsole(QString::number(x));
     MainWindow::instance->outputToConsole(QString::number(y));*/
 
-    newRegion->setPos((MAXX + x) / 16, (MAXY - y) / 16);
-    newRegion->setRect(-radius/2, -radius/2, radius, radius);
-
-    addItem(newRegion);
+    addItem(newRegion->getQGraphicsItem());
 }
 
 

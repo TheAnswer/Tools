@@ -147,7 +147,7 @@ void SpawnMoveCommand::redo() {
         spawn->setWorldZ(newWorldZ);
 }
 
-PlanetSpawnRegionChangeCommand::PlanetSpawnRegionChangeCommand(PlanetSpawnRegion* region, int newTier, int newConstant, float newRadius) {
+PlanetSpawnRegionChangeCommand::PlanetSpawnRegionChangeCommand(PlanetSpawnRegion* region, int newTier, int newConstant, float newRadius, float newWidth, float newHeight) {
     this->region = region;
 
     oldTier = region->getTier();
@@ -159,6 +159,12 @@ PlanetSpawnRegionChangeCommand::PlanetSpawnRegionChangeCommand(PlanetSpawnRegion
     oldRadius = region->getRadius();
     this->newRadius = newRadius;
 
+    oldWidth = region->getWidth();
+    this->newWidth = newWidth;
+
+    oldHeight = region->getHeight();
+    this->newHeight = newHeight;
+
     setText("PlanetSpawnRegion Change");
 }
 
@@ -169,8 +175,13 @@ void PlanetSpawnRegionChangeCommand::undo() {
     if (oldConstant != region->getConstant())
         region->setConstant(oldConstant);
 
-    if (oldRadius != region->getRadius())
+    if (oldRadius != region->getRadius()) {
         region->setRadius(oldRadius);
+    }
+
+    if (oldWidth != region->getWidth() || oldHeight != region->getHeight()) {
+        region->setDimensions(oldWidth, oldHeight);
+    }
 }
 
 void PlanetSpawnRegionChangeCommand::redo() {
@@ -182,8 +193,13 @@ void PlanetSpawnRegionChangeCommand::redo() {
         region->setConstant(newConstant);
     }
 
-    if (newRadius != region->getRadius())
+    if (newRadius != region->getRadius() && newRadius != 0) {
         region->setRadius(newRadius);
+    }
+
+    if ((newWidth != region->getWidth() || newHeight != region->getHeight()) && (newWidth != 0 || newHeight != 0)) {
+        region->setDimensions(newWidth, newHeight);
+    }
 }
 
 StaticSpawnChangeCommand::StaticSpawnChangeCommand(StaticSpawn* spawn, uint32 newRespawnTimer, float newHeading, uint64 newParentID, const QString& newMood, const QString& newName) {

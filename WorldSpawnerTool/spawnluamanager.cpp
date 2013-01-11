@@ -114,15 +114,38 @@ QVector<PlanetSpawnRegion*> SpawnLuaManager::loadPlanetRegions(const QString& pl
             QString name = getStringAt(1);
             float x = getFloatAt(2);
             float y = getFloatAt(3);
-            float radius = getFloatAt(4);
+            float radius = 0;
+            float width = 0;
+            float height = 0;
+            lua_rawgeti(L, -1, 4);
+            if (lua_istable(L, -1)) {
+                if (getIntAt(1) == 1) {
+                    radius = getFloatAt(2);
+                } else if (getIntAt(1) == 2) {
+                    width = getFloatAt(2);
+                    height = getFloatAt(3);
+                }
+                lua_pop(L, 1);
+            } else {
+                lua_pop(L, 1);
+                radius = getFloatAt(4);
+                width = 0;
+                height = 0;
+            }
+
             int tier = getIntAt(5);
             int constant = getIntAt(6);
 
-            PlanetSpawnRegion* region = new PlanetSpawnRegion();
+            PlanetSpawnRegion* region;
+
+            if (height > 0) {
+                region = new PlanetSpawnRegion(width, height);
+            } else {
+                region = new PlanetSpawnRegion(radius);
+            }
             region->setRegionName(name);
             region->setWorldX(x);
             region->setWorldY(y);
-            region->setRadius(radius);
             region->setTier(tier);
             region->setConstant(constant);
             region->setToolTip(name);
