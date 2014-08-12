@@ -57,6 +57,8 @@ public:
 
     inline unsigned long long int &getKey(int i) { return keys[i]; }
 
+    inline int getSize() { return keys.size(); }
+
     QByteArray getData(int i);
 };
 

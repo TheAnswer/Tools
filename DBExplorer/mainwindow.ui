@@ -11,11 +11,35 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>SWGEmu Database Explorer</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="1" column="1">
+     <widget class="QPushButton" name="databaseButton">
+      <property name="text">
+       <string>Database Path</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1" rowspan="2" alignment="Qt::AlignRight">
+     <widget class="QListView" name="listView">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QPushButton" name="idlButton">
+      <property name="text">
+       <string>IDL Path</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" rowspan="4">
      <widget class="QTableView" name="tableView">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -46,7 +70,6 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionOpen"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuFile"/>

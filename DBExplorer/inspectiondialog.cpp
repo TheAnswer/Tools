@@ -61,7 +61,7 @@ void InspectionDialog::setInformation(QMap<IDLVar, QByteArray> info) {
         else if (iter.key().varType == "long")
             val = DatabaseModel::instance()->getLong(iter.value());
         else
-            val = iter.value().toHex();
+            val = "0x" + QString::number(DatabaseModel::instance()->getUnsignedLong(iter.value()), 16).toUpper();
 
         //ui->listWidget->addItem(name + " : " + val.toString());
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(iter.key().varType));

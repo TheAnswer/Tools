@@ -21,11 +21,15 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_actionOpen_triggered();
-
     void on_actionExit_triggered();
 
     void on_tableView_doubleClicked(const QModelIndex &index);
+
+    void on_idlButton_clicked();
+
+    void on_databaseButton_clicked();
+
+    void on_listView_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;
