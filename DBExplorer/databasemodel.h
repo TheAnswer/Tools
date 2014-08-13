@@ -6,6 +6,7 @@
 #include <QAbstractTableModel>
 #include <QMap>
 #include <QHash>
+#include <QPair>
 
 class DatabaseModel : public QAbstractTableModel
 {
@@ -13,6 +14,7 @@ class DatabaseModel : public QAbstractTableModel
 protected:
     Database* db;
     QHash<unsigned int, IDLVar>* hashTable;
+    QHash<unsigned int, QPair<unsigned long long, QString> > displayList;
     QString dbName;
 
 public:
@@ -36,13 +38,14 @@ public:
     QByteArray getData(int i) { return db->getData(i); }
     QHash<unsigned int, IDLVar>* getHashTable() { return hashTable; }
 
-    bool hasStringEntries() { return dbName.contains("databases.db"); }
+    bool hasStringEntries() { return dbName.contains("databases.db") || dbName.contains("strings.db"); }
 
     void open(QString &path);
     void close();
 
     // seralization methods
     QMap<IDLVar, QByteArray> getVariableList(const QByteArray &data);
+    QByteArray getVariable(const QByteArray &data, QString varKey);
     bool getBoolean(const QByteArray &data) { return *(bool*)data.left(1).data(); }
     char getByte(const QByteArray &data) { return *(char*)data.left(1).data(); }
 

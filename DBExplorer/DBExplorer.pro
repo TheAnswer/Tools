@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     zcompression.cpp \
     inspectiondialog.cpp \
     crccalculator.cpp \
-    idlparser.cpp
+    idlparser.cpp \
+    databaselistmodel.cpp
 
 HEADERS  += mainwindow.h \
     database.h \
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     zcompression.h \
     inspectiondialog.h \
     crccalculator.h \
-    idlparser.h
+    idlparser.h \
+    databaselistmodel.h
 
 FORMS    += mainwindow.ui \
     inspectiondialog.ui

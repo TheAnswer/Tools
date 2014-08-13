@@ -83,7 +83,7 @@ void DatabaseListModel::populateList(QDir& baseDir) {
         entry.compressed = compressed;
         entry.objectDB = objectDB;
 
-        if (objectDB)
+        //if (objectDB)
             dbList->insert(key, entry);
 
         endResetModel();
