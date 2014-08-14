@@ -59,21 +59,22 @@ void IDLParser::parseIDL(QFileInfo fileName, QHash<unsigned int, IDLVar>* hashTa
             continue;
         }
 
-        QRegExp filterEx("[\\{\\}\\(\\)=]|^include|^import|^package|^class");
-        QRegExp matchEx("^protected|^public");
+        QRegExp filterEx("[\\{\\}\\(\\)=]|^include |^import |^package |^class ");
+        QRegExp matchEx("^protected |^public ");
         if (!line.contains(matchEx) || line.contains(filterEx) || line.isEmpty() )
             continue;
 
         if ((commentIdx = line.indexOf("//")) != -1) {
-            comment = true;
             line.remove(commentIdx, line.length());
         }
 
-        line = line.remove(matchEx).remove("transient").simplified();
-        line = line.remove("static").simplified();
+        line = line.remove(matchEx).simplified();
+        line = line.remove("transient ").simplified();
+        line = line.remove("static ").simplified();
+        line = line.remove(";").simplified();
         IDLVar idlVar;
         idlVar.className = className;
-        idlVar.varName = line.section(' ', -1, -1, QString::SectionSkipEmpty).remove(";");
+        idlVar.varName = line.section(' ', -1, -1, QString::SectionSkipEmpty);
         idlVar.varType = line.section(' ', 0, -2, QString::SectionSkipEmpty);
         QString stringToHash = idlVar.className + "." + idlVar.varName;
         idlVar.hashCode = CRCCalculator::hashCode(stringToHash.toAscii(), stringToHash.size());

@@ -41,7 +41,7 @@ void Database::close() {
     }
 }
 
-QByteArray Database::getData(int i) {
+QByteArray Database::getData(int i, bool compressed) {
     unsigned long long int oid = keys[i];
 
     Dbt key, data;
@@ -56,10 +56,12 @@ QByteArray Database::getData(int i) {
         QByteArray object((char*)data.get_data(), data.get_size());
         free(data.get_data());
 
-        try {
-            object = ZCompression::decompress(object);
-        } catch (std::exception &e) {
-            throw DatabaseException(QString("Error decompressing %1\n\nOID: %2").arg(e.what()).arg(oid));
+        if (compressed) {
+            try {
+                object = ZCompression::decompress(object);
+            } catch (std::exception &e) {
+                throw DatabaseException(QString("Error decompressing %1\n\nOID: %2").arg(e.what()).arg(oid));
+            }
         }
 
         return object;

@@ -13,8 +13,10 @@ class DatabaseModel : public QAbstractTableModel
     Q_OBJECT
 protected:
     Database* db;
+    bool compressed;
+    bool objectDB;
     QHash<unsigned int, IDLVar>* hashTable;
-    QHash<unsigned int, QPair<unsigned long long, QString> > displayList;
+    QList<QPair<unsigned long long, QString> > displayList;
     QString dbName;
 
 public:
@@ -35,10 +37,13 @@ public:
         return p;
     }
 
-    QByteArray getData(int i) { return db->getData(i); }
+    QByteArray getData(int i) { return db->getData(i, compressed); }
     QHash<unsigned int, IDLVar>* getHashTable() { return hashTable; }
 
-    bool hasStringEntries() { return dbName.contains("databases.db") || dbName.contains("strings.db"); }
+    void setObjectDB(bool b) { objectDB = b; }
+    void setCompressed(bool b) {compressed = b; }
+
+    bool hasStringEntries() { return !objectDB; }
 
     void open(QString &path);
     void close();
@@ -46,22 +51,25 @@ public:
     // seralization methods
     QMap<IDLVar, QByteArray> getVariableList(const QByteArray &data);
     QByteArray getVariable(const QByteArray &data, QString varKey);
-    bool getBoolean(const QByteArray &data) { return *(bool*)data.left(1).data(); }
-    char getByte(const QByteArray &data) { return *(char*)data.left(1).data(); }
 
-    unsigned short getUnsignedShort(const QByteArray &data) { return *(unsigned short*)data.left(2).data(); }
-    short getShort(const QByteArray & data) { return *(short*)data.left(2).data(); }
+    QVariant getDataByType(QByteArray *data, QString varType);
 
-    unsigned int getUnsignedInt(const QByteArray &data) { return *(unsigned int*)data.left(4).data(); }
-    int getInt(const QByteArray &data) { return *(int*)data.left(4).data(); }
-    float getFloat(const QByteArray &data) { return *(float*)data.left(4).data(); }
+    bool getBoolean(QByteArray *data) { bool retVal = *(bool*)data->left(1).data(); data->remove(0, 1); return retVal; }
+    char getByte(QByteArray *data) { char retVal = *(char*)data->left(1).data(); data->remove(0, 1); return retVal; }
 
-    double getDouble(const QByteArray &data) { return *(double*)data.left(8).data(); }
-    unsigned long long getUnsignedLong(const QByteArray &data) { return *(unsigned long long*)data.left(8).data(); }
-    long long getLong(const QByteArray &data) { return *(long long*)data.left(8).data(); }
+    unsigned short getUnsignedShort(QByteArray *data) { unsigned short retVal = *(unsigned short*)data->left(2).data(); data->remove(0, 2); return retVal; }
+    short getShort(QByteArray *data) { short retVal = *(short*)data->left(2).data(); data->remove(0, 2); return retVal; }
 
-    QString getString(const QByteArray &data);
-    QString getUnicode(const QByteArray & data);
+    unsigned int getUnsignedInt(QByteArray *data) { unsigned int retVal = *(unsigned int*)data->left(4).data(); data->remove(0, 4); return retVal; }
+    int getInt(QByteArray *data) { int retVal = *(int*)data->left(4).data(); data->remove(0, 4); return retVal; }
+    float getFloat(QByteArray *data) { float retVal = *(float*)data->left(4).data(); data->remove(0, 4); return retVal; }
+
+    double getDouble(QByteArray *data) { double retVal = *(double*)data->left(8).data(); data->remove(0, 8); return retVal; }
+    unsigned long long getUnsignedLong(QByteArray *data) { unsigned long long retVal = *(unsigned long long*)data->left(8).data(); data->remove(0, 8); return retVal; }
+    long long getLong(QByteArray *data) { long long retVal = *(long long*)data->left(8).data(); data->remove(0, 8); return retVal; }
+
+    QString getString(QByteArray *data);
+    QString getUnicode(QByteArray *data);
 
 signals:
 

@@ -59,7 +59,7 @@ public:
 
     inline int getSize() { return keys.size(); }
 
-    QByteArray getData(int i);
+    QByteArray getData(int i, bool compressed);
 };
 
 #endif // DATABASE_H

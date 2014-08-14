@@ -76,10 +76,12 @@ void MainWindow::on_databaseButton_clicked()
 
 void MainWindow::on_listView_doubleClicked(const QModelIndex &index)
 {
-    QString dbName = DatabaseListModel::instance()->getDbList()->values().at(index.row()).name;
-    QString fileName = DatabaseListModel::instance()->getDbPath() + "/" + dbName + ".db";
+    DatabaseListEntry entry = DatabaseListModel::instance()->getDbList()->values().at(index.row());
+    QString fileName = DatabaseListModel::instance()->getDbPath() + "/" + entry.name + ".db";
     if (!fileName.isEmpty()) {
         try {
+            DatabaseModel::instance()->setCompressed(entry.compressed);
+            DatabaseModel::instance()->setObjectDB(entry.objectDB);
             DatabaseModel::instance()->open(fileName);
         } catch ( DatabaseException & e ) {
             QMessageBox::critical(this, "Error Opening File", e.getMsg());

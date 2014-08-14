@@ -50,13 +50,13 @@ void DatabaseListModel::populateList(QDir& baseDir) {
 
     for (int i = 0; i < listDb.getSize(); ++i) {
         unsigned long long key = listDb.getKey(i);
-        QByteArray data = listDb.getData(i);
+        QByteArray data = listDb.getData(i, true);
 
         unsigned int tableType = (unsigned int)(key >> 32);
         key -= (unsigned long long)((unsigned long long)tableType << 32);
 
         if (tableType == 0xFFFFFFFF) { // special type of table here, look at these for values
-            unsigned long long val = DatabaseModel::instance()->getUnsignedLong(data);
+            unsigned long long val = DatabaseModel::instance()->getUnsignedLong(&data);
 
             switch (key) {
             case 0xFFFFFFFD:
@@ -76,7 +76,7 @@ void DatabaseListModel::populateList(QDir& baseDir) {
         bool compressed = tableType & 0x80000000;
         bool objectDB = (tableType & 0x7FFFFFFF) == 2;
 
-        QString dbName = DatabaseModel::instance()->getString(data);
+        QString dbName = DatabaseModel::instance()->getString(&data);
 
         DatabaseListEntry entry;
         entry.name = dbName;
