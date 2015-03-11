@@ -9,29 +9,6 @@
 
 
 /**
- * @brief The DatabaseException class because QT 4.8 doesn't handle exceptions
- */
-class DatabaseException : public std::exception
-{
-protected:
-    QString msg;
-
-public:
-    DatabaseException(const QString& m) : std::exception() {
-        this->msg = m;
-    }
-
-    virtual ~DatabaseException() throw() {}
-
-    const char* what() const throw() { return msg.toAscii(); }
-
-    QString getMsg() {
-        return msg;
-    }
-};
-
-
-/**
  * @brief The Database class will be the object for the actual berkeley database
  */
 class Database
@@ -43,12 +20,12 @@ protected:
 
     QList<unsigned long long int> keys;
 
-    Database() : db(NULL, 0) {}
 
     void close();
 
 public:
     Database(QString &path);
+    Database() : db(NULL, 0) {}
     ~Database() { close(); }
 
     inline Db &getDb() { return db; }

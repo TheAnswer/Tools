@@ -1,4 +1,5 @@
 #include "database.h"
+#include "databaseexception.h"
 #include "zcompression.h"
 #include <QMessageBox>
 #include <QByteArray>

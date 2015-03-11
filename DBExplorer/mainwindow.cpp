@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include "databasemodel.h"
 #include "databaselistmodel.h"
+#include "databaseexception.h"
 #include <QTableView>
 #include <QFileDialog>
 #include <QMessageBox>

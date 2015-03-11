@@ -1,4 +1,5 @@
 #include "databasemodel.h"
+#include "databaseexception.h"
 #include <algorithm>
 #include <cwchar>
 #include <QMessageBox>

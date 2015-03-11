@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     inspectiondialog.cpp \
     crccalculator.cpp \
     idlparser.cpp \
-    databaselistmodel.cpp
+    databaselistmodel.cpp \
+    databaseenvironment.cpp
 
 HEADERS  += mainwindow.h \
     database.h \
@@ -29,7 +30,9 @@ HEADERS  += mainwindow.h \
     inspectiondialog.h \
     crccalculator.h \
     idlparser.h \
-    databaselistmodel.h
+    databaselistmodel.h \
+    databaseenvironment.h \
+    databaseexception.h
 
 FORMS    += mainwindow.ui \
     inspectiondialog.ui
