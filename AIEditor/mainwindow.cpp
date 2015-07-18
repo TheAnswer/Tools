@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <QtGui>
+#include <QFileDialog>
 
 #include "mainwindow.h"
 #include "treemodel.h"
