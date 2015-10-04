@@ -1,6 +1,7 @@
 #include "treeitem.h"
+#include "composite.h"
 
-TreeItem::TreeItem(TreeItem *parent)
+TreeItem::TreeItem(Composite *parent)
 {
 	this->parent = parent;
 	data.insert(QString("Name"), QVariant("[No Data]"));
@@ -8,7 +9,7 @@ TreeItem::TreeItem(TreeItem *parent)
 	data.insert(QString("Parameters"), QVariant("[No Data]"));
 }
 
-TreeItem::TreeItem(const QMap<QString, QVariant> &data, TreeItem *parent)
+TreeItem::TreeItem(const QMap<QString, QVariant> &data, Composite *parent)
 {
 	this->parent = parent;
 	this->data = data;
@@ -16,12 +17,11 @@ TreeItem::TreeItem(const QMap<QString, QVariant> &data, TreeItem *parent)
 
 TreeItem::~TreeItem()
 {
-	qDeleteAll(this->children);
 }
 
-int TreeItem::childNumber() const
+int TreeItem::childNumber()
 {
-    if (parent) return parent->children.indexOf(const_cast<TreeItem*>(this));
+    if (parent) return parent->getIndex(this);
 
     return 0;
 }

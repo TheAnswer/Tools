@@ -9,6 +9,7 @@
 #include <QMenu>
 
 #include "ui_mainwindow.h"
+#include "actiongroups.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -22,13 +23,17 @@ private:
 	QFileInfo currentFileInfo;
 	QFile currentFile;
 
+    ActionGroup actionGroup;
+    CheckGroup checkGroup;
+    CompositeGroup compositeGroup;
+
 signals:
 
 public slots:
-	void updateActions();
+	void updateBehaviors();
 
 private slots:
-	void insertChild();
+	void insertChildBehavior();
 	void openFileDialog();
 	void openDirDialog();
 	//bool insertColumn(const QModelIndex &parent = QModelIndex());

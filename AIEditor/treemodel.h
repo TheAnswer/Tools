@@ -6,6 +6,8 @@
 #include <QVariant>
 
 class TreeItem;
+class Behavior;
+class BehaviorGroup;
 
 class TreeModel : public QAbstractItemModel
 {
@@ -41,6 +43,8 @@ public:
 	bool insertRows(int position, int rows, const QModelIndex &parent = QModelIndex());
 	bool removeRows(int position, int rows, const QModelIndex &parent = QModelIndex());
 	/***************************************************************************************************/
+
+    bool addItem(const BehaviorGroup *actionGroup, const QModelIndex &index);
 
 private:
 	TreeItem* get(const QModelIndex &index) const; // helper to convert model indexes to local indexes

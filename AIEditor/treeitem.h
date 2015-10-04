@@ -6,30 +6,32 @@
 #include <QString>
 #include <QVariant>
 
+class Composite;
+
 class TreeItem
 {
 public:
-	TreeItem(TreeItem *parent = 0);
-	TreeItem(const QMap<QString, QVariant> &data, TreeItem *parent = 0);
-	~TreeItem();
+    TreeItem(Composite *parent = 0);
+    TreeItem(const QMap<QString, QVariant> &data, Composite *parent = 0);
+    virtual ~TreeItem();
 
-	int count() const {
-		return children.count();
+    virtual size_t count() const {
+        return 0;
 	}
 
-	TreeItem* get(int index) {
-		return children.value(index);
+    virtual TreeItem* get(const size_t) {
+        return NULL;
 	}
 
 	QVariant get(const QString &field) const {
 		return data.value(field);
 	}
 
-	TreeItem* getParent() {
+    Composite* getParent() const {
 		return parent;
 	}
 
-	bool set(const QString &field, const QVariant &value) {
+    bool set(const QString &field, const QVariant &value) {
 		QMap<QString, QVariant>::iterator it = data.insert(field, value);
 
 		if (it.value() != value || it.key() != field) return false;
@@ -37,48 +39,27 @@ public:
 		return true;
 	}
 
-	bool insert(TreeItem *newChild, int position = 0) {
-		children.insert(position, newChild);
-
-		if (children.at(position) != newChild) return false;
-
-		return true;
+    virtual bool insert(TreeItem *, const size_t) {
+        return false;
 	}
 
-	bool insert(int position, int count) {
-		if (position < 0 || position > children.size()) return false;
-
-		for (int row = 0; row < count; row++)
-			children.insert(position, new TreeItem(this));
-
-		return true;
+    virtual bool insert(const size_t, const size_t) {
+        return false;
 	}
 
-	bool remove(int position = 0) {
-		TreeItem *childItem = children.at(position);
-
-		children.removeAt(position);
-
-		if (children.contains(childItem)) return false;
-
-		return true;
+    virtual bool remove(const size_t) {
+        return false;
 	}
 
-	bool remove(int position, int count) {
-		if (position < 0 || position + count > children.size()) return false;
-
-		for (int row = 0; row < count; row++)
-			delete children.takeAt(position);
-
-		return true;
+    virtual bool remove(const size_t, const size_t) {
+        return false;
 	}
 
-	int childNumber() const;
+    int childNumber();
 
 private:
-	QList<TreeItem*> children;
 	QMap<QString, QVariant> data;
-	TreeItem *parent;
+    Composite *parent;
 };
 
 #endif // TREEITEM_H

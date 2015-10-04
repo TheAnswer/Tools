@@ -2,15 +2,20 @@
 
 #include "treeitem.h"
 #include "treemodel.h"
+#include "action.h"
+#include "check.h"
+#include "composite.h"
+#include "actiongroups.h"
 
-TreeModel::TreeModel(QObject *parent) : QAbstractItemModel(parent)
+TreeModel::TreeModel(QObject *parent)
+    : QAbstractItemModel(parent)
 {
 	QMap<QString, QVariant> data;
 	data.insert(QString("Name"), QVariant("Name"));
 	data.insert(QString("Type"), QVariant("Type"));
 	data.insert(QString("Parameters"), QVariant("Parameters"));
 
-	root = new TreeItem(data);
+    root = new Composite(data);
 }
 
 TreeModel::~TreeModel()
@@ -49,7 +54,10 @@ QModelIndex TreeModel::index(int row, int column, const QModelIndex &parent) con
 	if (parent.isValid() && parent.column() != 0)
 		return QModelIndex();
 
-	TreeItem *parentItem = get(parent);
+    // only a composite item can have a child
+    Composite *parentItem = dynamic_cast<Composite*>(get(parent));
+    if (!parentItem) return QModelIndex();
+
 	TreeItem *childItem = parentItem->get(row);
 
 	if (childItem) return createIndex(row, column, childItem);
@@ -63,7 +71,7 @@ QModelIndex TreeModel::parent(const QModelIndex &index) const
 		return QModelIndex();
 
 	TreeItem *childItem = get(index);
-	TreeItem *parentItem = childItem->getParent();
+    Composite *parentItem = childItem->getParent();
 
 	if (parentItem == root) return QModelIndex();
 
@@ -99,7 +107,7 @@ Qt::ItemFlags TreeModel::flags(const QModelIndex &index) const
 
 bool TreeModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-	if (role != Qt::EditRole) return false;
+    if (role != Qt::EditRole && role != Qt::DisplayRole) return false;
 
 	TreeItem *item = get(index);
 	if (!item) return false;
@@ -125,19 +133,20 @@ bool TreeModel::insertColumns(int /*position*/, int /*columns*/, const QModelInd
 
 bool TreeModel::removeColumns(int /*position*/, int /*columns*/, const QModelIndex &/*parent*/)
 {
-	return false; // TODO: allow column removeal ( comes with variable parameter headers)
+    return false; // TODO: allow column removal ( comes with variable parameter headers)
 }
 
 bool TreeModel::insertRows(int position, int rows, const QModelIndex &parent)
 {
-	TreeItem *parentItem = get(parent);
+    Composite *parentItem = dynamic_cast<Composite *>(get(parent));
 
 	bool result;
 
 	beginInsertRows(parent, position, position + rows - 1);
-	if (!parentItem) { // then this is root
-		if (!root) root = new TreeItem();
-	} else result = parentItem->insert(position, rows);
+    if (!parentItem) { // then this is root
+        if (!root) root = new Composite();
+    } else
+        result = parentItem->insert(position, rows);
 	endInsertRows();
 
 	return result;
@@ -166,4 +175,31 @@ TreeItem* TreeModel::get(const QModelIndex &index) const
 
 	return root;
 }
+
+bool TreeModel::addItem(const BehaviorGroup *actionGroup, const QModelIndex &index)
+{
+    if (!actionGroup)
+        return false;
+
+    Composite *parentItem = dynamic_cast<Composite *>(get(index));
+    if (!parentItem)
+        return false;
+
+    Behavior *newBehavior;
+    if (actionGroup->isAction())
+        newBehavior = new Action(parentItem);
+    else if (actionGroup->isCheck())
+        newBehavior = new Check(parentItem);
+    else if (actionGroup->isComposite())
+        newBehavior = new Composite(parentItem);
+    else
+        return false;
+
+    beginInsertRows(index, 0, 0);
+    bool result = parentItem->insert(newBehavior, 0);
+    endInsertRows();
+
+    return result;
+}
+
 /***************************************************************************************************/

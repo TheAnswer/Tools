@@ -5,6 +5,7 @@
 
 #include "mainwindow.h"
 #include "treemodel.h"
+#include "composite.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -20,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	currentFileInfo.setFile(scriptsDir.absolutePath() + tr("/templates/example.lua"));
 
 	TreeModel *model = new TreeModel();
-	treeView->setModel(model);
+    btTreeView->setModel(model);
 
 	// File Menu
 	connect(actionOpen, SIGNAL(triggered()), this, SLOT(openFileDialog()));
@@ -28,19 +29,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	connect(actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
 
 	// Actions Menu
-	connect(menuActions, SIGNAL(aboutToShow()), this, SLOT(updateActions()));
-	connect(actionSelector, SIGNAL(triggered()), this, SLOT(insertChild()));
-	connect(actionSequence, SIGNAL(triggered()), this, SLOT(insertChild()));
+    connect(menuActions, SIGNAL(aboutToShow()), this, SLOT(updateBehaviors()));
+    connect(actionSelector, SIGNAL(triggered()), this, SLOT(insertChildBehavior()));
+    connect(actionSequence, SIGNAL(triggered()), this, SLOT(insertChildBehavior()));
+    compositeGroup.addAction(actionSelector);
+    compositeGroup.addAction(actionSequence);
 	// TODO: actions will need to be forced to have no children and composites will allow children
 	// probably rewrite TreeItem to be Action (with no children) and have Composite inherit that to add children
 
-	updateActions();
+    updateBehaviors();
 }
 
 MainWindow::~MainWindow()
 {}
 
-void MainWindow::updateActions()
+void MainWindow::updateBehaviors()
 {
 	// Process the actions file for actions. Don't worry about overhead since the file is
 	// never going to get too big. This way we don't have to think when we update the file
@@ -75,10 +78,16 @@ void MainWindow::updateActions()
 			QString contents = fullIn.readLine();
 
 			if (classDefs.exactMatch(contents)) {
-				QAction *newAction = new QAction(classDefs.capturedTexts().at(1), this);
+                QString actionText = classDefs.capturedTexts().at(1);
+                QAction *newAction = new QAction(actionText, this);
 				menuInsert_Action->addAction(newAction);
 
-				connect(newAction, SIGNAL(triggered()), this, SLOT(insertChild()));
+                if (QStringRef(&actionText, 0, 2) == "is")
+                    checkGroup.addAction(newAction);
+                else //if (QStringRef(&actionText, 0, 2) == "do")
+                    actionGroup.addAction(newAction);
+
+                connect(newAction, SIGNAL(triggered()), this, SLOT(insertChildBehavior()));
 			}
 		}
 	}
@@ -110,31 +119,43 @@ void MainWindow::openDirDialog()
 	//	or a menu subitem to insert action and insert composite
 }
 
-void MainWindow::insertChild()
+void MainWindow::insertChildBehavior()
 {
 	QAction *senderAction = dynamic_cast<QAction*>(sender());
 
 	if (senderAction != NULL)
 		std::cout << senderAction->text().toStdString() << std::endl;
 
-	TreeModel* model = static_cast<TreeModel*>(treeView->model());
+    TreeModel* model = dynamic_cast<TreeModel*>(btTreeView->model());
 
 	if (model == NULL) return;
 
-	QModelIndex index = treeView->selectionModel()->currentIndex();
+    QModelIndex index = btTreeView->selectionModel()->currentIndex();
 
-	if (!model->insertRows(0, 1, index)) return;
+    BehaviorGroup *senderGroup = dynamic_cast<BehaviorGroup *>(senderAction->actionGroup());
+    if (!model->addItem(senderGroup, index))
+        return;
 
-	for (int column = 0; column < model->columnCount(index); column++) {
-		QModelIndex child = model->index(0, column, index);
-		model->setData(child, QVariant("[No Data]"), Qt::EditRole);
-	}
+    model->setData(model->index(0, 0, index), senderAction->text(), Qt::DisplayRole);
 
-	treeView->selectionModel()->setCurrentIndex(model->index(0, 0, index), QItemSelectionModel::ClearAndSelect);
+    QString childType("[No Data]");
+    if (senderGroup->isAction())
+        childType = "Action";
+    else if (senderGroup->isCheck())
+        childType = "Check";
+    else if (senderGroup->isComposite())
+        childType = "Composite";
 
-	treeView->resizeColumnToContents(0);
-	treeView->resizeColumnToContents(1);
-	treeView->resizeColumnToContents(2);
+    model->setData(model->index(0, 1, index), childType, Qt::EditRole);
 
-	updateActions();
+    // TODO: add flags?
+    model->setData(model->index(0, 2, index), QString("[No Data]"), Qt::EditRole);
+
+    btTreeView->selectionModel()->setCurrentIndex(model->index(0, 0, index), QItemSelectionModel::ClearAndSelect);
+
+    btTreeView->resizeColumnToContents(0);
+    btTreeView->resizeColumnToContents(1);
+    btTreeView->resizeColumnToContents(2);
+
+    updateBehaviors();
 }

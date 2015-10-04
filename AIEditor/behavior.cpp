@@ -1,14 +1,13 @@
 #include "behavior.h"
 
-Behavior::Behavior()
-{
+Behavior::Behavior(Composite *parent)
+    : TreeItem(parent) {}
 
-}
+Behavior::Behavior(const QMap<QString, QVariant> &data, Composite *parent)
+    : TreeItem(data, parent) {}
 
-Behavior::~Behavior()
-{
+Behavior::~Behavior() {}
 
-}
 QAction *Behavior::getAction() const
 {
 	return action;
