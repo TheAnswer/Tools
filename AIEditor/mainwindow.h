@@ -18,6 +18,9 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
+    void loadSettings();
+    void saveSettings();
+
 private:
 	QDir scriptsDir;
 	QFileInfo currentFileInfo;
@@ -34,6 +37,7 @@ public slots:
 
 private slots:
 	void insertChildBehavior();
+    void insertChildDecision();
 	void openFileDialog();
 	void openDirDialog();
 	//bool insertColumn(const QModelIndex &parent = QModelIndex());

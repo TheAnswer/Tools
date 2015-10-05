@@ -9,23 +9,18 @@
 #ifndef BEHAVIOR_H
 #define BEHAVIOR_H
 
-#include <qglobal.h>
-#include <QList>
-#include <QMap>
-#include <QVariant>
-#include <QString>
-#include <QAction>
-
-#include "treeitem.h"
+#include "treetype.h"
 
 
-class Behavior : public TreeItem
+class Behavior : public TreeType
 {
 public:
-    Behavior(Composite *parent = 0);
-    Behavior(const QMap<QString, QVariant>& data, Composite *parent = 0);
-    virtual ~Behavior();
+    Behavior() : TreeType() {}
+    virtual ~Behavior() {}
 
+    bool isBehavior() const { return true; }
+
+    /*
 	QAction *getAction() const;
 	void setAction(QAction *value);
 
@@ -40,13 +35,16 @@ public:
 
 	quint8 getType() const;
 	void setType(const quint8 &value);
+    */
 
 private:
+    /*
 	QAction *action;
 	QString id;
 	QString className;
 	QString parentId;
     quint8 type;
+    */
 };
 
 #endif // BEHAVIOR_H

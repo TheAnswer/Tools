@@ -5,9 +5,11 @@
 #include <QModelIndex>
 #include <QVariant>
 
+#include "treetype.h"
+
 class TreeItem;
 class Behavior;
-class BehaviorGroup;
+class TypeGroup;
 
 class TreeModel : public QAbstractItemModel
 {
@@ -44,7 +46,10 @@ public:
 	bool removeRows(int position, int rows, const QModelIndex &parent = QModelIndex());
 	/***************************************************************************************************/
 
-    bool addItem(const BehaviorGroup *actionGroup, const QModelIndex &index);
+    bool addItem(const TypeGroup *actionGroup, const QModelIndex &index);
+
+    bool isDecisionTree() const { return treeType.isDecision(); }
+    bool isBehaviorTree() const { return treeType.isBehavior(); }
 
 private:
 	TreeItem* get(const QModelIndex &index) const; // helper to convert model indexes to local indexes
@@ -58,10 +63,7 @@ private:
 			break;
 		case 1:
 			return QString("Type");
-			break;
-		case 2:
-			return QString("Parameters");
-			break;
+            break;
 		default:
 			return QString();
 			break;
@@ -69,6 +71,7 @@ private:
 	}
 
 	TreeItem* root;
+    TreeType treeType;
 };
 
 #endif // TREEMODEL_H

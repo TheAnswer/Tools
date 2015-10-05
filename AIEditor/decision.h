@@ -1,16 +1,18 @@
 #ifndef DECISION_H
 #define DECISION_H
 
-#include "treeitem.h"
+#include "treetype.h"
 
-class Decision : public TreeItem
+class Node;
+
+class Decision : public TreeType
 {
 public:
-    Decision();
+    Decision() : TreeType() {}
+    virtual ~Decision() {}
 
-signals:
+    bool isDecision() const { return true; }
 
-public slots:
 };
 
 #endif // DECISION_H

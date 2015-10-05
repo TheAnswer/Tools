@@ -6,13 +6,13 @@
 #include <QString>
 #include <QVariant>
 
-class Composite;
+class Node;
 
 class TreeItem
 {
 public:
-    TreeItem(Composite *parent = 0);
-    TreeItem(const QMap<QString, QVariant> &data, Composite *parent = 0);
+    TreeItem(Node *parent = 0);
+    TreeItem(const QMap<QString, QVariant> &data, Node *parent = 0);
     virtual ~TreeItem();
 
     virtual size_t count() const {
@@ -27,7 +27,7 @@ public:
 		return data.value(field);
 	}
 
-    Composite* getParent() const {
+    Node* getParent() const {
 		return parent;
 	}
 
@@ -59,7 +59,7 @@ public:
 
 private:
 	QMap<QString, QVariant> data;
-    Composite *parent;
+    Node *parent;
 };
 
 #endif // TREEITEM_H

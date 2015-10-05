@@ -1,15 +1,17 @@
 #ifndef CHECK_H
 #define CHECK_H
 
-#include "behavior.h"
+#include "leaf.h"
 
-class Check : public Behavior
+class Node;
+
+class Check : public Leaf
 {
 public:
-    Check(Composite *parent = 0)
-        : Behavior(parent) {}
-    Check(const QMap<QString, QVariant> &data, Composite *parent = 0)
-        : Behavior(data, parent) {}
+    Check(Node *parent = 0)
+        : Leaf(parent) {}
+    Check(const QMap<QString, QVariant> &data, Node *parent = 0)
+        : Leaf(data, parent) {}
 
 signals:
 

@@ -1,13 +1,5 @@
 #include "behavior.h"
-
-Behavior::Behavior(Composite *parent)
-    : TreeItem(parent) {}
-
-Behavior::Behavior(const QMap<QString, QVariant> &data, Composite *parent)
-    : TreeItem(data, parent) {}
-
-Behavior::~Behavior() {}
-
+/*
 QAction *Behavior::getAction() const
 {
 	return action;
@@ -53,8 +45,4 @@ void Behavior::setType(const quint8 &value)
 {
 	type = value;
 }
-
-
-
-
-
+*/

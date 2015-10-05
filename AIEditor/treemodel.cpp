@@ -5,6 +5,8 @@
 #include "action.h"
 #include "check.h"
 #include "composite.h"
+#include "node.h"
+#include "leaf.h"
 #include "actiongroups.h"
 
 TreeModel::TreeModel(QObject *parent)
@@ -12,10 +14,9 @@ TreeModel::TreeModel(QObject *parent)
 {
 	QMap<QString, QVariant> data;
 	data.insert(QString("Name"), QVariant("Name"));
-	data.insert(QString("Type"), QVariant("Type"));
-	data.insert(QString("Parameters"), QVariant("Parameters"));
+    data.insert(QString("Type"), QVariant("Type"));
 
-    root = new Composite(data);
+    root = new Node(data);
 }
 
 TreeModel::~TreeModel()
@@ -54,8 +55,8 @@ QModelIndex TreeModel::index(int row, int column, const QModelIndex &parent) con
 	if (parent.isValid() && parent.column() != 0)
 		return QModelIndex();
 
-    // only a composite item can have a child
-    Composite *parentItem = dynamic_cast<Composite*>(get(parent));
+    // only a node item can have a child
+    Node *parentItem = dynamic_cast<Node*>(get(parent));
     if (!parentItem) return QModelIndex();
 
 	TreeItem *childItem = parentItem->get(row);
@@ -71,7 +72,7 @@ QModelIndex TreeModel::parent(const QModelIndex &index) const
 		return QModelIndex();
 
 	TreeItem *childItem = get(index);
-    Composite *parentItem = childItem->getParent();
+    Node *parentItem = childItem->getParent();
 
 	if (parentItem == root) return QModelIndex();
 
@@ -88,7 +89,7 @@ int TreeModel::rowCount(const QModelIndex &parent) const
 
 int TreeModel::columnCount(const QModelIndex &/*parent*/) const
 {
-	return 3; // always the same: Name, Type, Parameters (TODO: could possibly extend parameters to have a variable column count)
+    return 2; // always the same: Name, Type
 }
 /***************************************************************************************************/
 
@@ -138,13 +139,13 @@ bool TreeModel::removeColumns(int /*position*/, int /*columns*/, const QModelInd
 
 bool TreeModel::insertRows(int position, int rows, const QModelIndex &parent)
 {
-    Composite *parentItem = dynamic_cast<Composite *>(get(parent));
+    Node *parentItem = dynamic_cast<Node *>(get(parent));
 
-	bool result;
+	bool result = true;
 
 	beginInsertRows(parent, position, position + rows - 1);
     if (!parentItem) { // then this is root
-        if (!root) root = new Composite();
+        if (!root) root = new Node();
     } else
         result = parentItem->insert(position, rows);
 	endInsertRows();
@@ -176,27 +177,31 @@ TreeItem* TreeModel::get(const QModelIndex &index) const
 	return root;
 }
 
-bool TreeModel::addItem(const BehaviorGroup *actionGroup, const QModelIndex &index)
+bool TreeModel::addItem(const TypeGroup *actionGroup, const QModelIndex &index)
 {
     if (!actionGroup)
         return false;
 
-    Composite *parentItem = dynamic_cast<Composite *>(get(index));
+    Node *parentItem = dynamic_cast<Node *>(get(index));
     if (!parentItem)
         return false;
 
-    Behavior *newBehavior;
+    TreeItem *newItem;
     if (actionGroup->isAction())
-        newBehavior = new Action(parentItem);
+        newItem = new Action(parentItem);
     else if (actionGroup->isCheck())
-        newBehavior = new Check(parentItem);
+        newItem = new Check(parentItem);
     else if (actionGroup->isComposite())
-        newBehavior = new Composite(parentItem);
+        newItem = new Composite(parentItem);
+    else if (actionGroup->isNode())
+        newItem = new Node(parentItem);
+    else if (actionGroup->isLeaf())
+        newItem = new Leaf(parentItem);
     else
         return false;
 
     beginInsertRows(index, 0, 0);
-    bool result = parentItem->insert(newBehavior, 0);
+    bool result = parentItem->insert(newItem, 0);
     endInsertRows();
 
     return result;

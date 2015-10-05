@@ -1,16 +1,18 @@
 #ifndef LEAF_H
 #define LEAF_H
 
-#include "decision.h"
+#include "treeitem.h"
 
-class Leaf : public Decision
+class Node;
+
+class Leaf : public TreeItem
 {
 public:
-    Leaf();
+    Leaf(Node *parent = 0)
+        : TreeItem(parent) {}
+    Leaf(const QMap<QString, QVariant> &data, Node *parent = 0)
+        : TreeItem(data, parent) {}
 
-signals:
-
-public slots:
 };
 
 #endif // LEAF_H

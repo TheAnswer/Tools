@@ -1,15 +1,17 @@
 #ifndef ACTION_H
 #define ACTION_H
 
-#include "behavior.h"
+#include "leaf.h"
 
-class Action : public Behavior
+class Node;
+
+class Action : public Leaf
 {
 public:
-    Action(Composite *parent = 0)
-        : Behavior(parent) {}
-    Action(const QMap<QString, QVariant> &data, Composite *parent = 0)
-        : Behavior(data, parent) {}
+    Action(Node *parent = 0)
+        : Leaf(parent) {}
+    Action(const QMap<QString, QVariant> &data, Node *parent = 0)
+        : Leaf(data, parent) {}
 
 signals:
 

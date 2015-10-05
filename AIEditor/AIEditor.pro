@@ -10,7 +10,8 @@ HEADERS += \
     actiongroups.h \
     decision.h \
     node.h \
-    leaf.h
+    leaf.h \
+    treetype.h
 
 SOURCES += \
     behavior.cpp \
@@ -23,7 +24,8 @@ SOURCES += \
     composite.cpp \
     decision.cpp \
     node.cpp \
-    leaf.cpp
+    leaf.cpp \
+    treetype.cpp
 
 RESOURCES +=
 
