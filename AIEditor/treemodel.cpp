@@ -21,8 +21,7 @@ TreeModel::TreeModel(QObject *parent)
 
 TreeModel::~TreeModel()
 {
-	if (root != NULL)
-		delete root;
+    delete root;
 }
 
 /***************************************************************************************************

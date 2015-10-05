@@ -32,8 +32,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(actionSequence, SIGNAL(triggered()), this, SLOT(insertChildBehavior()));
     compositeGroup.addAction(actionSelector);
     compositeGroup.addAction(actionSequence);
-    // TODO: actions will need to be forced to have no children and composites will allow children
-    // probably rewrite TreeItem to be Action (with no children) and have Composite inherit that to add children
 
     updateBehaviors();
 }
@@ -84,7 +82,7 @@ void MainWindow::updateBehaviors()
 
                 if (QStringRef(&actionText, 0, 2) == "is")
                     checkGroup.addAction(newAction);
-                else //if (QStringRef(&actionText, 0, 2) == "do")
+                else //if (QStringRef(&actionText, 0, 2) == "anything else")
                     actionGroup.addAction(newAction);
 
                 connect(newAction, SIGNAL(triggered()), this, SLOT(insertChildBehavior()));
@@ -100,6 +98,34 @@ void MainWindow::openFileDialog()
         return;
 
     currentFileInfo = fileSelection;
+    if (!currentFileInfo.isFile()) return;
+
+    currentFile.close();
+    currentFile.setFileName(currentFileInfo.absoluteFilePath());
+
+    if (!currentFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QMap<QString, QStringList> actions;
+
+    QTextStream tempIn(&currentFile);
+    while (!tempIn.atEnd())
+    {
+        QStringList line = tempIn.readLine().split(',');
+        if (line.length() < 4) continue;
+
+        for (QStringList::iterator it = line.begin(); it != line.end(); ++it)
+            it->remove('{').remove('}').remove('"');
+
+        actions[line.at(0)] = line;
+    }
+
+    TreeModel *btModel = dynamic_cast<TreeModel*>(btTreeView->model());
+    TreeModel *dtModel = dynamic_cast<TreeModel*>(dtTreeView->model());
+
+    if (btModel == NULL || dtModel == NULL) return;
+
+    clear();
 
     // TODO: Need to determine if we have a template or an action (possibly use the directory structure or the file structure)
     // TODO: process the file
@@ -117,6 +143,17 @@ void MainWindow::openDirDialog()
     //  possibly a popout tool selector like dia
     //  or a scrollbox in the first column (is that even doable?)
     //  or a menu subitem to insert action and insert composite
+}
+
+void MainWindow::clear()
+{
+    TreeModel* model = dynamic_cast<TreeModel*>(btTreeView->model());
+    if (model == NULL) btTreeView->setModel(new TreeModel());
+    else model->clear();
+
+    model = dynamic_cast<TreeModel*>(dtTreeView->model());
+    if (model == NULL) dtTreeView->setModel(new TreeModel());
+    else model->clear();
 }
 
 void MainWindow::loadSettings()

@@ -57,9 +57,13 @@ public:
 
     int childNumber();
 
+    const QString& id() const { return stringID; }
+    const QString& id(const QString& i) { return stringID = i; }
+
 private:
 	QMap<QString, QVariant> data;
     Node *parent;
+    QString stringID;
 };
 
 #endif // TREEITEM_H

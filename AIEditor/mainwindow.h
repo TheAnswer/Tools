@@ -29,6 +29,8 @@ private:
     ActionGroup actionGroup;
     CheckGroup checkGroup;
     CompositeGroup compositeGroup;
+    NodeGroup nodeGroup;
+    LeafGroup leafGroup;
 
 signals:
 
@@ -39,11 +41,8 @@ private slots:
 	void insertChildBehavior();
     void insertChildDecision();
 	void openFileDialog();
-	void openDirDialog();
-	//bool insertColumn(const QModelIndex &parent = QModelIndex());
-	//void insertRow();
-	//bool removeColumn(const QModelIndex &parent = QModelIndex());
-	//void removeRow();
+    void openDirDialog();
+    void clear();
 };
 
 #endif // MAINWINDOW_H

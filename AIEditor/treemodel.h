@@ -6,8 +6,8 @@
 #include <QVariant>
 
 #include "treetype.h"
+#include "treeitem.h"
 
-class TreeItem;
 class Behavior;
 class TypeGroup;
 
@@ -47,6 +47,7 @@ public:
 	/***************************************************************************************************/
 
     bool addItem(const TypeGroup *actionGroup, const QModelIndex &index);
+    void clear() { delete root; }
 
     bool isDecisionTree() const { return treeType.isDecision(); }
     bool isBehaviorTree() const { return treeType.isBehavior(); }
