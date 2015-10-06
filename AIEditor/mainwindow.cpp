@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     //nodeGroup.addAction(actionNode);
 
     updateBehaviors();
+    updateDecisions();
 }
 
 MainWindow::~MainWindow()
@@ -61,20 +62,26 @@ MainWindow::~MainWindow()
 
 void MainWindow::btSelectionCallback(const QItemSelection& selected, const QItemSelection& deselected)
 {
-    QModelIndex selIdx = selected.indexes().at(0);
-    if (selIdx.isValid())
+    if (!selected.indexes().isEmpty())
     {
-        QString name = static_cast<TreeItem*>(selIdx.internalPointer())->name().toString();
-        QString dtName = dynamic_cast<TreeModel*>(btTreeView->model())->getDT(name);
-        std::cout << "BT Selected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
+        QModelIndex selIdx = selected.indexes().at(0);
+        if (selIdx.isValid())
+        {
+            QString name = static_cast<TreeItem*>(selIdx.internalPointer())->name().toString();
+            QString dtName = dynamic_cast<TreeModel*>(btTreeView->model())->getDT(name);
+            std::cout << "BT Selected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
+        }
     }
-    
-    QModelIndex desIdx = deselected.indexes().at(0);
-    if (desIdx.isValid())
+
+    if (!deselected.indexes().isEmpty())
     {
-        QString name = static_cast<TreeItem*>(desIdx.internalPointer())->name().toString();
-        QString dtName = dynamic_cast<TreeModel*>(btTreeView->model())->getDT(name);
-        std::cout << "BT Deselected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
+        QModelIndex desIdx = deselected.indexes().at(0);
+        if (desIdx.isValid())
+        {
+            QString name = static_cast<TreeItem*>(desIdx.internalPointer())->name().toString();
+            QString dtName = dynamic_cast<TreeModel*>(btTreeView->model())->getDT(name);
+            std::cout << "BT Deselected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
+        }
     }
     
     TreeModel *btModel = dynamic_cast<TreeModel*>(btTreeView->model());
@@ -82,7 +89,10 @@ void MainWindow::btSelectionCallback(const QItemSelection& selected, const QItem
     
     TreeModel *dtModel = dynamic_cast<TreeModel*>(dtTreeView->model());
     if (!dtModel) return;
-    
+
+    if (selected.indexes().isEmpty()) return;
+
+    QModelIndex selIdx = selected.indexes().at(0);
     TreeItem* selItem = static_cast<TreeItem*>(selIdx.internalPointer());
     if (!selItem) return;
     
@@ -161,7 +171,7 @@ void MainWindow::updateBehaviors()
                 
                 TreeModel *model = dynamic_cast<TreeModel*>(btTreeView->model());
                 if (model) model->mapDTtoBT(classDefs.capturedTexts().at(3),
-                                            classDefs.capturedTexts().at(2));
+                                            classDefs.capturedTexts().at(1));
 
                 connect(newAction, SIGNAL(triggered()), this, SLOT(insertChild()));
             }
@@ -223,7 +233,7 @@ void MainWindow::openFileDialog()
         if (line.length() < 4) continue;
 
         for (QStringList::iterator it = line.begin(); it != line.end(); ++it)
-            it->remove('{').remove('}').remove('"');
+            it->remove('{').remove('}').remove('"').remove('\t').remove(' ');
 
         actions[line.at(0)] = line;
     }

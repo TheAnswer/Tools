@@ -81,7 +81,7 @@ QModelIndex TreeModel::parent(const QModelIndex &index) const
 
 int TreeModel::rowCount(const QModelIndex &parent) const
 {
-	TreeItem *parentItem = get(parent);
+    Node *parentItem = dynamic_cast<Node*>(get(parent));
 
 	if (parentItem) return parentItem->count();
 	else return 0;
