@@ -61,7 +61,7 @@ void MainWindow::btSelectionCallback(const QItemSelection& selected, const QItem
     {
         QString name = static_cast<TreeItem*>(selIdx.internalPointer())->name().toString();
         QString dtName = dynamic_cast<TreeModel*>(btTreeView->model())->getDT(name);
-        std::cout << "Selected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
+        std::cout << "BT Selected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
     }
     
     QModelIndex desIdx = deselected.indexes().at(0);
@@ -69,13 +69,45 @@ void MainWindow::btSelectionCallback(const QItemSelection& selected, const QItem
     {
         QString name = static_cast<TreeItem*>(desIdx.internalPointer())->name().toString();
         QString dtName = dynamic_cast<TreeModel*>(btTreeView->model())->getDT(name);
-        std::cout << "Deselected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
+        std::cout << "BT Deselected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
     }
+    
+    TreeModel *btModel = dynamic_cast<TreeModel*>(btTreeView->model());
+    if (!btModel) return;
+    
+    TreeModel *dtModel = dynamic_cast<TreeModel*>(dtTreeView->model());
+    if (!dtModel) return;
+    
+    TreeItem* selItem = static_cast<TreeItem*>(selIdx.internalPointer());
+    if (!selItem) return;
+    
+    QString btName = selItem->name().toString();
+    QString dtName = btModel->getDT(btName);
+    
+    dtModel->clear();
+    QMap<QString, QVariant> data;
+    data["Name"] = dtName;
+    data["ID"] = "interrupt";
+    data["parentID"] = "none";
+    
+    dtModel->addItem(dtModel->createItem(data));
 }
 
-void MainWindow::dtSelectionCallback(const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/)
+void MainWindow::dtSelectionCallback(const QItemSelection& selected, const QItemSelection& deselected)
 {
+    QModelIndex selIdx = selected.indexes().at(0);
+    if (selIdx.isValid())
+    {
+        QString name = static_cast<TreeItem*>(selIdx.internalPointer())->name().toString();
+        std::cout << "DT Selected: " << name.toStdString() << std::endl;
+    }
     
+    QModelIndex desIdx = deselected.indexes().at(0);
+    if (desIdx.isValid())
+    {
+        QString name = static_cast<TreeItem*>(desIdx.internalPointer())->name().toString();
+        std::cout << "DT Deselected: " << name.toStdString()  << std::endl;
+    }
 }
 
 void MainWindow::updateBehaviors()
