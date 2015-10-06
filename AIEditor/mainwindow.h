@@ -11,6 +11,8 @@
 #include "ui_mainwindow.h"
 #include "actiongroups.h"
 
+class TreeItem;
+
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
 	Q_OBJECT
@@ -20,6 +22,9 @@ public:
 
     void loadSettings();
     void saveSettings();
+
+    void insertChildBehavior(TreeItem* behavior);
+    void insertChildDecision(TreeItem* behavior);
 
 private:
 	QDir scriptsDir;
@@ -38,8 +43,7 @@ public slots:
 	void updateBehaviors();
 
 private slots:
-	void insertChildBehavior();
-    void insertChildDecision();
+	void insertChild();
 	void openFileDialog();
     void openDirDialog();
     void clear();

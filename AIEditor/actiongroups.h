@@ -13,6 +13,9 @@ public:
     virtual bool isComposite() const { return false; }
     virtual bool isNode() const { return false; }
     virtual bool isLeaf() const { return false; }
+    
+    virtual bool isBehavior() const { return false; }
+    virtual bool isDecision() const { return true; }
 };
 
 class ActionGroup : public TypeGroup
@@ -20,6 +23,7 @@ class ActionGroup : public TypeGroup
 public:
     ActionGroup(QObject *parent = 0) : TypeGroup(parent) {}
     bool isAction() const { return true; }
+    bool isBehavior() const { return true; }
 };
 
 class CheckGroup : public TypeGroup
@@ -27,6 +31,7 @@ class CheckGroup : public TypeGroup
 public:
     CheckGroup(QObject *parent = 0) : TypeGroup(parent) {}
     bool isCheck() const { return true; }
+    bool isBehavior() const { return true; }
 };
 
 class CompositeGroup : public TypeGroup
@@ -34,6 +39,7 @@ class CompositeGroup : public TypeGroup
 public:
     CompositeGroup(QObject *parent = 0) : TypeGroup(parent) {}
     bool isComposite() const { return true; }
+    bool isBehavior() const { return true; }
 };
 
 class NodeGroup : public TypeGroup
@@ -41,6 +47,7 @@ class NodeGroup : public TypeGroup
 public:
     NodeGroup(QObject *parent = 0) : TypeGroup(parent) {}
     bool isNode() const { return true; }
+    bool isDecision() const { return true; }
 };
 
 class LeafGroup : public TypeGroup
@@ -48,6 +55,7 @@ class LeafGroup : public TypeGroup
 public:
     LeafGroup(QObject *parent = 0) : TypeGroup(parent) {}
     bool isLeaf() { return true; }
+    bool isDecision() const { return true; }
 };
 
 #endif // ACTIONGROUPS_H

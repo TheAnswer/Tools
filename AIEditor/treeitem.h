@@ -56,14 +56,19 @@ public:
 	}
 
     int childNumber();
+    
+    QVariant name() const { return data["Name"]; }
+    QVariant name(const QString &i) { return data["Name"] = i; }
 
-    const QString& id() const { return stringID; }
-    const QString& id(const QString& i) { return stringID = i; }
+    QVariant id() const { return data["ID"]; }
+    QVariant id(const QString& i) { return data["ID"] = i; }
+    
+    QVariant parentID() const { return data["parentID"]; }
+    QVariant parentID(const QString& i) { return data["parentID"] = i; }
 
 private:
 	QMap<QString, QVariant> data;
     Node *parent;
-    QString stringID;
 };
 
 #endif // TREEITEM_H

@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <QAction>
 
 #include "treeitem.h"
 #include "treemodel.h"
@@ -14,7 +15,7 @@ TreeModel::TreeModel(QObject *parent)
 {
 	QMap<QString, QVariant> data;
 	data.insert(QString("Name"), QVariant("Name"));
-    data.insert(QString("Type"), QVariant("Type"));
+    data.insert(QString("ID"), QVariant("ID"));
 
     root = new Node(data);
 }
@@ -176,34 +177,106 @@ TreeItem* TreeModel::get(const QModelIndex &index) const
 	return root;
 }
 
-bool TreeModel::addItem(const TypeGroup *actionGroup, const QModelIndex &index)
+QModelIndex TreeModel::indexOf(TreeItem *item) const
 {
-    if (!actionGroup)
-        return false;
+	if (item == root || item == NULL)
+		return QModelIndex();
+	
+	Node *parent = item->getParent();
+	QList<Node *> parents;
+	while (parent && parent != root)
+	{
+		parents.append(parent);
+		parent = parent->getParent();
+	}
+	
+	// default constructor gives root, and root is not in our list
+	QModelIndex currIdx;
+	parent = root;
+	for (QList<Node *>::iterator it = parents.begin(); it != parents.end(); ++it)
+		currIdx = index((*it)->childNumber(), 0, currIdx);
+	
+	// now we have the currIdx of item's direct parent
+	currIdx = index(item->childNumber(), 0, currIdx);
+	
+	return currIdx;
+}
+
+bool TreeModel::addItem(const QAction *action, const QModelIndex &index)
+{
+	if (!action) return false;
+	
+    TypeGroup *senderGroup = dynamic_cast<TypeGroup *>(action->actionGroup());
+    if (!senderGroup) return false;
 
     Node *parentItem = dynamic_cast<Node *>(get(index));
-    if (!parentItem)
-        return false;
+    if (!parentItem) return false;
+    
+    QMap<QString, QVariant> data;
+    data["Name"] = action->text();
+    data["parentID"] = parentItem->id();
+    if (!index.isValid())
+    	data["ID"] = "root";
+    else
+    	data["ID"] = data["parentID"].toString() + QString((unsigned int)parentItem->count() + 1);
 
     TreeItem *newItem;
-    if (actionGroup->isAction())
-        newItem = new Action(parentItem);
-    else if (actionGroup->isCheck())
-        newItem = new Check(parentItem);
-    else if (actionGroup->isComposite())
-        newItem = new Composite(parentItem);
-    else if (actionGroup->isNode())
-        newItem = new Node(parentItem);
-    else if (actionGroup->isLeaf())
-        newItem = new Leaf(parentItem);
+    if (senderGroup->isAction())
+        newItem = new Action(data, parentItem);
+    else if (senderGroup->isCheck())
+        newItem = new Check(data, parentItem);
+    else if (senderGroup->isComposite())
+        newItem = new Composite(data, parentItem);
+    else if (senderGroup->isNode())
+        newItem = new Node(data, parentItem);
+    else if (senderGroup->isLeaf())
+        newItem = new Leaf(data, parentItem);
     else
         return false;
 
-    beginInsertRows(index, 0, 0);
-    bool result = parentItem->insert(newItem, 0);
-    endInsertRows();
+	return addItem(newItem, parentItem, index);
+}
 
-    return result;
+bool TreeModel::addItem(TreeItem *item)
+{
+	if (!item) return false;
+	
+	Node *parentItem = item->getParent();
+	if (!parentItem) return false;
+	
+	QModelIndex pIdx = indexOf(parentItem);
+	
+	return addItem(item, parentItem, pIdx);
+}
+
+bool TreeModel::addItem(TreeItem *item, Node *parentItem, const QModelIndex& pIdx)
+{
+	beginInsertRows(pIdx, 0, 0);
+	bool result = parentItem->insert(item, 0);
+	endInsertRows();
+	
+	setData(index(item->childNumber(), 0, pIdx), item->name(), Qt::DisplayRole);
+	setData(index(item->childNumber(), 1, pIdx), item->id(),  Qt::EditRole);
+	
+	return result;
+}
+
+TreeItem* TreeModel::createItem(const QMap<QString, QVariant>& data, Node* parent)
+{
+	if (!parent) parent = root ? root : (root = new Node());
+	
+	QString itemName = data["Name"].toString();
+	
+	if (itemName == "Selector" || itemName == "Sequence")
+		return new Composite(data, parent);
+	
+	if (itemName == "Node")
+		return new Node(data, parent);
+
+	if (isDecisionTree())
+		return new Leaf(data, parent);
+	
+	return new Action(data, parent);
 }
 
 /***************************************************************************************************/

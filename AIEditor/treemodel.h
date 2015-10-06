@@ -6,10 +6,9 @@
 #include <QVariant>
 
 #include "treetype.h"
-#include "treeitem.h"
+#include "node.h"
 
-class Behavior;
-class TypeGroup;
+class QAction;
 
 class TreeModel : public QAbstractItemModel
 {
@@ -46,14 +45,18 @@ public:
 	bool removeRows(int position, int rows, const QModelIndex &parent = QModelIndex());
 	/***************************************************************************************************/
 
-    bool addItem(const TypeGroup *actionGroup, const QModelIndex &index);
+    bool addItem(const QAction *action, const QModelIndex &index);
+	bool addItem(TreeItem *item);
+	bool addItem(TreeItem *item, Node *parentItem, const QModelIndex& pIdx);
     void clear() { delete root; }
+    TreeItem* createItem(const QMap<QString, QVariant>& data, Node* parent = 0);
 
     bool isDecisionTree() const { return treeType.isDecision(); }
     bool isBehaviorTree() const { return treeType.isBehavior(); }
 
 private:
 	TreeItem* get(const QModelIndex &index) const; // helper to convert model indexes to local indexes
+	QModelIndex indexOf(TreeItem *item) const;
 
 	QString getHeader(int section) const
 	{
@@ -71,7 +74,7 @@ private:
 		};
 	}
 
-	TreeItem* root;
+	Node* root;
     TreeType treeType;
 };
 

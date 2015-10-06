@@ -3,10 +3,12 @@
 #include <QtGui>
 #include <QFileDialog>
 #include <QSettings>
+#include <QList>
+#include <QMap>
 
 #include "mainwindow.h"
 #include "treemodel.h"
-#include "composite.h"
+#include "node.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -28,8 +30,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // Actions Menu
     connect(menuActions, SIGNAL(aboutToShow()), this, SLOT(updateBehaviors()));
-    connect(actionSelector, SIGNAL(triggered()), this, SLOT(insertChildBehavior()));
-    connect(actionSequence, SIGNAL(triggered()), this, SLOT(insertChildBehavior()));
+    connect(actionSelector, SIGNAL(triggered()), this, SLOT(insertChild()));
+    connect(actionSequence, SIGNAL(triggered()), this, SLOT(insertChild()));
     compositeGroup.addAction(actionSelector);
     compositeGroup.addAction(actionSequence);
 
@@ -85,7 +87,7 @@ void MainWindow::updateBehaviors()
                 else //if (QStringRef(&actionText, 0, 2) == "anything else")
                     actionGroup.addAction(newAction);
 
-                connect(newAction, SIGNAL(triggered()), this, SLOT(insertChildBehavior()));
+                connect(newAction, SIGNAL(triggered()), this, SLOT(insertChild()));
             }
         }
     }
@@ -119,16 +121,75 @@ void MainWindow::openFileDialog()
 
         actions[line.at(0)] = line;
     }
-
-    TreeModel *btModel = dynamic_cast<TreeModel*>(btTreeView->model());
-    TreeModel *dtModel = dynamic_cast<TreeModel*>(dtTreeView->model());
-
-    if (btModel == NULL || dtModel == NULL) return;
-
+    
+    // This ensures that we don't have NULL models, so no need to check
     clear();
 
-    // TODO: Need to determine if we have a template or an action (possibly use the directory structure or the file structure)
-    // TODO: process the file
+    TreeModel *btModel = dynamic_cast<TreeModel*>(btTreeView->model());
+    //TreeModel *dtModel = dynamic_cast<TreeModel*>(dtTreeView->model());
+    
+    // for now assume we opened a template a parse it
+    // each action has 4 entries (after trimming). The first is the id, and
+    // is what the map is keyed to. The second is the name of the action lua
+    // class. The third is the parent id. The fourth is the type of action
+    // (selector, sequence, or behavior)
+    
+    // To ensure that we always have the id's to associate with parent id's,
+    // build a list of everything first and then go back and assign the parents
+    // and set up the display
+    QMap<QString, QList<QMap<QString, QVariant> > > parents;
+    for (QMap<QString, QStringList>::iterator it = actions.begin(); it != actions.end(); ++it)
+    {
+        QMap<QString, QVariant> data;
+        
+        if (it->at(3) == "SELECTORBEHAVIOR")
+            data["Name"] = "Selector";
+        else if (it->at(3) == "SEQUENCEBEHAVIOR")
+            data["Name"] = "Sequence";
+        else
+            data["Name"] = it->at(1);
+        
+        data["ID"] = it->at(0);
+        data["parentID"] = it->at(2);
+        
+        parents[data["parentID"].toString()].append(data);
+    }
+    
+    // start with the parentID of "none" since this is necessarily the root
+    // of the tree
+    // parentID, parentItem
+    QMap<QString, TreeItem*> idsToParse;
+    {
+        QList<QMap<QString, QVariant> > rootItems = parents.take("none");
+        // just take the first entry, it should only have one entry so we don't
+        // have any way to deal with the others anyway.
+        QMap<QString, QVariant> rootData = rootItems.takeFirst();
+        // no parent
+        TreeItem *result = btModel->createItem(rootData);
+        btModel->addItem(result);
+        idsToParse[rootData["ID"].toString()] = result;
+    }
+    
+    // Now loop through the rest and add them where they need to be
+    while (!idsToParse.isEmpty())
+    {
+        QString currentID = idsToParse.keys().at(0);
+        Node *currentParent = dynamic_cast<Node*>(idsToParse[currentID]);
+        idsToParse.remove(currentID);
+        if (!currentParent) continue;
+        
+        QList<QMap<QString, QVariant> > currentItems = parents.take(currentID);
+        
+        for (QList<QMap<QString, QVariant> >::iterator it = currentItems.begin(); it != currentItems.end(); ++it)
+        {
+            TreeItem *result = btModel->createItem(*it, currentParent);
+            btModel->addItem(result);
+            idsToParse[(*it)["ID"].toString()] = result;
+        }
+    }
+
+    // now we have a map of all items keyed by ID with parents assigned properly
+    // TODO: Feature add: edit lua actions in the editor
 }
 
 void MainWindow::openDirDialog()
@@ -159,6 +220,7 @@ void MainWindow::clear()
 void MainWindow::loadSettings()
 {
     QSettings settings("config.ini", QSettings::IniFormat);
+    
     QString pathName = settings.value("general/scriptsDir", tr("/home/swgemu/MMOCoreORB/bin/scripts/ai")).toString();
     scriptsDir = QDir(pathName, tr("Lua (*.lua)"));
     if (!scriptsDir.exists())
@@ -175,69 +237,48 @@ void MainWindow::saveSettings()
     settings.setValue("general/scriptsDir", scriptsDir.path());
 }
 
-void MainWindow::insertChildBehavior()
+void MainWindow::insertChild()
 {
     QAction *senderAction = dynamic_cast<QAction*>(sender());
+    if (senderAction == NULL) return;
+	
+    TypeGroup *senderGroup = dynamic_cast<TypeGroup *>(senderAction->actionGroup());
+    if (!senderGroup) return;
 
-    if (senderAction != NULL)
-        std::cout << senderAction->text().toStdString() << std::endl;
-
-    TreeModel* model = dynamic_cast<TreeModel*>(btTreeView->model());
-
+    TreeModel* model = NULL;
+    if (senderGroup->isBehavior())
+        model = dynamic_cast<TreeModel*>(btTreeView->model());
+    else if (senderGroup->isDecision())
+        model = dynamic_cast<TreeModel*>(dtTreeView->model());
     if (model == NULL) return;
 
     QModelIndex index = btTreeView->selectionModel()->currentIndex();
 
-    TypeGroup *senderGroup = dynamic_cast<TypeGroup *>(senderAction->actionGroup());
-    if (!model->addItem(senderGroup, index))
-        return;
-
-    model->setData(model->index(0, 0, index), senderAction->text(), Qt::DisplayRole);
-
-    QString childType("[No Data]");
-    if (senderGroup->isAction())
-        childType = "Action";
-    else if (senderGroup->isCheck())
-        childType = "Check";
-    else if (senderGroup->isComposite())
-        childType = "Composite";
-
-    model->setData(model->index(0, 1, index), childType, Qt::DisplayRole);
+    if (!model->addItem(senderAction, index)) return;
 
     btTreeView->selectionModel()->setCurrentIndex(model->index(0, 0, index), QItemSelectionModel::ClearAndSelect);
     btTreeView->resizeColumnToContents(0);
     btTreeView->resizeColumnToContents(1);
-
-    updateBehaviors();
 }
 
-void MainWindow::insertChildDecision()
+void MainWindow::insertChildBehavior(TreeItem* behavior)
 {
-    QAction *senderAction = dynamic_cast<QAction*>(sender());
+    TreeModel *btModel = dynamic_cast<TreeModel*>(btTreeView->model());
+    if (!btModel) return;
+    
+    if (!btModel->addItem(behavior)) return;
+    
+    btTreeView->resizeColumnToContents(0);
+    btTreeView->resizeColumnToContents(1);
+}
 
-    if (senderAction != NULL)
-        std::cout << senderAction->text().toStdString() << std::endl;
-
-    TreeModel* model = dynamic_cast<TreeModel*>(dtTreeView->model());
-    if (model == NULL) return;
-
-    QModelIndex index = dtTreeView->selectionModel()->currentIndex();
-    \
-    TypeGroup *senderGroup = dynamic_cast<TypeGroup *>(senderAction->actionGroup());
-    if (!model->addItem(senderGroup, index))
-        return;
-
-    model->setData(model->index(0, 0, index), senderAction->text(), Qt::DisplayRole);
-
-    QString childType("[No Data]");
-    if (senderGroup->isNode())
-        childType = "Node";
-    if (senderGroup->isLeaf())
-        childType = "Leaf";
-
-    model->setData(model->index(0, 1, index), childType, Qt::DisplayRole);
-
-    dtTreeView->selectionModel()->setCurrentIndex(model->index(0, 0, index), QItemSelectionModel::ClearAndSelect);
+void MainWindow::insertChildDecision(TreeItem* decision)
+{
+    TreeModel *dtModel = dynamic_cast<TreeModel*>(dtTreeView->model());
+    if (!dtModel) return;
+    
+    if (!dtModel->addItem(decision)) return;
+    
     dtTreeView->resizeColumnToContents(0);
     dtTreeView->resizeColumnToContents(1);
 }

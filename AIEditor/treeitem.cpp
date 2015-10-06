@@ -1,18 +1,15 @@
 #include "treeitem.h"
 #include "composite.h"
 
-TreeItem::TreeItem(Node *parent)
+TreeItem::TreeItem(Node *parent) : parent(parent)
 {
-	this->parent = parent;
-	data.insert(QString("Name"), QVariant("[No Data]"));
-    data.insert(QString("Type"), QVariant("[No Data]"));
+	data["Name"] = "none";
+    data["ID"] = "none";
+    data["parentID"] = "";
 }
 
 TreeItem::TreeItem(const QMap<QString, QVariant> &data, Node *parent)
-{
-	this->parent = parent;
-	this->data = data;
-}
+    : data(data), parent(parent) {}
 
 TreeItem::~TreeItem()
 {

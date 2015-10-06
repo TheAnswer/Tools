@@ -56,7 +56,7 @@ public:
         return true;
     }
 
-    size_t getIndex(TreeItem *child)
+    size_t getIndex(TreeItem *child) const
     {
         return (size_t)children.indexOf(child);
     }
