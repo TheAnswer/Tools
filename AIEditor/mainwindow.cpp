@@ -42,9 +42,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // Actions Menu
     connect(menuActions, SIGNAL(aboutToShow()), this, SLOT(updateBehaviors()));
     connect(actionSelector, SIGNAL(triggered()), this, SLOT(insertChild()));
-    connect(actionSequence, SIGNAL(triggered()), this, SLOT(insertChild()));
     compositeGroup.addAction(actionSelector);
+    connect(actionSequence, SIGNAL(triggered()), this, SLOT(insertChild()));
     compositeGroup.addAction(actionSequence);
+    
+    // Decisions Menu
+    connect(menuDecisions, SIGNAL(aboutToShow()), this, SLOT(updateDecisions()));
+    //connect(actionNode, SIGNAL(triggered()), this, SLOT(insertChild()));
+    //nodeGroup.addAction(actionNode);
 
     updateBehaviors();
 }
@@ -160,6 +165,36 @@ void MainWindow::updateBehaviors()
 
                 connect(newAction, SIGNAL(triggered()), this, SLOT(insertChild()));
             }
+        }
+    }
+}
+
+void MainWindow::updateDecisions()
+{
+    QList<QAction*> decisions = menuInsert_Leaf->actions();
+    for (QList<QAction*>::iterator it = decisions.begin(); it != decisions.end(); ++it)
+        menuInsert_Leaf->removeAction(*it);
+    
+    QFile decisionsFile(scriptsDir.absoluteFilePath("interrupts.lua"));
+    
+    if (!decisionsFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+    
+    QTextStream in(&decisionsFile);
+    QRegExp classDefs("(.*) = createClass.*");
+    while (!in.atEnd())
+    {
+        QString line = in.readLine();
+        
+        if (classDefs.exactMatch(line))
+        {
+            QString decisionText = classDefs.capturedTexts().at(1);
+            QAction *newDecision = new QAction(decisionText, this);
+            menuInsert_Leaf->addAction(newDecision);
+            
+            leafGroup.addAction(newDecision);
+            
+            connect(newDecision, SIGNAL(triggered()), this, SLOT(insertChild()));
         }
     }
 }

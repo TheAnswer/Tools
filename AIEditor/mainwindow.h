@@ -41,6 +41,7 @@ signals:
 
 public slots:
 	void updateBehaviors();
+	void updateDecisions();
 
 private slots:
     void btSelectionCallback(const QItemSelection& selected, const QItemSelection& deselected);
