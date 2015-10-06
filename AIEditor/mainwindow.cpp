@@ -309,6 +309,7 @@ void MainWindow::openSaveDialog()
     QString filter = "Lua (*.lua)";
     QString saveFile = QFileDialog::getSaveFileName(this, tr("Save File"), currentFileInfo.absolutePath(), filter, &filter);
     if (saveFile.isEmpty()) return;
+    if (!saveFile.endsWith(".lua")) saveFile += ".lua";
 
     // first write to templates.lua
     QStringList templateList;
