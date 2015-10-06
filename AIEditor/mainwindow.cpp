@@ -34,6 +34,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             this,
             SLOT(dtSelectionCallback(const QItemSelection&, const QItemSelection&)));
 
+    connect(btModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
+            this, SLOT(btIDChangedCallback(const QModelIndex&, const QModelIndex&)));
+    connect(dtModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
+            this, SLOT(dtIDChangedCallback(const QModelIndex&, const QModelIndex&)));
+
     // File Menu
     connect(actionOpen, SIGNAL(triggered()), this, SLOT(openFileDialog()));
     connect(actionSelect_Scripts, SIGNAL(triggered()), this, SLOT(openDirDialog()));
@@ -60,30 +65,8 @@ MainWindow::~MainWindow()
     saveSettings();
 }
 
-void MainWindow::btSelectionCallback(const QItemSelection& selected, const QItemSelection& deselected)
+void MainWindow::btSelectionCallback(const QItemSelection& selected, const QItemSelection& /*deselected*/)
 {
-    if (!selected.indexes().isEmpty())
-    {
-        QModelIndex selIdx = selected.indexes().at(0);
-        if (selIdx.isValid())
-        {
-            QString name = static_cast<TreeItem*>(selIdx.internalPointer())->name().toString();
-            QString dtName = dynamic_cast<TreeModel*>(btTreeView->model())->getDT(name);
-            std::cout << "BT Selected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
-        }
-    }
-
-    if (!deselected.indexes().isEmpty())
-    {
-        QModelIndex desIdx = deselected.indexes().at(0);
-        if (desIdx.isValid())
-        {
-            QString name = static_cast<TreeItem*>(desIdx.internalPointer())->name().toString();
-            QString dtName = dynamic_cast<TreeModel*>(btTreeView->model())->getDT(name);
-            std::cout << "BT Deselected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
-        }
-    }
-    
     TreeModel *btModel = dynamic_cast<TreeModel*>(btTreeView->model());
     if (!btModel) return;
     
@@ -108,21 +91,23 @@ void MainWindow::btSelectionCallback(const QItemSelection& selected, const QItem
     dtModel->addItem(dtModel->createItem(data));
 }
 
-void MainWindow::dtSelectionCallback(const QItemSelection& selected, const QItemSelection& deselected)
+void MainWindow::dtSelectionCallback(const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/)
 {
-    QModelIndex selIdx = selected.indexes().at(0);
-    if (selIdx.isValid())
-    {
-        QString name = static_cast<TreeItem*>(selIdx.internalPointer())->name().toString();
-        std::cout << "DT Selected: " << name.toStdString() << std::endl;
-    }
-    
-    QModelIndex desIdx = deselected.indexes().at(0);
-    if (desIdx.isValid())
-    {
-        QString name = static_cast<TreeItem*>(desIdx.internalPointer())->name().toString();
-        std::cout << "DT Deselected: " << name.toStdString()  << std::endl;
-    }
+}
+
+void MainWindow::btIDChangedCallback(const QModelIndex& topLeft, const QModelIndex& /*botRght*/)
+{
+    // we only care about ID's (for now), and assume we only have one object selected
+    if (!topLeft.isValid() || topLeft.column() != 1)
+        return;
+
+    TreeItem *item = static_cast<TreeItem*>(topLeft.internalPointer());
+    if (item)
+        item->id(topLeft.data().toString());
+}
+
+void MainWindow::dtIDChangedCallback(const QModelIndex& /*topLeft*/, const QModelIndex& /*botRght*/)
+{
 }
 
 void MainWindow::updateBehaviors()

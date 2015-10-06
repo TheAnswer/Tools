@@ -46,6 +46,8 @@ public slots:
 private slots:
     void btSelectionCallback(const QItemSelection& selected, const QItemSelection& deselected);
     void dtSelectionCallback(const QItemSelection& selected, const QItemSelection& deselected);
+    void btIDChangedCallback(const QModelIndex& topLeft, const QModelIndex& botRght);
+    void dtIDChangedCallback(const QModelIndex& topLeft, const QModelIndex& botRght);
 	void insertChild();
 	void openFileDialog();
     void openDirDialog();
