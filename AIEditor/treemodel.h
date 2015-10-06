@@ -4,6 +4,7 @@
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
+#include <QMap>
 
 #include "treetype.h"
 #include "node.h"
@@ -50,6 +51,9 @@ public:
 	bool addItem(TreeItem *item, Node *parentItem, const QModelIndex& pIdx);
     void clear() { delete root; }
     TreeItem* createItem(const QMap<QString, QVariant>& data, Node* parent = 0);
+    
+    void mapDTtoBT(const QString& dt, const QString& bt) { btdtMap[bt] = dt; }
+    const QString& getDT(const QString& bt) { return btdtMap[bt]; }
 
     bool isDecisionTree() const { return treeType.isDecision(); }
     bool isBehaviorTree() const { return treeType.isBehavior(); }
@@ -76,6 +80,7 @@ private:
 
 	Node* root;
     TreeType treeType;
+    QMap<QString, QString> btdtMap;
 };
 
 #endif // TREEMODEL_H

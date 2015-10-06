@@ -22,6 +22,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     TreeModel *dtModel = new TreeModel();
     btTreeView->setModel(btModel);
     dtTreeView->setModel(dtModel);
+    btTreeView->setSelectionMode(QAbstractItemView::SingleSelection);
+    dtTreeView->setSelectionMode(QAbstractItemView::SingleSelection);
+    
+    connect(btTreeView->selectionModel(),
+            SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+            this,
+            SLOT(btSelectionCallback(const QItemSelection&, const QItemSelection&)));
+    connect(dtTreeView->selectionModel(),
+            SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+            this,
+            SLOT(dtSelectionCallback(const QItemSelection&, const QItemSelection&)));
 
     // File Menu
     connect(actionOpen, SIGNAL(triggered()), this, SLOT(openFileDialog()));
@@ -41,6 +52,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 MainWindow::~MainWindow()
 {
     saveSettings();
+}
+
+void MainWindow::btSelectionCallback(const QItemSelection& selected, const QItemSelection& deselected)
+{
+    QModelIndex selIdx = selected.indexes().at(0);
+    if (selIdx.isValid())
+    {
+        QString name = static_cast<TreeItem*>(selIdx.internalPointer())->name().toString();
+        QString dtName = dynamic_cast<TreeModel*>(btTreeView->model())->getDT(name);
+        std::cout << "Selected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
+    }
+    
+    QModelIndex desIdx = deselected.indexes().at(0);
+    if (desIdx.isValid())
+    {
+        QString name = static_cast<TreeItem*>(desIdx.internalPointer())->name().toString();
+        QString dtName = dynamic_cast<TreeModel*>(btTreeView->model())->getDT(name);
+        std::cout << "Deselected: " << name.toStdString() << ":" << dtName.toStdString() << std::endl;
+    }
+}
+
+void MainWindow::dtSelectionCallback(const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/)
+{
+    
 }
 
 void MainWindow::updateBehaviors()
@@ -67,7 +102,7 @@ void MainWindow::updateBehaviors()
             continue;
 
         QFile actionFile(scriptsDir.absoluteFilePath(line.at(1)));
-        QRegExp classDefs("(.*) = createClass.*");
+        QRegExp classDefs("(.*) = createClass\\((.*),\\s*(.*)\\)");
 
         if (!actionFile.open(QIODevice::ReadOnly | QIODevice::Text))
             return;
@@ -86,6 +121,10 @@ void MainWindow::updateBehaviors()
                     checkGroup.addAction(newAction);
                 else //if (QStringRef(&actionText, 0, 2) == "anything else")
                     actionGroup.addAction(newAction);
+                
+                TreeModel *model = dynamic_cast<TreeModel*>(btTreeView->model());
+                if (model) model->mapDTtoBT(classDefs.capturedTexts().at(3),
+                                            classDefs.capturedTexts().at(2));
 
                 connect(newAction, SIGNAL(triggered()), this, SLOT(insertChild()));
             }
@@ -128,7 +167,7 @@ void MainWindow::openFileDialog()
     TreeModel *btModel = dynamic_cast<TreeModel*>(btTreeView->model());
     //TreeModel *dtModel = dynamic_cast<TreeModel*>(dtTreeView->model());
     
-    // for now assume we opened a template a parse it
+    // for now assume we opened a template and parse it
     // each action has 4 entries (after trimming). The first is the id, and
     // is what the map is keyed to. The second is the name of the action lua
     // class. The third is the parent id. The fourth is the type of action

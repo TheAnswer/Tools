@@ -43,6 +43,8 @@ public slots:
 	void updateBehaviors();
 
 private slots:
+    void btSelectionCallback(const QItemSelection& selected, const QItemSelection& deselected);
+    void dtSelectionCallback(const QItemSelection& selected, const QItemSelection& deselected);
 	void insertChild();
 	void openFileDialog();
     void openDirDialog();
