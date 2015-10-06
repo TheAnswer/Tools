@@ -35,13 +35,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             SLOT(dtSelectionCallback(const QItemSelection&, const QItemSelection&)));
 
     connect(btModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
-            this, SLOT(btIDChangedCallback(const QModelIndex&, const QModelIndex&)));
+            this, SLOT(idChangedCallback(const QModelIndex&, const QModelIndex&)));
     connect(dtModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
-            this, SLOT(dtIDChangedCallback(const QModelIndex&, const QModelIndex&)));
+            this, SLOT(idChangedCallback(const QModelIndex&, const QModelIndex&)));
 
     // File Menu
     connect(actionOpen, SIGNAL(triggered()), this, SLOT(openFileDialog()));
     connect(actionSelect_Scripts, SIGNAL(triggered()), this, SLOT(openDirDialog()));
+    connect(actionSave_As, SIGNAL(triggered()), this, SLOT(openSaveDialog()));
     connect(actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
 
     // Actions Menu
@@ -95,7 +96,7 @@ void MainWindow::dtSelectionCallback(const QItemSelection& /*selected*/, const Q
 {
 }
 
-void MainWindow::btIDChangedCallback(const QModelIndex& topLeft, const QModelIndex& /*botRght*/)
+void MainWindow::idChangedCallback(const QModelIndex& topLeft, const QModelIndex& /*botRght*/)
 {
     // we only care about ID's (for now), and assume we only have one object selected
     if (!topLeft.isValid() || topLeft.column() != 1)
@@ -104,10 +105,6 @@ void MainWindow::btIDChangedCallback(const QModelIndex& topLeft, const QModelInd
     TreeItem *item = static_cast<TreeItem*>(topLeft.internalPointer());
     if (item)
         item->id(topLeft.data().toString());
-}
-
-void MainWindow::dtIDChangedCallback(const QModelIndex& /*topLeft*/, const QModelIndex& /*botRght*/)
-{
 }
 
 void MainWindow::updateBehaviors()
@@ -305,6 +302,56 @@ void MainWindow::openDirDialog()
     //  possibly a popout tool selector like dia
     //  or a scrollbox in the first column (is that even doable?)
     //  or a menu subitem to insert action and insert composite
+}
+
+void MainWindow::openSaveDialog()
+{
+    QString filter = "Lua (*.lua)";
+    QString saveFile = QFileDialog::getSaveFileName(this, tr("Save File"), currentFileInfo.absolutePath(), filter, &filter);
+    if (saveFile.isEmpty()) return;
+
+    // first write to templates.lua
+    QStringList templateList;
+    {
+        QFile file(scriptsDir.absoluteFilePath("templates/templates.lua"));
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return;
+
+        QTextStream stream(&file);
+
+        while (!stream.atEnd())
+            templateList << stream.readLine();
+
+        file.close();
+    }
+
+    // find out if we need to change a line and if we do, write the list back out
+    QString base = QFileInfo(saveFile).baseName();
+    qDebug() << base;
+    {
+        QFile file(scriptsDir.absoluteFilePath("templates/templates.lua"));
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) return;
+
+        QTextStream stream(&file);
+
+        for (QStringList::const_iterator it = templateList.begin(); it != templateList.end(); ++it)
+            stream << *it << "\n";
+    }
+
+    // now write out the actual template. Don't worry about checking if it already exists,
+    // we can assume that since we are saving that it should be written.
+    {
+        QFile file(saveFile);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) return;
+
+        QTextStream stream(&file);
+
+        TreeModel* btModel = dynamic_cast<TreeModel*>(btTreeView->model());
+        if (!btModel) return;
+
+        stream << base << " = {\n";
+        btModel->write(stream);
+        stream << "}\n\naddAiTemplate(\"" << base << "\", " << base << ")";
+    }
 }
 
 void MainWindow::clear()

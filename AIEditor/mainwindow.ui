@@ -46,7 +46,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>19</height>
+     <height>15</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -55,6 +55,7 @@
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionSelect_Scripts"/>
+    <addaction name="actionSave_As"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -82,23 +83,20 @@
     <addaction name="menuInsert_Action"/>
     <addaction name="menuInsert_Check"/>
     <addaction name="menuInsert_Composite"/>
+    <addaction name="actionRemove_Behavior"/>
    </widget>
    <widget class="QMenu" name="menuDecisions">
     <property name="title">
      <string>Decisions</string>
     </property>
-    <widget class="QMenu" name="menuInsert_Node">
-     <property name="title">
-      <string>Insert Node</string>
-     </property>
-    </widget>
     <widget class="QMenu" name="menuInsert_Leaf">
      <property name="title">
       <string>Insert Leaf</string>
      </property>
     </widget>
-    <addaction name="menuInsert_Node"/>
+    <addaction name="actionInsert_Node"/>
     <addaction name="menuInsert_Leaf"/>
+    <addaction name="actionRemove_Decision"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuActions"/>
@@ -130,24 +128,24 @@
     <string>Selector</string>
    </property>
   </action>
-  <action name="actionH">
+  <action name="actionInsert_Node">
    <property name="text">
-    <string>h</string>
+    <string>Insert Node</string>
    </property>
   </action>
-  <action name="action2">
+  <action name="actionSave_As">
    <property name="text">
-    <string>2</string>
+    <string>Save As...</string>
    </property>
   </action>
-  <action name="action1">
+  <action name="actionRemove_Behavior">
    <property name="text">
-    <string>1</string>
+    <string>Remove Behavior</string>
    </property>
   </action>
-  <action name="action1_2">
+  <action name="actionRemove_Decision">
    <property name="text">
-    <string>1</string>
+    <string>Remove Decision</string>
    </property>
   </action>
  </widget>

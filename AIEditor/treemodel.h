@@ -55,6 +55,8 @@ public:
     void mapDTtoBT(const QString& dt, const QString& bt) { btdtMap[bt] = dt; }
     const QString& getDT(const QString& bt) { return btdtMap[bt]; }
 
+    QTextStream& write(QTextStream& stream) const { return root->write(stream); }
+
     bool isDecisionTree() const { return treeType.isDecision(); }
     bool isBehaviorTree() const { return treeType.isBehavior(); }
 

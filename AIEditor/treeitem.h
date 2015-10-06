@@ -5,6 +5,7 @@
 #include <QMap>
 #include <QString>
 #include <QVariant>
+#include <QTextStream>
 
 class Node;
 
@@ -54,6 +55,16 @@ public:
     virtual bool remove(const size_t, const size_t) {
         return false;
 	}
+
+    virtual QTextStream& write(QTextStream& stream) const
+    {
+        stream << "\t{\"" << id().toString()
+               << "\", \"" << name().toString()
+               << "\", \"" << parentID().toString()
+               << "\", BEHAVIOR},\n";
+
+        return stream;
+    }
 
     int childNumber();
     

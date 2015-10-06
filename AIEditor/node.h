@@ -56,6 +56,14 @@ public:
         return true;
     }
 
+    QTextStream& write(QTextStream& stream) const
+    {
+        for (QList<TreeItem*>::const_iterator it = children.begin(); it != children.end(); ++it)
+            (*it)->write(stream);
+
+        return stream;
+    }
+
     size_t getIndex(TreeItem *child) const
     {
         return (size_t)children.indexOf(child);
