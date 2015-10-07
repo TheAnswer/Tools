@@ -279,4 +279,14 @@ TreeItem* TreeModel::createItem(const QMap<QString, QVariant>& data, Node* paren
 	return new Action(data, parent);
 }
 
+void TreeModel::removeItem(const QModelIndex& idx)
+{
+	TreeItem *child = get(idx);
+	if (!child) return;
+	
+	QModelIndex pIdx = indexOf(child->getParent());
+	
+	removeRows(child->childNumber(), 1, pIdx);
+}
+
 /***************************************************************************************************/

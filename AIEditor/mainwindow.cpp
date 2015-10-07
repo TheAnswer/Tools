@@ -51,9 +51,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     compositeGroup.addAction(actionSelector);
     connect(actionSequence, SIGNAL(triggered()), this, SLOT(insertChild()));
     compositeGroup.addAction(actionSequence);
+    connect(actionRemove_Behavior, SIGNAL(triggered()), this, SLOT(removeBehavior()));
     
     // Decisions Menu
     connect(menuDecisions, SIGNAL(aboutToShow()), this, SLOT(updateDecisions()));
+    connect(actionRemove_Decision, SIGNAL(triggered()), this, SLOT(removeDecision()));
     //connect(actionNode, SIGNAL(triggered()), this, SLOT(insertChild()));
     //nodeGroup.addAction(actionNode);
 
@@ -436,4 +438,24 @@ void MainWindow::insertChildDecision(TreeItem* decision)
     
     dtTreeView->resizeColumnToContents(0);
     dtTreeView->resizeColumnToContents(1);
+}
+
+void MainWindow::removeBehavior()
+{
+    TreeModel *btModel = dynamic_cast<TreeModel*>(btTreeView->model());
+    if (!btModel) return;
+    
+    QModelIndex idx = btTreeView->selectionModel()->currentIndex();
+    
+    btModel->removeItem(idx);
+}
+
+void MainWindow::removeDecision()
+{
+    TreeModel *dtModel = dynamic_cast<TreeModel*>(dtTreeView->model());
+    if (!dtModel) return;
+    
+    QModelIndex idx = dtTreeView->selectionModel()->currentIndex();
+    
+    dtModel->removeItem(idx);
 }

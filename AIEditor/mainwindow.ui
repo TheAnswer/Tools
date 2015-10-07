@@ -74,6 +74,10 @@
      </property>
      <addaction name="actionSequence"/>
      <addaction name="actionSelector"/>
+     <addaction name="actionSequenceParallel"/>
+     <addaction name="actionSelectorParallel"/>
+     <addaction name="actionSequenceND"/>
+     <addaction name="actionSelectorND"/>
     </widget>
     <widget class="QMenu" name="menuInsert_Check">
      <property name="title">
@@ -126,6 +130,26 @@
   <action name="actionSelector">
    <property name="text">
     <string>Selector</string>
+   </property>
+  </action>
+  <action name="actionSequenceParallel">
+   <property name="text">
+    <string>Parallel Sequence</string>
+   </property>
+  </action>
+  <action name="actionSelectorParallel">
+   <property name="text">
+    <string>Parallel Selector</string>
+   </property>
+  </action>
+  <action name="actionSequenceND">
+   <property name="text">
+    <string>Non-Deterministic Sequence</string>
+   </property>
+  </action>
+  <action name="actionSelectorND">
+   <property name="text">
+    <string>Non-Deterministic Selector</string>
    </property>
   </action>
   <action name="actionInsert_Node">

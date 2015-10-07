@@ -49,6 +49,7 @@ public:
     bool addItem(const QAction *action, const QModelIndex &index);
 	bool addItem(TreeItem *item);
 	bool addItem(TreeItem *item, Node *parentItem, const QModelIndex& pIdx);
+	void removeItem(const QModelIndex& idx);
     void clear() { delete root; root = NULL; }
     TreeItem* createItem(const QMap<QString, QVariant>& data, Node* parent = 0);
     
