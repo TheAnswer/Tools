@@ -70,7 +70,7 @@ QModelIndex TreeModel::parent(const QModelIndex &index) const
 	TreeItem *childItem = get(index);
     Node *parentItem = childItem->getParent();
 
-	if (parentItem == root) return QModelIndex();
+    if (parentItem == root || parentItem == NULL) return QModelIndex();
 
 	return createIndex(parentItem->childNumber(), 0, parentItem);
 }
@@ -208,7 +208,7 @@ TreeItem* TreeModel::addItem(const TypeGroup *senderGroup, const QModelIndex &in
     if (!index.isValid())
     	data["ID"] = "root";
     else
-    	data["ID"] = data["parentID"].toString() + QString((unsigned int)parentItem->count() + 1);
+        data["ID"] = data["parentID"].toString() + QString::number((unsigned int)parentItem->count() + 1);
 
     TreeItem *newItem = NULL;
     if (senderGroup->isAction())

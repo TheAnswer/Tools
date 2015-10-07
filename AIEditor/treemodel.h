@@ -51,7 +51,7 @@ public:
 	bool addItem(TreeItem *item);
 	bool addItem(TreeItem *item, Node *parentItem, const QModelIndex& pIdx);
 	void removeItem(const QModelIndex& idx);
-    void clear() { delete root; root = NULL; }
+    void clear() { removeItem(QModelIndex()); }
     TreeItem* createItem(const QMap<QString, QVariant>& data, Node* parent = 0);
 
     QTextStream& write(QTextStream& stream) const { return root->write(stream); }

@@ -52,13 +52,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(actionSequence, SIGNAL(triggered()), this, SLOT(insertChild()));
     compositeGroup.addAction(actionSequence);
     connect(actionSelectorParallel, SIGNAL(triggered()), this, SLOT(insertChild()));
-    compositeGroup.addAction(actionSelector);
+    compositeGroup.addAction(actionSelectorParallel);
     connect(actionSequenceParallel, SIGNAL(triggered()), this, SLOT(insertChild()));
-    compositeGroup.addAction(actionSequence);
+    compositeGroup.addAction(actionSequenceParallel);
     connect(actionSelectorND, SIGNAL(triggered()), this, SLOT(insertChild()));
-    compositeGroup.addAction(actionSelector);
+    compositeGroup.addAction(actionSelectorND);
     connect(actionSequenceND, SIGNAL(triggered()), this, SLOT(insertChild()));
-    compositeGroup.addAction(actionSequence);
+    compositeGroup.addAction(actionSequenceND);
     connect(actionRemove_Behavior, SIGNAL(triggered()), this, SLOT(removeBehavior()));
     
     // Decisions Menu
