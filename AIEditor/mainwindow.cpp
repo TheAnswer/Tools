@@ -327,8 +327,10 @@ void MainWindow::openSaveDialog()
 
     // find out if we need to change a line and if we do, write the list back out
     QString base = QFileInfo(saveFile).baseName();
-    qDebug() << base;
+    if (!templateList.contains("includeAiFile(\"templates/" + base + ".lua\""))
     {
+        templateList.prepend("includeAiFile(\"templates/" + base + ".lua\"");
+        
         QFile file(scriptsDir.absoluteFilePath("templates/templates.lua"));
         if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) return;
 
