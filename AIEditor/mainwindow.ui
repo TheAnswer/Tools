@@ -134,22 +134,22 @@
   </action>
   <action name="actionSequenceParallel">
    <property name="text">
-    <string>Parallel Sequence</string>
+    <string>SequenceParallel</string>
    </property>
   </action>
   <action name="actionSelectorParallel">
    <property name="text">
-    <string>Parallel Selector</string>
+    <string>SelectorParallel</string>
    </property>
   </action>
   <action name="actionSequenceND">
    <property name="text">
-    <string>Non-Deterministic Sequence</string>
+    <string>SequenceNonDeterministic</string>
    </property>
   </action>
   <action name="actionSelectorND">
    <property name="text">
-    <string>Non-Deterministic Selector</string>
+    <string>SelectorNonDeterministic</string>
    </property>
   </action>
   <action name="actionInsert_Node">

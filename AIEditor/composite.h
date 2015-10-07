@@ -22,6 +22,14 @@ public:
             stream << "\", SEQUENCEBEHAVIOR},\n";
         else if (name().toString() == "Selector")
             stream << "\", SELECTORBEHAVIOR},\n";
+        else if (name().toString() == "SequenceParallel")
+            stream << "\", PARALLELSEQUENCEBEHAVIOR},\n";
+        else if (name().toString() == "SelectorParallel")
+            stream << "\", PARALLELSELECTORBEHAVIOR},\n";
+        else if (name().toString() == "SequenceNonDeterministic")
+            stream << "\", NONDETERMINISTICSEQUENCEBEHAVIOR},\n";
+        else if (name().toString() == "SelectorNonDeterministic")
+            stream << "\", NONDETERMINISTICSELECTORBEHAVIOR},\n";
 
         return Node::write(stream);
     }
