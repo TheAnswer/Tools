@@ -4,6 +4,8 @@
 TreeItem::TreeItem(Node *parent) : parent(parent)
 {
 	data["Name"] = "none";
+	data["iName"] = "";
+	data["fName"] = "";
     data["ID"] = "none";
     data["parentID"] = "";
 }

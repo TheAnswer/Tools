@@ -13,11 +13,7 @@
 TreeModel::TreeModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
-	QMap<QString, QVariant> data;
-	data.insert(QString("Name"), QVariant("Name"));
-    data.insert(QString("ID"), QVariant("ID"));
-
-    root = new Node(data);
+    root = new Node();
 }
 
 TreeModel::~TreeModel()
@@ -202,25 +198,19 @@ QModelIndex TreeModel::indexOf(TreeItem *item) const
 	return currIdx;
 }
 
-bool TreeModel::addItem(const QAction *action, const QModelIndex &index)
+TreeItem* TreeModel::addItem(const TypeGroup *senderGroup, const QModelIndex &index)
 {
-	if (!action) return false;
-	
-    TypeGroup *senderGroup = dynamic_cast<TypeGroup *>(action->actionGroup());
-    if (!senderGroup) return false;
-
     Node *parentItem = dynamic_cast<Node *>(get(index));
-    if (!parentItem) return false;
+    if (!parentItem) return NULL;
     
     QMap<QString, QVariant> data;
-    data["Name"] = action->text();
     data["parentID"] = parentItem->id();
     if (!index.isValid())
     	data["ID"] = "root";
     else
     	data["ID"] = data["parentID"].toString() + QString((unsigned int)parentItem->count() + 1);
 
-    TreeItem *newItem;
+    TreeItem *newItem = NULL;
     if (senderGroup->isAction())
         newItem = new Action(data, parentItem);
     else if (senderGroup->isCheck())
@@ -232,9 +222,12 @@ bool TreeModel::addItem(const QAction *action, const QModelIndex &index)
     else if (senderGroup->isLeaf())
         newItem = new Leaf(data, parentItem);
     else
-        return false;
+        return NULL;
 
-	return addItem(newItem, parentItem, index);
+	if (addItem(newItem, parentItem, index)) return newItem;
+	
+	delete newItem;
+	return NULL;
 }
 
 bool TreeModel::addItem(TreeItem *item)
@@ -267,10 +260,10 @@ TreeItem* TreeModel::createItem(const QMap<QString, QVariant>& data, Node* paren
 	
 	QString itemName = data["Name"].toString();
 	
-	if (itemName == "Selector" || itemName == "Sequence")
+	if (itemName.startsWith("Selector") || itemName.startsWith("Sequence"))
 		return new Composite(data, parent);
 	
-	if (itemName == "Node")
+	if (itemName.startsWith("Node"))
 		return new Node(data, parent);
 
 	if (isDecisionTree())

@@ -78,24 +78,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::btSelectionCallback(const QItemSelection& selected, const QItemSelection& /*deselected*/)
 {
-    TreeModel *btModel = dynamic_cast<TreeModel*>(btTreeView->model());
-    if (!btModel) return;
-    
+    if (selected.indexes().isEmpty()) return;
+
     TreeModel *dtModel = dynamic_cast<TreeModel*>(dtTreeView->model());
     if (!dtModel) return;
-
-    if (selected.indexes().isEmpty()) return;
 
     QModelIndex selIdx = selected.indexes().at(0);
     TreeItem* selItem = static_cast<TreeItem*>(selIdx.internalPointer());
     if (!selItem) return;
     
-    QString btName = selItem->name().toString();
-    QString dtName = btModel->getDT(btName);
-    
     dtModel->clear();
+    
     QMap<QString, QVariant> data;
-    data["Name"] = dtName;
+    data["Name"] = selItem->iName().toString();
+    data["iName"] = selItem->name().toString();
+    data["fName"] = compositeClasses.key(qMakePair(data["iName"].toString(), data["Name"].toString()));
+    // TODO: these values will change when we implement a DT
     data["ID"] = "interrupt";
     data["parentID"] = "none";
     
@@ -129,7 +127,14 @@ void MainWindow::updateBehaviors()
     }
 
     QFile actionsFile(scriptsDir.absoluteFilePath("actions/actions.lua"));
+    readDefs(actionsFile);
+    
+    QFile compositeFile(scriptsDir.absoluteFilePath("tasks/tasks.lua"));
+    readDefs(compositeFile);
+}
 
+void MainWindow::readDefs(QFile& actionsFile)
+{
     if (!actionsFile.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
@@ -151,22 +156,23 @@ void MainWindow::updateBehaviors()
         {
             QString contents = fullIn.readLine();
 
-            if (classDefs.exactMatch(contents)) {
-                QString actionText = classDefs.capturedTexts().at(1);
-                QAction *newAction = new QAction(actionText, this);
-                menuInsert_Action->addAction(newAction);
+            if (!classDefs.exactMatch(contents)) continue;
+            
+            QString actionText = classDefs.capturedTexts().at(1);
+            compositeClasses[actionText] = qMakePair(classDefs.capturedTexts().at(2),
+                                                     classDefs.capturedTexts().at(3));
+           
+            if (actionText.startsWith("Composite")) continue;
+            
+            QAction *newAction = new QAction(actionText, this);
+            menuInsert_Action->addAction(newAction);
 
-                if (QStringRef(&actionText, 0, 2) == "is")
-                    checkGroup.addAction(newAction);
-                else //if (QStringRef(&actionText, 0, 2) == "anything else")
-                    actionGroup.addAction(newAction);
-                
-                TreeModel *model = dynamic_cast<TreeModel*>(btTreeView->model());
-                if (model) model->mapDTtoBT(classDefs.capturedTexts().at(3),
-                                            classDefs.capturedTexts().at(1));
-
-                connect(newAction, SIGNAL(triggered()), this, SLOT(insertChild()));
-            }
+            if (QStringRef(&actionText, 0, 2) == "is")
+                checkGroup.addAction(newAction);
+            else //if (QStringRef(&actionText, 0, 2) == "anything else")
+                actionGroup.addAction(newAction);
+            
+            connect(newAction, SIGNAL(triggered()), this, SLOT(insertChild()));
         }
     }
 }
@@ -250,12 +256,25 @@ void MainWindow::openFileDialog()
     {
         QMap<QString, QVariant> data;
         
+        QString refName = it->at(1);
+        
         if (it->at(3) == "SELECTORBEHAVIOR")
             data["Name"] = "Selector";
         else if (it->at(3) == "SEQUENCEBEHAVIOR")
             data["Name"] = "Sequence";
+        else if (it->at(3) == "PARALLELSELECTORBEHAVIOR")
+            data["Name"] = "SelectorParallel";
+        else if (it->at(3) == "PARALLELSEQUENCEBEHAVIOR")
+            data["Name"] = "SequenceParallel";
+        else if (it->at(3) == "NONDETERMINISTICSELECTORBEHAVIOR")
+            data["Name"] = "SelectorNonDeterministic";
+        else if (it->at(3) == "NONDETERMINISTICSEQUENCEBEHAVIOR")
+            data["Name"] = "SequenceNonDeterministic";
         else
-            data["Name"] = it->at(1);
+            data["Name"] = compositeClasses[refName].first;
+        
+        data["iName"] = compositeClasses[refName].second;
+        data["fName"] = refName;
         
         data["ID"] = it->at(0);
         data["parentID"] = it->at(2);
@@ -418,8 +437,23 @@ void MainWindow::insertChild()
     if (model == NULL) return;
 
     QModelIndex index = btTreeView->selectionModel()->currentIndex();
-
-    if (!model->addItem(senderAction, index)) return;
+    
+    TreeItem* newItem = model->addItem(senderGroup, index);
+    if (!newItem) return;
+    
+    if (senderAction->text().startsWith("Sequence") || senderAction->text().startsWith("Selector"))
+    {
+        newItem->name(senderAction->text());
+        newItem->iName(QString("Interrupt"));
+        newItem->fName(QString("Composite"));
+    }
+    else
+    {
+        QPair<QString, QString> names = compositeClasses[senderAction->text()];
+        newItem->name(names.first);
+        newItem->iName(names.second);
+        newItem->fName(senderAction->text());
+    }
 
     btTreeView->selectionModel()->setCurrentIndex(model->index(0, 0, index), QItemSelectionModel::ClearAndSelect);
     btTreeView->resizeColumnToContents(0);

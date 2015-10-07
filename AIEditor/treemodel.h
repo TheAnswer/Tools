@@ -5,11 +5,12 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <QMap>
+#include <QPair>
 
 #include "treetype.h"
 #include "node.h"
 
-class QAction;
+class TypeGroup;
 
 class TreeModel : public QAbstractItemModel
 {
@@ -46,15 +47,12 @@ public:
 	bool removeRows(int position, int rows, const QModelIndex &parent = QModelIndex());
 	/***************************************************************************************************/
 
-    bool addItem(const QAction *action, const QModelIndex &index);
+    TreeItem* addItem(const TypeGroup *senderGroup, const QModelIndex &index);
 	bool addItem(TreeItem *item);
 	bool addItem(TreeItem *item, Node *parentItem, const QModelIndex& pIdx);
 	void removeItem(const QModelIndex& idx);
     void clear() { delete root; root = NULL; }
     TreeItem* createItem(const QMap<QString, QVariant>& data, Node* parent = 0);
-    
-    void mapDTtoBT(const QString& dt, const QString& bt) { btdtMap[bt] = dt; }
-    const QString& getDT(const QString& bt) { return btdtMap[bt]; }
 
     QTextStream& write(QTextStream& stream) const { return root->write(stream); }
 
@@ -83,7 +81,6 @@ private:
 
 	Node* root;
     TreeType treeType;
-    QMap<QString, QString> btdtMap;
 };
 
 #endif // TREEMODEL_H

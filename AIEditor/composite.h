@@ -16,7 +16,7 @@ public:
     QTextStream& write(QTextStream& stream) const
     {
         stream << "\t{\"" << id().toString()
-               << "\", \"" << "Composite"
+               << "\", \"" << fName().toString()
                << "\", \"" << parentID().toString();
         if (name().toString() == "Sequence")
             stream << "\", SEQUENCEBEHAVIOR},\n";

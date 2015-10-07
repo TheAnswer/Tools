@@ -59,7 +59,7 @@ public:
     virtual QTextStream& write(QTextStream& stream) const
     {
         stream << "\t{\"" << id().toString()
-               << "\", \"" << name().toString()
+               << "\", \"" << fName().toString()
                << "\", \"" << parentID().toString()
                << "\", BEHAVIOR},\n";
 
@@ -70,6 +70,12 @@ public:
     
     QVariant name() const { return data["Name"]; }
     QVariant name(const QString &i) { return data["Name"] = i; }
+    
+    QVariant iName() const { return data["iName"]; }
+    QVariant iName(const QString &i) { return data["iName"] = i; }
+    
+    QVariant fName() const { return data["fName"]; }
+    QVariant fName(const QString &i) { return data["fName"] = i; }
 
     QVariant id() const { return data["ID"]; }
     QVariant id(const QString& i) { return data["ID"] = i; }

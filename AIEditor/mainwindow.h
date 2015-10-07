@@ -12,6 +12,7 @@
 #include "actiongroups.h"
 
 class TreeItem;
+class QFile;
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -36,6 +37,11 @@ private:
     CompositeGroup compositeGroup;
     NodeGroup nodeGroup;
     LeafGroup leafGroup;
+    
+    // <finalName, <BTname, DTname> >
+    QMap<QString, QPair<QString, QString> > compositeClasses;
+    
+    void readDefs(QFile& actionsFile);
 
 signals:
 
