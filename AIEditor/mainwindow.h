@@ -42,6 +42,8 @@ private:
     QMap<QString, QPair<QString, QString> > compositeClasses;
     
     void readDefs(QFile& actionsFile);
+    QStringList readFileIntoList(const QString& fileName);
+    void writeListIntoFile(const QStringList& list, const QString& fileName);
 
 signals:
 

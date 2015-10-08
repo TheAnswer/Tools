@@ -245,7 +245,7 @@ bool TreeModel::addItem(TreeItem *item)
 bool TreeModel::addItem(TreeItem *item, Node *parentItem, const QModelIndex& pIdx)
 {
 	beginInsertRows(pIdx, 0, 0);
-	bool result = parentItem->insert(item, parentItem->size());
+	bool result = parentItem->insert(item, parentItem->count());
 	endInsertRows();
 	
 	setData(index(item->childNumber(), 0, pIdx), item->name(), Qt::DisplayRole);

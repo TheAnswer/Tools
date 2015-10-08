@@ -352,19 +352,8 @@ void MainWindow::openSaveDialog()
     if (!saveFile.endsWith(".lua")) saveFile += ".lua";
 
     // first write to templates.lua
-    QStringList templateList;
-    {
-        QFile file(scriptsDir.absoluteFilePath("templates/templates.lua"));
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return;
-
-        QTextStream stream(&file);
-
-        while (!stream.atEnd())
-            templateList << stream.readLine();
-
-        file.close();
-    }
-
+    QStringList templateList = readFileIntoList(scriptsDir.absoluteFilePath("templates/templates.lua"));
+    
     // find out if we need to change a line and if we do, write the list back out
     QString base = QFileInfo(saveFile).baseName();
     QString templateEntry = "includeAiFile(\"templates/" + base + ".lua\"";
@@ -375,14 +364,34 @@ void MainWindow::openSaveDialog()
         if (idx > templateList.size()) idx = templateList.size();
         templateList.insert(idx, templateEntry);
         
-        QFile file(scriptsDir.absoluteFilePath("templates/templates.lua"));
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) return;
-
-        QTextStream stream(&file);
-
-        for (QStringList::const_iterator it = templateList.begin(); it != templateList.end(); ++it)
-            stream << *it << "\n";
+        writeListIntoFile(templateList, scriptsDir.absoluteFilePath("templates/templates.lua"));
     }
+    
+    QStringList actionList = readFileIntoList(scriptsDir.absoluteFilePath("actions/actions.lua"));
+    QStringList taskList = readFileIntoList(scriptsDir.absoluteFilePath("tasks/tasks.lua"));
+    for (QMap<QString, QPair<QString, QString> >::const_iterator it = compositeClasses.begin();
+         it != compositeClasses.end(); ++it)
+    {
+        QStringList *currentList = &actionList;
+        if (it->first.startsWith("Composite"))
+            currentList = &taskList;
+        
+        QString line = it.key() + " = createClass(" + it->first + ", " + it->second + ")";
+        if (!currentList->contains(line))
+        {
+            int idx = currentList->lastIndexOf(QRegExp(".*createClass.*,.*")) + 1;
+            if (idx == 0)
+            {
+                idx = currentList->lastIndexOf(QRegExp("includeAiFile.*")) + 1;
+                line.prepend("\n");
+            }
+            
+            if (idx > currentList->size()) idx = currentList->size();
+            currentList->insert(idx, line);
+        }
+    }
+    writeListIntoFile(actionList, scriptsDir.absoluteFilePath("actions/actions.lua"));
+    writeListIntoFile(taskList, scriptsDir.absoluteFilePath("tasks/tasks.lua"));
 
     // now write out the actual template. Don't worry about checking if it already exists,
     // we can assume that since we are saving that it should be written.
@@ -399,6 +408,32 @@ void MainWindow::openSaveDialog()
         btModel->write(stream);
         stream << "}\n\naddAiTemplate(\"" << base << "\", " << base << ")";
     }
+}
+
+QStringList MainWindow::readFileIntoList(const QString& fileName)
+{
+    QStringList returnList;
+    
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return returnList;
+    
+    QTextStream stream(&file);
+    
+    while (!stream.atEnd())
+        returnList << stream.readLine();
+    
+    return returnList;
+}
+
+void MainWindow::writeListIntoFile(const QStringList& list, const QString& fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) return;
+    
+    QTextStream stream(&file);
+    
+    for (QStringList::const_iterator it = list.begin(); it != list.end(); ++it)
+        stream << *it << "\n";
 }
 
 void MainWindow::clear()
@@ -481,10 +516,20 @@ void MainWindow::insertChild()
             newItem->name(newItem->fName().toString());
             newItem->id(QString("interrupt")); // TODO this will obviously change
             bt->iName(newItem->name().toString());
+            QPair<QString, QString> compPair = qMakePair(bt->name().toString(), bt->iName().toString());
+            if (compositeClasses.key(compPair).isEmpty())
+            {
+                QString left = compPair.first;
+                if (left.endsWith("Base")) left.chop(4);
+                
+                QString right = compPair.second;
+                if (right.endsWith("Interrupt")) right.chop(9);
+                
+                compositeClasses[left + right] = compPair;
+            }
         }
     }
 
-    btTreeView->selectionModel()->setCurrentIndex(model->index(0, 0, index), QItemSelectionModel::ClearAndSelect);
     btTreeView->resizeColumnToContents(0);
     btTreeView->resizeColumnToContents(1);
 }
