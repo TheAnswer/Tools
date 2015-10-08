@@ -54,7 +54,7 @@ class LeafGroup : public TypeGroup
 {
 public:
     LeafGroup(QObject *parent = 0) : TypeGroup(parent) {}
-    bool isLeaf() { return true; }
+    bool isLeaf() const { return true; }
     bool isDecision() const { return true; }
 };
 

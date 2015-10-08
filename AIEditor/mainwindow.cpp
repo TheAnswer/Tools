@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // Decisions Menu
     connect(menuDecisions, SIGNAL(aboutToShow()), this, SLOT(updateDecisions()));
     connect(actionRemove_Decision, SIGNAL(triggered()), this, SLOT(removeDecision()));
-    //connect(actionNode, SIGNAL(triggered()), this, SLOT(insertChild()));
+    //connect(actionInsert_Node, SIGNAL(triggered()), this, SLOT(insertChild()));
     //nodeGroup.addAction(actionNode);
 
     updateBehaviors();
@@ -182,6 +182,15 @@ void MainWindow::updateDecisions()
     QList<QAction*> decisions = menuInsert_Leaf->actions();
     for (QList<QAction*>::iterator it = decisions.begin(); it != decisions.end(); ++it)
         menuInsert_Leaf->removeAction(*it);
+
+    {
+        QAction *newDecision = new QAction("Interrupt", this);
+        menuInsert_Leaf->addAction(newDecision);
+
+        leafGroup.addAction(newDecision);
+
+        connect(newDecision, SIGNAL(triggered()), this, SLOT(insertChild()));
+    }
     
     QFile decisionsFile(scriptsDir.absoluteFilePath("interrupts.lua"));
     
@@ -429,17 +438,23 @@ void MainWindow::insertChild()
     TypeGroup *senderGroup = dynamic_cast<TypeGroup *>(senderAction->actionGroup());
     if (!senderGroup) return;
 
-    TreeModel* model = NULL;
-    if (senderGroup->isBehavior())
-        model = dynamic_cast<TreeModel*>(btTreeView->model());
-    else if (senderGroup->isDecision())
-        model = dynamic_cast<TreeModel*>(dtTreeView->model());
-    if (model == NULL) return;
-
     QModelIndex index = btTreeView->selectionModel()->currentIndex();
-    
-    TreeItem* newItem = model->addItem(senderGroup, index);
-    if (!newItem) return;
+
+    TreeModel* model = NULL;
+    TreeItem* newItem = NULL;
+    if (senderGroup->isBehavior())
+    {
+        model = dynamic_cast<TreeModel*>(btTreeView->model());
+        if (model) newItem = model->addItem(senderGroup, index);
+    }
+    else if (senderGroup->isDecision())
+    {
+        if (!index.isValid()) return; // don't add DT's without BT item references
+        model = dynamic_cast<TreeModel*>(dtTreeView->model());
+        if (model) newItem = model->addItem(senderGroup, dtTreeView->selectionModel()->currentIndex());
+    }
+
+    if (!model || !newItem) return;
     
     if (senderAction->text().startsWith("Sequence") || senderAction->text().startsWith("Selector"))
     {
@@ -453,6 +468,18 @@ void MainWindow::insertChild()
         newItem->name(names.first);
         newItem->iName(names.second);
         newItem->fName(senderAction->text());
+    }
+
+    if (senderGroup->isDecision())
+    {
+        TreeItem *bt = static_cast<TreeItem*>(index.internalPointer());
+        if (bt)
+        {
+            newItem->iName(bt->name().toString());
+            newItem->name(newItem->fName().toString());
+            newItem->id(QString("interrupt")); // TODO this will obviously change
+            bt->iName(newItem->name().toString());
+        }
     }
 
     btTreeView->selectionModel()->setCurrentIndex(model->index(0, 0, index), QItemSelectionModel::ClearAndSelect);
@@ -500,4 +527,8 @@ void MainWindow::removeDecision()
     QModelIndex idx = dtTreeView->selectionModel()->currentIndex();
     
     dtModel->removeItem(idx);
+
+    QModelIndex index = btTreeView->selectionModel()->currentIndex();
+    if (index.isValid() && static_cast<TreeItem*>(index.internalPointer()))
+        static_cast<TreeItem*>(index.internalPointer())->iName(QString(""));
 }

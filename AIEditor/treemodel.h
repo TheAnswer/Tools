@@ -71,7 +71,7 @@ private:
 			return QString("Name");
 			break;
 		case 1:
-			return QString("Type");
+            return QString("ID");
             break;
 		default:
 			return QString();
