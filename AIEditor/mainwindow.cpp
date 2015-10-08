@@ -245,6 +245,8 @@ void MainWindow::openFileDialog()
         actions[line.at(0)] = line;
     }
     
+    currentFile.close();
+    
     // This ensures that we don't have NULL models, so no need to check
     clear();
 
