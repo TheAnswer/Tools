@@ -267,7 +267,7 @@ QVariant DatabaseModel::getDataByType(QByteArray *data, QString varType) {
 QString DatabaseModel::getString(QByteArray *data) {
     int size = *(short*)data->left(2).data();
 
-    QString retVal = QString::fromAscii(data->remove(0, 2).data(), size);
+    QString retVal = QString::fromLatin1(data->remove(0, 2).data(), size);
     data->remove(0, size);
 
     return retVal;

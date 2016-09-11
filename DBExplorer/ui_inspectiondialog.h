@@ -10,14 +10,14 @@
 #define UI_INSPECTIONDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QGridLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QTableWidget>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QHeaderView>
+#include <QTableWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -63,7 +63,7 @@ public:
 
     void retranslateUi(QDialog *InspectionDialog)
     {
-        InspectionDialog->setWindowTitle(QApplication::translate("InspectionDialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        InspectionDialog->setWindowTitle(QApplication::translate("InspectionDialog", "Dialog", 0, 0));
     } // retranslateUi
 
 };

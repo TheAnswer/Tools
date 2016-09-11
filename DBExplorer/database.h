@@ -1,7 +1,7 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <db5.0/db_cxx.h>
+#include <db53/db_cxx.h>
 #include <QList>
 #include <QString>
 #include <QStringList>

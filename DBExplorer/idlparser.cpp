@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QRegExp>
+#include <QDebug>
 
 IDLParser::IDLParser()
 {
@@ -10,6 +11,8 @@ IDLParser::IDLParser()
 
 // returns a QHash of IDLVars indexed by calculated CRCs
 void IDLParser::parseIDLs(QDir baseDir, QHash<unsigned int, IDLVar>* hashTable) {
+    qDebug() << "parsing idl" << baseDir;
+
     QFileInfoList list = baseDir.entryInfoList();
     for (int i = 0; i < list.size(); i++) {
         QFileInfo fileInfo = list.at(i);
@@ -77,7 +80,7 @@ void IDLParser::parseIDL(QFileInfo fileName, QHash<unsigned int, IDLVar>* hashTa
         idlVar.varName = line.section(' ', -1, -1, QString::SectionSkipEmpty);
         idlVar.varType = line.section(' ', 0, -2, QString::SectionSkipEmpty);
         QString stringToHash = idlVar.className + "." + idlVar.varName;
-        idlVar.hashCode = CRCCalculator::hashCode(stringToHash.toAscii(), stringToHash.size());
+        idlVar.hashCode = CRCCalculator::hashCode(stringToHash.toStdString().c_str(), stringToHash.size());
 
         hashTable->insert(idlVar.hashCode, idlVar);
     } while (!line.isNull());

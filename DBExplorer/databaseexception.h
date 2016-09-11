@@ -1,7 +1,8 @@
 #ifndef DATABASEEXCEPTION_H
 #define DATABASEEXCEPTION_H
 
-#include <db5.0/db_cxx.h>
+#include <QString>
+#include <db53/db_cxx.h>
 
 /**
  * @brief The DatabaseException class because QT 4.8 doesn't handle exceptions
@@ -18,7 +19,7 @@ public:
 
     virtual ~DatabaseException() throw() {}
 
-    const char* what() const throw() { return msg.toAscii(); }
+    const char* what() const throw() { return msg.toStdString().c_str(); }
 
     QString getMsg() {
         return msg;

@@ -13,7 +13,7 @@ Database::Database(QString &path)
 {
     try {
         db.set_error_stream(&std::cerr);
-        db.open(NULL, fileName.toAscii(), NULL, DB_HASH, cFlags, 0);
+        db.open(NULL, fileName.toStdString().c_str(), NULL, DB_HASH, cFlags, 0);
 
         Dbc *cursorp;
         db.cursor(NULL, &cursorp, 0);
