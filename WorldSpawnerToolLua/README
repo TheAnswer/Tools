@@ -1,0 +1,18 @@
+SWGEmu World Spawner Tool Lua
+=============================
+
+This is a tool to control the various regions on each planet. It is written in Lua and requires wxLua to run.
+
+Features
+--------
+ * Shows each planet and their defined regions.
+ * Shows the settings for each region.
+ * Allows the user to modify the settings for the regions and save them to the regions file.
+
+Limitations
+-----------
+ * The user has to ensure that wxLua is available, download and build wxWidgets and wxLua according to http://wxlua.sourceforge.net/docs/install.html
+ * Can only be run from the WorldSpawnerToolLua directory currently.
+ * Hard coded paths taken from the newest dev environment.
+ * Only existing spawn groups can be used. Spawn groups are taken from the Core3 repo that is checked out.
+
