@@ -1,0 +1,29 @@
+SWGEmu World Spawner Tool Python
+=============================
+
+This is a tool to control the various regions on each planet. It is written in Python 3 and requires the following packages to be installed on Linux:
+- python3-tk
+- python3-pip
+After that you need to pip install lupa and Pillow.
+Windows only needs the pip install lupa and Pillow since default Python is delivered with both pip and tk.
+
+Features
+--------
+ * Shows each planet and their defined regions.
+ * Shows the settings for each region.
+ * Allows the user to modify the settings for the regions (any change is automatically saved).
+
+Limitations
+-----------
+ * The user has to ensure that the prerequisites are installed.
+ * Can only be run from the WorldSpawnerToolPython directory currently.
+ * Hard coded paths taken from the Zonama dev environment.
+ * Only existing spawn groups can be used. Spawn groups are taken from the Core3 repo that is checked out.
+
+ Install Prerequisites
+ ---------------------
+ Do:
+ - sudo apt-get install python3-pip
+ - sudo apt-get install python3-tk
+ - python3 -m pip install lupa Pillow
+
